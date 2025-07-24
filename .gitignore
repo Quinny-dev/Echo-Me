@@ -1,0 +1,17 @@
+# Virtual environment
+venv/
+ 
+# Byte‑compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS‑generated files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Data / output directories (adjust if yours differ)
+data/
