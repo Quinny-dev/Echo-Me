@@ -1,68 +1,65 @@
+# scripts/data_pipeline/sequence_buffer.py
+"""
+SequenceBuffer: fixed-length rolling buffer for 126-dim frame vectors.
+"""
+
+from typing import List, Optional
 import numpy as np
+import os
+import uuid
 
 class SequenceBuffer:
-    """
-    A fixed-length rolling buffer to store sequences of hand landmark frames.
-    Each frame is expected to be a list or array of length 126 (2 hands × 21 landmarks × 3 coords).
-    """
-
     def __init__(self, max_length: int):
-        """
-        Initialize the sequence buffer.
-        
-        Args:
-            max_length (int): Maximum number of frames to hold in the buffer.
-        """
-        self.max_length = max_length
-        self.buffer = []
+        self.max_length = int(max_length)
+        self.buffer: List[np.ndarray] = []
 
-    def add_frame(self, frame):
+    def append(self, frame_vector: Optional[List[float]]):
         """
-        Add a new frame to the buffer. If the buffer exceeds max_length, the oldest frame is removed.
-        
-        Args:
-            frame (list or np.array): A single frame of landmarks (length 126).
+        Append a single frame vector (expected length 126). If None, append zeros.
         """
-        if len(frame) != 126:
-            raise ValueError(f"Frame length should be 126, got {len(frame)}")
-
-        self.buffer.append(frame)
-
-        # Maintain fixed size buffer by popping oldest frame if needed
+        if frame_vector is None:
+            vec = np.zeros((126,), dtype=np.float32)
+        else:
+            vec = np.asarray(frame_vector, dtype=np.float32).flatten()
+            if vec.size < 126:
+                pad = np.zeros((126 - vec.size,), dtype=np.float32)
+                vec = np.concatenate([vec, pad])
+            elif vec.size > 126:
+                vec = vec[:126]
+        self.buffer.append(vec)
         if len(self.buffer) > self.max_length:
-            self.buffer.pop(0)
+            self.buffer = self.buffer[-self.max_length:]
 
-    def get_sequence(self):
+    def get_sequence(self, pad_front: bool = True) -> np.ndarray:
         """
-        Get the current sequence of frames as a numpy array.
-        If the buffer has fewer frames than max_length, zero-pad at the beginning.
-        
-        Returns:
-            np.ndarray: Array of shape (max_length, 126) with float values.
+        Return array shaped (max_length, 126). Pad with zeros if not full.
         """
-        seq_len = len(self.buffer)
-        if seq_len == 0:
-            # Return all zeros if empty
+        if len(self.buffer) == 0:
             return np.zeros((self.max_length, 126), dtype=np.float32)
-        
-        # Stack buffered frames into numpy array
-        seq = np.array(self.buffer, dtype=np.float32)
-
-        # Pad with zeros at the front if needed
-        if seq_len < self.max_length:
-            padding = np.zeros((self.max_length - seq_len, 126), dtype=np.float32)
-            seq = np.vstack((padding, seq))
-
+        seq = np.vstack(self.buffer)
+        T = seq.shape[0]
+        if T < self.max_length:
+            pad_amt = self.max_length - T
+            pad = np.zeros((pad_amt, seq.shape[1]), dtype=seq.dtype)
+            if pad_front:
+                seq = np.vstack((pad, seq))
+            else:
+                seq = np.vstack((seq, pad))
         return seq
 
     def clear(self):
-        """
-        Clear the buffer.
-        """
         self.buffer = []
 
     def __len__(self):
-        """
-        Get current number of frames in buffer.
-        """
         return len(self.buffer)
+
+    def save(self, directory: str, prefix: str = "sequence"):
+        """
+        Save the padded sequence to directory as an .npy file; returns path.
+        """
+        os.makedirs(directory, exist_ok=True)
+        seq = self.get_sequence()
+        filename = f"{prefix}_{uuid.uuid4().hex}.npy"
+        path = os.path.join(directory, filename)
+        np.save(path, seq)
+        return path

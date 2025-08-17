@@ -1,127 +1,191 @@
+# scripts/data_pipeline/sequence_collector.py
+"""
+Sequence collector with optical-flow fallback:
+Saves .npz per sequence with arrays:
+ - sequence: shape (T,126) float32 (left-slot then right-slot)
+ - presence: shape (T,2) int8 (left_present, right_present)
+ - propagated: shape (T,2) int8 (left_propagated, right_propagated) -> 1 if this frame's slot was filled by flow
+"""
+
 import cv2
 import os
 import sys
 import time
+import uuid
 import numpy as np
 
-
-# Add the project root to sys.path for absolute imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Now import other modules from their actual folders
 from hand_landmarking.hand_landmark_detector import HandLandmarkDetector
-from hand_landmarking.utils import draw_landmarks
+from hand_landmarking.utils import draw_landmarks, mp_results_to_canonical_two_hand_vector
+from hand_landmarking.optical_flow import (
+    track_landmarks_lk,
+    extract_left_right_from_mp_results,
+    build_flat_from_slots,
+)
 from data_pipeline.sequence_buffer import SequenceBuffer
 from data_pipeline.utils import SEQUENCE_LENGTH, DATA_DIR
-from data_pipeline.utils import normalize_landmarks_single, sliding_window_blocks
 
-# Initialize modules
-detector = HandLandmarkDetector()
-buffer = SequenceBuffer(SEQUENCE_LENGTH)
-os.makedirs(DATA_DIR, exist_ok=True)
+def run_collector(device_index=0, save_dir=DATA_DIR, sequence_length=SEQUENCE_LENGTH, target_width=None):
+    """
+    If target_width is provided (e.g., 1280) collector will upscale small frames for better detection.
+    """
+    os.makedirs(save_dir, exist_ok=True)
+    detector = HandLandmarkDetector(static_image_mode=False, max_num_hands=2)
+    buf = SequenceBuffer(max_length=sequence_length)
+    presence_history = []
+    propagated_history = []
 
-cap = cv2.VideoCapture(0)
-print("All systems ready.")
+    cap = cv2.VideoCapture(device_index)
+    if not cap.isOpened():
+        raise RuntimeError(f"Could not open webcam index {device_index}")
 
-# Prompt user *after* initialization
-label = input("\nEnter the label for this sign (e.g. hello): ").strip().lower()
-recording = False
-counting_down = False
-sequence_saved = False
-countdown_start_time = None
+    prev_gray = None
+    # previous per-hand pixel coords and z
+    prev_left_xy = None; prev_left_z = None
+    prev_right_xy = None; prev_right_z = None
+    prev_presence = (0, 0)  # last frame presence (left, right)
 
-cv2.namedWindow("Sequence Collector", cv2.WINDOW_NORMAL)
-cv2.setWindowProperty("Sequence Collector", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    collecting = False
+    saved_count = 0
+    print("Controls: SPACE toggles capture ON/OFF. ESC quits. When buffer full and capturing, auto-save.")
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        print("Failed to grab frame.")
-        break
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Frame read failed, exiting.")
+            break
 
-    display_frame = frame.copy()
-
-    key = cv2.waitKey(1) & 0xFF
-
-    # ESC = exit
-    if key == 27:
-        break
-
-    # SPACE = start countdown
-    if key == 32 and not recording and not counting_down:
-        counting_down = True
-        countdown_start_time = time.time()
-
-    # Countdown logic
-    if counting_down and not recording:
-        seconds_elapsed = int(time.time() - countdown_start_time)
-        countdown_remaining = 3 - seconds_elapsed
-
-        if countdown_remaining > 0:
-            countdown_text = f"Recording starts in {countdown_remaining}..."
-            cv2.putText(
-                display_frame, countdown_text, (50, 100),
-                cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 4, cv2.LINE_AA
-            )
+        # optionally upscale small frames to target_width for better detection
+        if target_width is not None:
+            h, w = frame.shape[:2]
+            if w < target_width:
+                scale = target_width / float(w)
+                frame_proc = cv2.resize(frame, (int(w*scale), int(h*scale)), interpolation=cv2.INTER_LINEAR)
+            else:
+                frame_proc = frame
         else:
-            recording = True
-            counting_down = False
+            frame_proc = frame
 
-    # Recording logic
-    elif recording and not sequence_saved:
-        # get raw 126‑vector → reshape to two hands of 21×3
-        landmarks = detector.detect_landmarks(frame)
-        if landmarks is not None:
-            arr = np.array(landmarks, dtype=np.float32).reshape(2, 21, 3)
+        gray = cv2.cvtColor(frame_proc, cv2.COLOR_BGR2GRAY)
+        results = detector.process(frame_proc)
 
-            # normalize each hand separately
-            for h in range(arr.shape[0]):
-                arr[h] = normalize_landmarks_single(arr[h])
+        # defaults for this frame
+        left_xy = None; left_z = None; right_xy = None; right_z = None
+        propagated_flags = np.array([0,0], dtype=np.int8)
 
-            # flatten back to length‑126 and add
-            buffer.add_frame(arr.flatten().tolist())
+        # If MediaPipe returned landmarks -> extract pixel coords & z
+        if results is not None and getattr(results, "multi_hand_landmarks", None):
+            left_xy, left_z, right_xy, right_z, presence = extract_left_right_from_mp_results(results, frame_proc.shape)
+            # update prev references for future optical-flow
+            prev_left_xy, prev_left_z = (left_xy.copy() if left_xy is not None else None,
+                                         left_z.copy() if left_z is not None else None)
+            prev_right_xy, prev_right_z = (right_xy.copy() if right_xy is not None else None,
+                                           right_z.copy() if right_z is not None else None)
+            prev_presence = (int(bool(presence[0])), int(bool(presence[1])))
+        else:
+            # If no detection this frame, attempt to propagate previously-seen landmarks using optical flow
+            if prev_gray is not None:
+                # try propagate left slot if we had it
+                if prev_left_xy is not None:
+                    p1_left, st_left = track_landmarks_lk(prev_gray, gray, prev_left_xy)
+                    if p1_left is not None and st_left is not None:
+                        # require at least some points tracked successfully (tunable threshold)
+                        if st_left.sum() >= 6:  # at least 6 points tracked -> accept propagated hand
+                            left_xy = p1_left
+                            left_z = prev_left_z.copy() if prev_left_z is not None else np.zeros((21,), dtype=np.float32)
+                            propagated_flags[0] = 1
+                        else:
+                            left_xy = None; left_z = None
+                    else:
+                        left_xy = None; left_z = None
+                # try propagate right slot if we had it
+                if prev_right_xy is not None:
+                    p1_right, st_right = track_landmarks_lk(prev_gray, gray, prev_right_xy)
+                    if p1_right is not None and st_right is not None:
+                        if st_right.sum() >= 6:
+                            right_xy = p1_right
+                            right_z = prev_right_z.copy() if prev_right_z is not None else np.zeros((21,), dtype=np.float32)
+                            propagated_flags[1] = 1
+                        else:
+                            right_xy = None; right_z = None
 
-        # Draw landmarks
-        results = detector.hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        frame = draw_landmarks(frame, results.multi_hand_landmarks)
-        display_frame = frame
+                # update prev_... only if propagation happened (so next frame can chain)
+                if propagated_flags[0] == 1:
+                    prev_left_xy = left_xy.copy()
+                    # prev_left_z already preserved
+                if propagated_flags[1] == 1:
+                    prev_right_xy = right_xy.copy()
+            # if prev_gray is None or propagation failed, presence remains zeros
 
-    # Save when enough frames are collected
-    if len(buffer) >= SEQUENCE_LENGTH:
-        # 1) get your buffered data: shape (SEQUENCE_LENGTH, 126)
-        seq_flat = buffer.get_sequence()  
-        # 2) reshape to (T, 2, 21, 3)
-        seq = seq_flat.reshape(SEQUENCE_LENGTH, 2, 21, 3)
+            # presence: derived from propagation success
+            presence = (int(bool(left_xy is not None)), int(bool(right_xy is not None)))
+            prev_presence = presence
 
-        # 3) slice into overlapping windows
-        STRIDE = 5  # choose your stride
-        windows = sliding_window_blocks(seq, SEQUENCE_LENGTH, STRIDE)
+        # Build canonical flat vector (normalized coords) and per-frame presence mask
+        flat_vec, presence_mask = build_flat_from_slots(left_xy, left_z, right_xy, right_z, frame_proc.shape, normalize=True)
+        buf.append(flat_vec)
+        presence_history.append(presence_mask.astype(np.int8))
+        propagated_history.append(propagated_flags)
 
-        # 4) save each window back flattened
-        for idx, w in enumerate(windows):
-            fname = f"{label}_{int(time.time())}_w{idx}.npy"
-            out_path = os.path.join(DATA_DIR, fname)
-            np.save(out_path, w.reshape(SEQUENCE_LENGTH, 126))
-            print(f"Saved window {idx} to {out_path}")
+        # Draw landmarks for display using MediaPipe results if present, else draw propagated points
+        display = frame_proc.copy()
+        try:
+            if results is not None and getattr(results, "multi_hand_landmarks", None):
+                draw_landmarks(display, results.multi_hand_landmarks)
+            else:
+                # draw propagated points so user sees fallback (small circles)
+                if left_xy is not None:
+                    for (x,y) in left_xy:
+                        cv2.circle(display, (int(x), int(y)), 3, (0,255,0), -1)
+                if right_xy is not None:
+                    for (x,y) in right_xy:
+                        cv2.circle(display, (int(x), int(y)), 3, (0,200,255), -1)
+        except Exception:
+            pass
 
-        sequence_saved = True
+        # overlay info
+        cv2.putText(display, f"Buffer: {len(buf)}/{sequence_length}  Saved: {saved_count}",
+                    (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 0), 2)
+        if propagated_flags.any():
+            cv2.putText(display, f"PROPAGATED L:{propagated_flags[0]} R:{propagated_flags[1]}",
+                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (50, 200, 50), 2)
+        if detecting := (results is not None and getattr(results, "multi_hand_landmarks", None)):
+            cv2.putText(display, "DETECTED", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
+        cv2.imshow("Sequence Collector (with optical-flow fallback)", display)
 
-    # Not recording yet
-    if not recording and not counting_down:
-        cv2.putText(
-            display_frame, "Press SPACE to start capturing", (20, 30),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2
-        )
+        key = cv2.waitKey(1) & 0xFF
+        if key == 27:  # ESC
+            break
+        elif key == 32:  # SPACE toggles capture
+            collecting = not collecting
+            print("Collecting:", collecting)
 
-    # Display frame
-    cv2.imshow("Sequence Collector", display_frame)
+        # Auto-save when buffer full and user toggled collecting ON
+        if collecting and len(buf) >= sequence_length:
+            seq = buf.get_sequence(pad_front=True)  # (sequence_length, 126)
+            # build presence mask and propagated mask arrays
+            last_presence = np.stack(presence_history[-sequence_length:], axis=0).astype(np.int8)
+            last_propagated = np.stack(propagated_history[-sequence_length:], axis=0).astype(np.int8)
+            basename = f"sequence_{uuid.uuid4().hex}"
+            savepath = os.path.join(save_dir, basename + ".npz")
+            np.savez(savepath, sequence=seq, presence=last_presence, propagated=last_propagated)
+            print("Saved:", savepath)
+            saved_count += 1
 
-    if sequence_saved:
-        time.sleep(2)
-        break
+            # clear / reset
+            buf.clear()
+            presence_history = []
+            propagated_history = []
+            time.sleep(0.5)
 
-# Cleanup
-cap.release()
-cv2.destroyAllWindows()
-detector.close()
+        # update prev_gray for next iteration (use proc-frame gray)
+        prev_gray = gray.copy()
+
+    cap.release()
+    cv2.destroyAllWindows()
+    detector.close()
+
+if __name__ == "__main__":
+    run_collector()
