@@ -1,65 +1,67 @@
-# scripts/data_pipeline/sequence_buffer.py
-"""
-SequenceBuffer: fixed-length rolling buffer for 126-dim frame vectors.
-"""
 
 from typing import List, Optional
 import numpy as np
 import os
 import uuid
 
+from data_pipeline.utils import export_sequence_json
+
 class SequenceBuffer:
+  
+
     def __init__(self, max_length: int):
         self.max_length = int(max_length)
-        self.buffer: List[np.ndarray] = []
+        self.buffer: List[Optional[np.ndarray]] = []
 
     def append(self, frame_vector: Optional[List[float]]):
-        """
-        Append a single frame vector (expected length 126). If None, append zeros.
-        """
+       
         if frame_vector is None:
-            vec = np.zeros((126,), dtype=np.float32)
-        else:
-            vec = np.asarray(frame_vector, dtype=np.float32).flatten()
-            if vec.size < 126:
-                pad = np.zeros((126 - vec.size,), dtype=np.float32)
-                vec = np.concatenate([vec, pad])
-            elif vec.size > 126:
-                vec = vec[:126]
-        self.buffer.append(vec)
+            self.buffer.append(None)
+            # keep only last max_length
+            if len(self.buffer) > self.max_length:
+                self.buffer = self.buffer[-self.max_length:]
+            return
+
+        arr = np.array(frame_vector, dtype=float).reshape(1, -1)
+        self.buffer.append(arr)
         if len(self.buffer) > self.max_length:
             self.buffer = self.buffer[-self.max_length:]
-
-    def get_sequence(self, pad_front: bool = True) -> np.ndarray:
-        """
-        Return array shaped (max_length, 126). Pad with zeros if not full.
-        """
-        if len(self.buffer) == 0:
-            return np.zeros((self.max_length, 126), dtype=np.float32)
-        seq = np.vstack(self.buffer)
-        T = seq.shape[0]
-        if T < self.max_length:
-            pad_amt = self.max_length - T
-            pad = np.zeros((pad_amt, seq.shape[1]), dtype=seq.dtype)
-            if pad_front:
-                seq = np.vstack((pad, seq))
-            else:
-                seq = np.vstack((seq, pad))
-        return seq
-
-    def clear(self):
-        self.buffer = []
 
     def __len__(self):
         return len(self.buffer)
 
-    def save(self, directory: str, prefix: str = "sequence"):
-        """
-        Save the padded sequence to directory as an .npy file; returns path.
-        """
+    def get_sequence(self, pad_value: float = 0.0) -> np.ndarray:
+     
+        if not self.buffer:
+            return np.zeros((self.max_length, 0), dtype=float)
+
+        first_non_none = next((b for b in self.buffer if b is not None), None)
+        if first_non_none is None:
+            return np.zeros((self.max_length, 0), dtype=float)
+        F = first_non_none.shape[1]
+
+        rows = []
+        for b in self.buffer:
+            if b is None:
+                rows.append(np.full((1, F), pad_value, dtype=float))
+            else:
+                rows.append(np.array(b).reshape(1, F))
+        seq = np.concatenate(rows, axis=0)
+
+        if seq.shape[0] < self.max_length:
+            pad_amt = self.max_length - seq.shape[0]
+            pad = np.full((pad_amt, F), pad_value, dtype=float)
+            seq = np.concatenate([pad, seq], axis=0)
+        elif seq.shape[0] > self.max_length:
+            seq = seq[-self.max_length :]
+
+        return seq.astype(float)
+
+    def save(self, directory: str, prefix: str = "sequence") -> str:
+      
         os.makedirs(directory, exist_ok=True)
         seq = self.get_sequence()
-        filename = f"{prefix}_{uuid.uuid4().hex}.npy"
+        filename = f"{prefix}_{uuid.uuid4().hex}.json"
         path = os.path.join(directory, filename)
-        np.save(path, seq)
+        export_sequence_json(seq, path, filename_hint=filename)
         return path

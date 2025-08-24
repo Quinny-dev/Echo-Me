@@ -1,11 +1,3 @@
-# scripts/data_pipeline/sequence_collector.py
-"""
-Sequence collector with optical-flow fallback:
-Saves .npz per sequence with arrays:
- - sequence: shape (T,126) float32 (left-slot then right-slot)
- - presence: shape (T,2) int8 (left_present, right_present)
- - propagated: shape (T,2) int8 (left_propagated, right_propagated) -> 1 if this frame's slot was filled by flow
-"""
 
 import cv2
 import os
@@ -27,9 +19,7 @@ from data_pipeline.sequence_buffer import SequenceBuffer
 from data_pipeline.utils import SEQUENCE_LENGTH, DATA_DIR
 
 def run_collector(device_index=0, save_dir=DATA_DIR, sequence_length=SEQUENCE_LENGTH, target_width=None):
-    """
-    If target_width is provided (e.g., 1280) collector will upscale small frames for better detection.
-    """
+    
     os.makedirs(save_dir, exist_ok=True)
     detector = HandLandmarkDetector(static_image_mode=False, max_num_hands=2)
     buf = SequenceBuffer(max_length=sequence_length)
@@ -168,10 +158,12 @@ def run_collector(device_index=0, save_dir=DATA_DIR, sequence_length=SEQUENCE_LE
             # build presence mask and propagated mask arrays
             last_presence = np.stack(presence_history[-sequence_length:], axis=0).astype(np.int8)
             last_propagated = np.stack(propagated_history[-sequence_length:], axis=0).astype(np.int8)
+            from data_pipeline.utils import export_sequence_json
+
             basename = f"sequence_{uuid.uuid4().hex}"
-            savepath = os.path.join(save_dir, basename + ".npz")
-            np.savez(savepath, sequence=seq, presence=last_presence, propagated=last_propagated)
-            print("Saved:", savepath)
+            json_path = os.path.join(save_dir, basename + ".json")
+            export_sequence_json(seq, json_path, filename_hint=basename)
+            print("Saved JSON:", json_path)
             saved_count += 1
 
             # clear / reset
