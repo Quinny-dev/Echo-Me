@@ -1,3 +1,4 @@
+# Put this in Echo-Me-compvi/scripts/hand_landmarking/video_sequence_collector.py
 from __future__ import annotations
 
 import os
@@ -30,15 +31,7 @@ from data_pipeline.utils import SEQUENCE_LENGTH, DATA_DIR
 
 
 class VideoSequenceCollector:
-    """Collect sequences from a video file using the project's detection pipeline.
-
-    Differences from the original collector:
-      - Output JSON contains two objects: "left" and "right", each with a
-        `sequence` list. Each frame in those sequences is 63 floats (21x3) for
-        that hand only.
-
-    All detection / optical-flow logic is reused from the project.
-    """
+    """Collect sequences from a video file using the project's detection pipeline."""
 
     def __init__(self, out_dir: Optional[str] = None, verbose: bool = True):
         self.out_dir = out_dir or DATA_DIR
@@ -51,6 +44,7 @@ class VideoSequenceCollector:
         # optical-flow state
         self.prev_gray: Optional[np.ndarray] = None
         # prev_slots holds last extracted left/right pixel coords and z if available
+        # Format expected by optical_flow helpers: (left_xy,left_z,right_xy,right_z,presence)
         self.prev_slots = None
 
         # sequence counters
@@ -75,13 +69,9 @@ class VideoSequenceCollector:
         return path
 
     def _flat_to_left_right(self, flat_126) -> tuple[list[float], list[float]]:
-        """Split a 126-length flattened frame into left (63) and right (63).
-
-        Accepts numpy array or list; returns two Python lists of floats.
-        """
+        """Split a 126-length flattened frame into left (63) and right (63)."""
         arr = np.asarray(flat_126).reshape(-1)
         if arr.size < 126:
-            # pad to 126 with zeros
             tmp = np.zeros((126,), dtype=np.float32)
             tmp[: arr.size] = arr
             arr = tmp
@@ -92,8 +82,7 @@ class VideoSequenceCollector:
     def _attempt_optical_flow(self, frame_bgr: np.ndarray) -> Optional[np.ndarray]:
         """Attempt to propagate previous landmarks via LK optical flow.
 
-        Returns a 126-length flat frame if successful, else None. Logic follows
-        the project's optical-flow helpers where available.
+        Returns a 126-length flat frame if successful, else None.
         """
         if track_landmarks_lk is None or self.prev_slots is None or self.prev_gray is None:
             return None
@@ -121,7 +110,7 @@ class VideoSequenceCollector:
         if next_pts is None or st is None:
             return None
         st = np.asarray(st).reshape(-1)
-        if st.sum() < 6:
+        if st.sum() < 6:  # require at least some tracked points
             return None
 
         left_new = None
@@ -143,9 +132,22 @@ class VideoSequenceCollector:
         # Try to use build_flat_from_slots if available (preferred)
         if build_flat_from_slots is not None:
             try:
-                flat = build_flat_from_slots(left_new, None if left_new is None else None, right_new, None if right_new is None else None, frame_bgr.shape)
-                return flat
+                # build_flat_from_slots returns (flat, presence)
+                flat, presence = build_flat_from_slots(
+                    left_new,
+                    None,
+                    right_new,
+                    None,
+                    frame_bgr.shape,
+                )
+                # Check we got meaningful data
+                if flat is not None and np.sum(np.abs(np.asarray(flat))) > 0:
+                    # update prev_slots presence for future frames
+                    self.prev_slots = (left_new, None, right_new, None, presence)
+                    self.prev_gray = cur_gray
+                    return flat
             except Exception:
+                # fallthrough to fallback composition below
                 pass
 
         # Fallback: assemble 126-length flat with z=0 for tracked points
@@ -163,13 +165,21 @@ class VideoSequenceCollector:
                 flat_arr[base + i * 3 + 0] = x
                 flat_arr[base + i * 3 + 1] = y
                 flat_arr[base + i * 3 + 2] = 0.0
+        # Update prev state
+        self.prev_slots = (left_new, None, right_new, None, (1 if left_new is not None else 0, 1 if right_new is not None else 0))
+        self.prev_gray = cur_gray
         return flat_arr
 
-    def process_video(self, video_path: str, sign_label: str, max_sequences: Optional[int] = None, max_frames: Optional[int] = None, skip_frames: int = 0) -> int:
-        """Process `video_path` and save sequences labeled by `sign_label`.
+    def process_video(
+        self,
+        video_path: str,
+        sign_label: str,
+        max_sequences: Optional[int] = None,
+        max_frames: Optional[int] = None,
+        skip_frames: int = 0,
+    ) -> int:
+        """Process `video_path` and save sequences labeled by `sign_label`."""
 
-        Returns the number of sequence files written.
-        """
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
             raise RuntimeError(f"Unable to open video: {video_path}")
@@ -181,7 +191,7 @@ class VideoSequenceCollector:
 
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) if cap.get(cv2.CAP_PROP_FRAME_COUNT) > 0 else None
         if self.verbose:
-            print(f"Processing video {video_path} (total_frames={total_frames}) -> out_dir={self.out_dir}")
+            print(f"Processing video: {video_path} total_frames={total_frames}")
 
         try:
             while True:
@@ -200,66 +210,65 @@ class VideoSequenceCollector:
                     mp_results = self.detector.process(frame)
                     if mp_results is not None:
                         flat_vec = mp_results_to_canonical_two_hand_vector(mp_results, frame.shape)
+                        # If canonical helper returns (flat, presence), unpack
+                        if isinstance(flat_vec, tuple):
+                            flat_vec = flat_vec[0]
                 except Exception:
                     flat_vec = None
 
-                # 2) If no detection, attempt optical flow propagation
-                if (flat_vec is None) or (isinstance(flat_vec, (list, tuple, np.ndarray)) and np.sum(np.abs(np.array(flat_vec))) == 0):
+                # 2) If no detection (or empty), attempt optical flow propagation
+                if flat_vec is None or np.sum(np.abs(np.asarray(flat_vec).reshape(-1))) == 0:
                     opt = self._attempt_optical_flow(frame)
-                    if opt is not None and np.sum(np.abs(np.array(opt))) > 0:
+                    if opt is not None and np.sum(np.abs(np.asarray(opt).reshape(-1))) > 0:
                         flat_vec = opt
 
-                # 3) Fallback to last valid frame if available
-                if (flat_vec is None) or (isinstance(flat_vec, (list, tuple, np.ndarray)) and np.sum(np.abs(np.array(flat_vec))) == 0):
-                    if len(left_buffer) > 0 and len(right_buffer) > 0:
-                        # try last valid from buffers
-                        last_left = None
-                        last_right = None
-                        for i in range(len(left_buffer)-1, -1, -1):
-                            if left_buffer[i] is not None and np.sum(np.abs(np.array(left_buffer[i]))) > 0:
-                                last_left = left_buffer[i]
-                                break
-                        for i in range(len(right_buffer)-1, -1, -1):
-                            if right_buffer[i] is not None and np.sum(np.abs(np.array(right_buffer[i]))) > 0:
-                                last_right = right_buffer[i]
-                                break
-                        if last_left is not None and last_right is not None:
-                            # combine into 126 and split below
-                            flat_vec = np.concatenate([np.array(last_left).reshape(-1), np.array(last_right).reshape(-1)])
+                # 3) Fallback to last valid frame from buffers if available
+                if flat_vec is None or np.sum(np.abs(np.asarray(flat_vec).reshape(-1))) == 0:
+                    # try last valid from buffers
+                    last_left = None
+                    last_right = None
+                    for i in range(len(left_buffer) - 1, -1, -1):
+                        if left_buffer[i] is not None and np.sum(np.abs(np.asarray(left_buffer[i]))) > 0:
+                            last_left = left_buffer[i]
+                            break
+                    for i in range(len(right_buffer) - 1, -1, -1):
+                        if right_buffer[i] is not None and np.sum(np.abs(np.asarray(right_buffer[i]))) > 0:
+                            last_right = right_buffer[i]
+                            break
+                    if last_left is not None and last_right is not None:
+                        flat_vec = np.concatenate([np.array(last_left).reshape(-1), np.array(last_right).reshape(-1)])
+                    elif last_left is not None:
+                        flat_vec = np.concatenate([np.array(last_left).reshape(-1), np.zeros((63,))])
+                    elif last_right is not None:
+                        flat_vec = np.concatenate([np.zeros((63,)), np.array(last_right).reshape(-1)])
+                    else:
+                        # final fallback: zeros
+                        flat_vec = np.zeros((126,), dtype=np.float32)
 
-                # 4) Final fallback: zeros
-                if (flat_vec is None) or (isinstance(flat_vec, (list, tuple, np.ndarray)) and np.sum(np.abs(np.array(flat_vec))) == 0):
-                    flat_vec = np.zeros((126,), dtype=np.float32)
+                # Now ensure flat_vec is a 126-length array and split
+                flat_arr = np.asarray(flat_vec).reshape(-1)
+                if flat_arr.size < 126:
+                    tmp = np.zeros((126,), dtype=np.float32)
+                    tmp[: flat_arr.size] = flat_arr
+                    flat_arr = tmp
+                left_f, right_f = self._flat_to_left_right(flat_arr)
 
-                # split into left/right 63-length lists
-                left_f, right_f = self._flat_to_left_right(flat_vec)
-
+                # Append to buffers
                 left_buffer.append(left_f)
                 right_buffer.append(right_f)
 
-                # Update prev_gray and prev_slots for optical flow next frame
-                try:
-                    mp_results = self.detector.process(frame)
-                    if mp_results is not None:
-                        try:
-                            left_xy, left_z, right_xy, right_z, pres = extract_left_right_from_mp_results(mp_results, frame.shape)
-                            self.prev_slots = (left_xy, left_z, right_xy, right_z, pres)
-                        except Exception:
-                            pass
-                    self.prev_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                except Exception:
-                    pass
+                # Keep buffers at most SEQUENCE_LENGTH
+                if len(left_buffer) > SEQUENCE_LENGTH:
+                    left_buffer.pop(0)
+                if len(right_buffer) > SEQUENCE_LENGTH:
+                    right_buffer.pop(0)
 
-                # If we have enough frames, save sequence file
-                if len(left_buffer) >= SEQUENCE_LENGTH and len(right_buffer) >= SEQUENCE_LENGTH:
-                    left_seq = left_buffer[:SEQUENCE_LENGTH]
-                    right_seq = right_buffer[:SEQUENCE_LENGTH]
-                    self._save_left_right_json(left_seq, right_seq, sign_label)
+                # Save when we have a full sequence
+                if len(left_buffer) == SEQUENCE_LENGTH and len(right_buffer) == SEQUENCE_LENGTH:
+                    self._save_left_right_json(left_buffer.copy(), right_buffer.copy(), sign_label)
                     sequences_saved += 1
-                    # drop saved frames (advance sliding window by SEQUENCE_LENGTH)
-                    left_buffer = left_buffer[SEQUENCE_LENGTH:]
-                    right_buffer = right_buffer[SEQUENCE_LENGTH:]
-
+                    left_buffer = []
+                    right_buffer = []
                     if max_sequences is not None and sequences_saved >= max_sequences:
                         break
 
