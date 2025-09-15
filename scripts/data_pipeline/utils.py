@@ -3,8 +3,8 @@ import numpy as np
 import json
 from pathlib import Path
 
-SEQUENCE_LENGTH = 150               # Number of frames per sign.
-FPS = 25                          # Capture rate (frames/sec).
+SEQUENCE_LENGTH = 60               # Number of frames per sign.
+FPS = 10                          # Capture rate (frames/sec).
 HAND_CONNECTIONS = 2                # Allow 1 or 2 hands.
 USE_STATIC_IMAGE_MODE = False
 DATA_DIR = "data/raw_sequences"
