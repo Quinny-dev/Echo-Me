@@ -1,0 +1,29 @@
+import os
+import shutil
+
+# Paths (edit these!)
+video_dir = r"C:/Users/Ken/Documents/GitHub/Echo-Me/start_kit/videos_other"
+whitelist_file = r"C:/Users/Ken/Documents/GitHub/Echo-Me/start_kit/whitelist.txt"
+output_dir = r"C:/Users/Ken/Documents/GitHub/Echo-Me/start_kit/corrupted_videos"
+
+# Create output folder if it doesn’t exist
+os.makedirs(output_dir, exist_ok=True)
+
+# Load whitelist (strip spaces/newlines)
+with open(whitelist_file, "r", encoding="utf-8") as f:
+    whitelist = {line.strip() for line in f if line.strip()}
+
+print(f"Loaded {len(whitelist)} filenames from whitelist.")
+
+# Go through all files in the directory
+moved_count = 0
+for file in os.listdir(video_dir):
+    if file in whitelist:
+        src = os.path.join(video_dir, file)
+        dst = os.path.join(output_dir, file)
+
+        print(f"Moving: {file}")
+        shutil.move(src, dst)
+        moved_count += 1
+
+print(f"\nDone. Moved {moved_count} files into {output_dir}")

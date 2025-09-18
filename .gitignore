@@ -1,11 +1,16 @@
 start_kit/download_*.log
-start_kit/missing.txt
+start_kit/*.txt
 start_kit/raw_videos/
 start_kit/raw_videos_mp4/
 start_kit/videos/
+start_kit/videos_new/
+start_kit/videos_other/
+start_kit/corrupted_videos/
 
 */__pycache__
 code/I3D/archived/
 *.pt
 
 *.zip
+
+*.txt
