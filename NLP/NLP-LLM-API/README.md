@@ -1,0 +1,1 @@
+just make an env file and put your relevant openAI API key in and it will run

@@ -1,0 +1,1 @@
+In each folder there should be instructions located at ./README.md. Follow those to run the different programs.
