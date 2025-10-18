@@ -16,7 +16,7 @@ sys.path.insert(1, './tools')
 import holistic, common, encrypt
 
 PRINT_FREQ = 30
-SERVER_ADDR = "35.243.169.18"
+SERVER_ADDR = "127.0.0.1"
 # SERVER_ADDR = "127.0.0.1"
 
 # Server IP address and Port number
@@ -51,6 +51,7 @@ def server(landmark_queue, prediction_queue):
 
 def video_loop(landmark_queue, prediction_queue, use_holistic=False):
     cap = cv2.VideoCapture(0)
+    cv2.namedWindow(APP_NAME, cv2.WINDOW_NORMAL) 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     cap.set(cv2.CAP_PROP_FOURCC, fourcc)
     if not cap.isOpened():
@@ -89,7 +90,7 @@ def video_loop(landmark_queue, prediction_queue, use_holistic=False):
 
         row = holistic.to_landmark_row(results, use_holistic)
 
-        landmark_str = ','.join(np.array(row).astype(np.str))
+        landmark_str = ','.join(map(str, row))
 
         # send comma delimited str of flattened landmarks in bytes to server
         try:

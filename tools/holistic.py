@@ -119,36 +119,35 @@ def process_capture(cap, use_holistic):
 
 def draw_landmarks(image, landmarks, use_holistic, tag=''):
     mp_drawing = mp.solutions.drawing_utils
-    # Draw landmark annotation on the image.
     height, width, _ = image.shape
     if use_holistic:
-        mp_drawing.draw_landmarks(
-            image, landmarks.left_hand_landmarks, mp.python.solutions.holistic.HAND_CONNECTIONS)
         if landmarks.left_hand_landmarks:
-            cv2.putText(image, "L", (int(width*landmarks.left_hand_landmarks.landmark[0].x), int(height*landmarks.left_hand_landmarks.landmark[0].y)),
+            mp_drawing.draw_landmarks(
+                image, landmarks.left_hand_landmarks, mp.solutions.holistic.HAND_CONNECTIONS)
+            cv2.putText(image, "L", (int(width*landmarks.left_hand_landmarks.landmark[0].x),
+                                      int(height*landmarks.left_hand_landmarks.landmark[0].y)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        mp_drawing.draw_landmarks(
-            image, landmarks.right_hand_landmarks, mp.python.solutions.holistic.HAND_CONNECTIONS)
         if landmarks.right_hand_landmarks:
-            cv2.putText(image, "R", (int(width*landmarks.right_hand_landmarks.landmark[0].x), int(height*landmarks.right_hand_landmarks.landmark[0].y)),
+            mp_drawing.draw_landmarks(
+                image, landmarks.right_hand_landmarks, mp.solutions.holistic.HAND_CONNECTIONS)
+            cv2.putText(image, "R", (int(width*landmarks.right_hand_landmarks.landmark[0].x),
+                                      int(height*landmarks.right_hand_landmarks.landmark[0].y)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        # mp_drawing.draw_landmarks(
-        #     image, landmarks.pose_landmarks, UPPER_BODY_CONNECTIONS)
     else:
-
         if landmarks.multi_hand_landmarks:
             for idx, hand_handedness in enumerate(landmarks.multi_handedness):
                 handedness_dict = MessageToDict(hand_handedness)
                 hand = handedness_dict['classification'][0]["label"]
-                cv2.putText(image, hand, (int(width*landmarks.multi_hand_landmarks[idx].landmark[0].x), int(height*landmarks.multi_hand_landmarks[idx].landmark[0].y)),
+                cv2.putText(image, hand, (int(width*landmarks.multi_hand_landmarks[idx].landmark[0].x),
+                                          int(height*landmarks.multi_hand_landmarks[idx].landmark[0].y)),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
             for hand_landmarks in landmarks.multi_hand_landmarks:
                 mp_drawing.draw_landmarks(
-                    image, hand_landmarks, mp.python.solutions.holistic.HAND_CONNECTIONS)
-    cv2.putText(image, tag, (10, 50),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 6)
-    cv2.putText(image, tag, (10, 50),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                    image, hand_landmarks, mp.solutions.holistic.HAND_CONNECTIONS)
+
+    cv2.putText(image, tag, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 6)
+    cv2.putText(image, tag, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+
 
 
 def convert_video(infile, outfile, use_holistic):
