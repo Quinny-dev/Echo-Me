@@ -1,8 +1,34 @@
-numpy
-pandas
-scikit-learn
-matplotlib
-seaborn
-tensorflow==2.15.0
-mediapipe
-opencv-python
+# GUI
+PySide6>=6.6.0
+
+# Core deep learning & ML
+tensorflow>=2.16.0
+keras>=3.10.0
+numpy>=1.24.0,<2.0.0
+pandas==2.3.3
+scikit-learn>=1.6.0
+
+# Computer vision
+mediapipe>=0.10.21
+opencv-python>=4.10.0
+opencv-contrib-python>=4.10.0
+
+# Utilities
+matplotlib>=3.8.0
+tqdm>=4.66.0
+pyyaml>=6.0.2
+cryptography>=43.0.0
+
+# Networking & I/O
+flask>=3.0.0
+requests>=2.31.0
+boto3>=1.34.0
+paramiko>=3.4.0
+
+# For encryption (ChaCha20)
+pycryptodome>=3.20.0
+
+# Windows
+winshell
+pywin32
+psutil
