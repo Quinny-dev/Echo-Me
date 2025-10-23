@@ -1,52 +1,123 @@
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QTextEdit, QFrame, QGraphicsDropShadowEffect,
-    QDialog, QFormLayout, QCheckBox, QComboBox
+    QDialog, QFormLayout, QCheckBox, QComboBox, QLineEdit, QMessageBox
 )
 from PySide6.QtGui import QIcon, QFont, QColor
 from PySide6.QtCore import Qt
 from camera_feed import CameraFeed
 from hand_landmarking.hand_landmarking import HandLandmarkDetector
 from pathlib import Path
+import json
+import bcrypt
 
 READY_FILE = Path("gui_ready.flag")  # splash will wait for this file
+USER_PREF_FILE = Path("user_preferences.json")
+
+# Ensure JSON file exists
+if not USER_PREF_FILE.exists():
+    USER_PREF_FILE.write_text(json.dumps({}))
+
+def load_user_data():
+    with open(USER_PREF_FILE, "r") as f:
+        return json.load(f)
+
+def save_user_data(data):
+    with open(USER_PREF_FILE, "w") as f:
+        json.dump(data, f, indent=4)
+
+# ---- Login Dialog ----
+class LoginDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Login")
+        self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
+        self.setFixedSize(300, 180)
+
+        layout = QFormLayout(self)
+
+        self.username_input = QLineEdit()
+        self.password_input = QLineEdit()
+        self.password_input.setEchoMode(QLineEdit.Password)
+
+        self.login_btn = QPushButton("Login / Register")
+        self.login_btn.clicked.connect(self.login_or_register)
+
+        layout.addRow(QLabel("Username:"), self.username_input)
+        layout.addRow(QLabel("Password:"), self.password_input)
+        layout.addRow(self.login_btn)
+
+        self.user_data = load_user_data()
+        self.logged_in_user = None
+
+    def login_or_register(self):
+        username = self.username_input.text().strip()
+        password = self.password_input.text().encode("utf-8")
+
+        if not username or not password:
+            QMessageBox.warning(self, "Error", "Username and password cannot be empty")
+            return
+
+        if username in self.user_data:
+            # Existing user: verify password
+            hashed_pw = self.user_data[username]["password"].encode("utf-8")
+            if bcrypt.checkpw(password, hashed_pw):
+                self.logged_in_user = username
+                self.accept()
+            else:
+                QMessageBox.warning(self, "Error", "Incorrect password")
+        else:
+            # New user: create account
+            hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
+            self.user_data[username] = {
+                "password": hashed_pw.decode("utf-8"),
+                "preferences": {
+                    "dark_mode": True,
+                    "show_landmarks": True,
+                    "tts_translation": "No Translation",
+                    "tts_voice": "English (US)",
+                    "tts_speed": "Normal"
+                }
+            }
+            save_user_data(self.user_data)
+            self.logged_in_user = username
+            QMessageBox.information(self, "Account Created", "New account registered")
+            self.accept()
 
 # ---- User Preferences Dialog ----
 class PreferencesDialog(QDialog):
-    def __init__(self, parent=None, show_landmarks=True, dark_mode=True, translation="No Translation", voice="English (US)", speed="Normal"):
+    def __init__(self, parent=None, user=None):
         super().__init__(parent)
         self.setWindowTitle("User Preferences")
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
         self.setFixedSize(350, 300)
 
         self.parent_window = parent
+        self.user = user
+        user_data = load_user_data().get(user, {}).get("preferences", {})
 
         self.dark_mode_checkbox = QCheckBox("Enable Dark Mode")
-        self.dark_mode_checkbox.setChecked(dark_mode)
+        self.dark_mode_checkbox.setChecked(user_data.get("dark_mode", True))
 
         self.show_landmarks_checkbox = QCheckBox("Show landmark overlay")
-        self.show_landmarks_checkbox.setChecked(show_landmarks)
+        self.show_landmarks_checkbox.setChecked(user_data.get("show_landmarks", True))
 
-        # Translation dropdown
         self.translation_combo = QComboBox()
         self.translation_combo.addItems([
             "No Translation", "English (US)", "English (UK)", "Afrikaans", "Spanish (Spain)", "French (France)"
         ])
-        self.translation_combo.setCurrentText(translation)
+        self.translation_combo.setCurrentText(user_data.get("tts_translation", "No Translation"))
 
-        # Voice dropdown
         self.voice_combo = QComboBox()
         self.voice_combo.addItems([
             "English (US)", "English (UK)", "Afrikaans", "Spanish (Spain)", "French (France)"
         ])
-        self.voice_combo.setCurrentText(voice)
+        self.voice_combo.setCurrentText(user_data.get("tts_voice", "English (US)"))
 
-        # Speed dropdown
         self.speed_combo = QComboBox()
         self.speed_combo.addItems(["Slow", "Normal", "Fast"])
-        self.speed_combo.setCurrentText(speed)
+        self.speed_combo.setCurrentText(user_data.get("tts_speed", "Normal"))
 
-        # Save button
         save_btn = QPushButton("Save")
         save_btn.clicked.connect(self.save_preferences)
 
@@ -58,8 +129,7 @@ class PreferencesDialog(QDialog):
         layout.addRow(QLabel("Speed:"), self.speed_combo)
         layout.addRow(save_btn)
 
-        # Apply styles based on dark mode
-        self.apply_styles(dark_mode)
+        self.apply_styles(self.dark_mode_checkbox.isChecked())
 
     def apply_styles(self, dark_mode):
         if dark_mode:
@@ -113,20 +183,30 @@ class PreferencesDialog(QDialog):
         """)
 
     def save_preferences(self):
-        if self.parent_window:
+        if self.parent_window and self.user:
             self.parent_window.landmark_toggle_btn_state(self.show_landmarks_checkbox.isChecked())
             self.parent_window.set_dark_mode(self.dark_mode_checkbox.isChecked())
-            # Update TTS preferences
             self.parent_window.tts_translation = self.translation_combo.currentText()
             self.parent_window.tts_voice = self.voice_combo.currentText()
             self.parent_window.tts_speed = self.speed_combo.currentText()
+
+            data = load_user_data()
+            data[self.user]["preferences"] = {
+                "dark_mode": self.dark_mode_checkbox.isChecked(),
+                "show_landmarks": self.show_landmarks_checkbox.isChecked(),
+                "tts_translation": self.translation_combo.currentText(),
+                "tts_voice": self.voice_combo.currentText(),
+                "tts_speed": self.speed_combo.currentText()
+            }
+            save_user_data(data)
         self.accept()
 
-
+# ---- Main App ----
 class EchoMeApp(QWidget):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
-        self.setWindowTitle("ECHO ME")
+        self.username = username
+        self.setWindowTitle(f"ECHO ME - {username}")
         self.setWindowIcon(QIcon("assets/Echo_Me_Logo.ico"))
 
         self.setFixedSize(658, 780)
@@ -134,7 +214,6 @@ class EchoMeApp(QWidget):
         self.dark_mode = True
         self.center_top()
 
-        # TTS preferences
         self.tts_translation = "No Translation"
         self.tts_voice = "English (US)"
         self.tts_speed = "Normal"
@@ -155,7 +234,7 @@ class EchoMeApp(QWidget):
         self.top_layout.addWidget(self.logo_label)
         self.top_layout.addStretch()
 
-        self.user_button = QPushButton("User")
+        self.user_button = QPushButton(self.username)
         self.user_button.setFixedSize(80, 30)
         self.user_button.clicked.connect(self.open_preferences)
         self.top_layout.addWidget(self.user_button)
@@ -208,8 +287,9 @@ class EchoMeApp(QWidget):
 
         self.scroll_area = QScrollArea()
         self.transcription_content = QTextEdit()
-        self.transcription_content.setReadOnly(True)
+        self.transcription_content.setReadOnly(False)
         self.transcription_content.setText("Transcription goes here...")
+        self.transcription_content.focusInEvent = self.clear_placeholder
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setWidget(self.transcription_content)
         self.main_layout.addWidget(self.scroll_area)
@@ -222,14 +302,17 @@ class EchoMeApp(QWidget):
             hand_detector=self.hand_detector
         )
 
-        # ---- Landmark overlay state ----
         self.show_landmarks = True
-
-        # ---- Signal splash that GUI is ready ----
         self.signal_ready()
-
-        # Apply initial dark-mode
         self.set_dark_mode(self.dark_mode)
+
+        # Load user preferences
+        self.load_user_preferences()
+
+    def clear_placeholder(self, event):
+        if self.transcription_content.toPlainText() == "Transcription goes here...":
+            self.transcription_content.clear()
+        QTextEdit.focusInEvent(self.transcription_content, event)
 
     def set_dark_mode(self, dark: bool):
         self.dark_mode = dark
@@ -248,7 +331,6 @@ class EchoMeApp(QWidget):
             transcription_bg = "#00b3b3"
             text_color = "black"
 
-        # Apply styles
         self.setStyleSheet(f"background-color: {bg_color};")
         self.top_bar.setStyleSheet(f"background-color: {top_bar_color};")
         self.logo_label.setStyleSheet(f"color: {text_color};")
@@ -268,14 +350,7 @@ class EchoMeApp(QWidget):
         self.camera_label.setStyleSheet("background-color: black; border-radius: 10px;")
 
     def open_preferences(self):
-        dialog = PreferencesDialog(
-            self,
-            show_landmarks=self.show_landmarks,
-            dark_mode=self.dark_mode,
-            translation=getattr(self, "tts_translation", "No Translation"),
-            voice=getattr(self, "tts_voice", "English (US)"),
-            speed=getattr(self, "tts_speed", "Normal")
-        )
+        dialog = PreferencesDialog(self, self.username)
         dialog.exec()
 
     def landmark_toggle_btn_state(self, state):
@@ -311,9 +386,22 @@ class EchoMeApp(QWidget):
             READY_FILE.unlink()
         event.accept()
 
+    def load_user_preferences(self):
+        data = load_user_data()
+        prefs = data.get(self.username, {}).get("preferences", {})
+        self.set_dark_mode(prefs.get("dark_mode", True))
+        self.landmark_toggle_btn_state(prefs.get("show_landmarks", True))
+        self.tts_translation = prefs.get("tts_translation", "No Translation")
+        self.tts_voice = prefs.get("tts_voice", "English (US)")
+        self.tts_speed = prefs.get("tts_speed", "Normal")
+
 
 if __name__ == "__main__":
     app = QApplication([])
-    window = EchoMeApp()
-    window.show()
-    app.exec()
+
+    login_dialog = LoginDialog()
+    if login_dialog.exec() == QDialog.Accepted:
+        username = login_dialog.logged_in_user
+        window = EchoMeApp(username)
+        window.show()
+        app.exec()

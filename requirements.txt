@@ -40,3 +40,7 @@ pycryptodome>=3.20.0
 winshell>=0.6
 pywin32>=305
 psutil>=5.9.6
+
+# Security
+PySide6
+bcrypt

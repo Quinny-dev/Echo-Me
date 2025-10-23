@@ -1,0 +1,12 @@
+{
+    "Peter": {
+        "password": "$2b$12$oaQeGJp6u7bWg7hP4UIQA.SQ6VPjt2o/qXrGVaHDWp6s3P2eFwjpC",
+        "preferences": {
+            "dark_mode": true,
+            "show_landmarks": true,
+            "tts_translation": "No Translation",
+            "tts_voice": "English (US)",
+            "tts_speed": "Normal"
+        }
+    }
+}
