@@ -22,3 +22,6 @@ setup/venv/
 
 # Launcher
 scripts/launcher.py
+
+# User preferences (for now)
+user_preferences.json

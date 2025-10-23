@@ -1,6 +1,6 @@
 {
-    "Peter": {
-        "password": "$2b$12$oaQeGJp6u7bWg7hP4UIQA.SQ6VPjt2o/qXrGVaHDWp6s3P2eFwjpC",
+    "Juan": {
+        "password": "$2b$12$LsQmGSzNmZavxcVJTA54y.bbLxM5Mdd440lm8nnkqIPZFMKOyrvoi",
         "preferences": {
             "dark_mode": true,
             "show_landmarks": true,

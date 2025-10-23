@@ -7,7 +7,7 @@ gTTS>=2.3.1
 pyttsx3>=2.90
 
 # Translation
-googletrans>=4.0.0-rc1
+deep-translator
 
 # Core deep learning & ML
 tensorflow>=2.16.0

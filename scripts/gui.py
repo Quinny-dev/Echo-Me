@@ -1,20 +1,21 @@
-from PySide6.QtWidgets import (
+from PySide6.QtWidgets import ( 
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QTextEdit, QFrame, QGraphicsDropShadowEffect,
-    QDialog, QFormLayout, QCheckBox, QComboBox, QLineEdit, QMessageBox
+    QDialog, QFormLayout, QCheckBox, QComboBox, QLineEdit, QMessageBox,
+    QFileDialog
 )
 from PySide6.QtGui import QIcon, QFont, QColor
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QThread, Signal
 from camera_feed import CameraFeed
 from hand_landmarking.hand_landmarking import HandLandmarkDetector
+from tts import LANGUAGE_OPTIONS, GTTS_VOICES, convert_and_play, download_audio_files, cleanup
 from pathlib import Path
 import json
 import bcrypt
 
-READY_FILE = Path("gui_ready.flag")  # splash will wait for this file
+READY_FILE = Path("gui_ready.flag")
 USER_PREF_FILE = Path("user_preferences.json")
 
-# Ensure JSON file exists
 if not USER_PREF_FILE.exists():
     USER_PREF_FILE.write_text(json.dumps({}))
 
@@ -26,16 +27,32 @@ def save_user_data(data):
     with open(USER_PREF_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
+# ---- TTS Worker Thread ----
+class TTSWorker(QThread):
+    finished = Signal(str)  # emits translated text
+    error = Signal(str)
+    
+    def __init__(self, text, preferences):
+        super().__init__()
+        self.text = text
+        self.preferences = preferences
+    
+    def run(self):
+        try:
+            translated_text = convert_and_play(self.text, self.preferences)
+            self.finished.emit(translated_text)
+        except Exception as e:
+            self.error.emit(str(e))
+
 # ---- Login Dialog ----
 class LoginDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Login")
-        self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
+        self.setWindowFlags(Qt.Dialog | Qt.CustomizeWindowHint)
         self.setFixedSize(300, 180)
 
         layout = QFormLayout(self)
-
         self.username_input = QLineEdit()
         self.password_input = QLineEdit()
         self.password_input.setEchoMode(QLineEdit.Password)
@@ -59,7 +76,6 @@ class LoginDialog(QDialog):
             return
 
         if username in self.user_data:
-            # Existing user: verify password
             hashed_pw = self.user_data[username]["password"].encode("utf-8")
             if bcrypt.checkpw(password, hashed_pw):
                 self.logged_in_user = username
@@ -67,7 +83,6 @@ class LoginDialog(QDialog):
             else:
                 QMessageBox.warning(self, "Error", "Incorrect password")
         else:
-            # New user: create account
             hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
             self.user_data[username] = {
                 "password": hashed_pw.decode("utf-8"),
@@ -90,7 +105,7 @@ class PreferencesDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("User Preferences")
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
-        self.setFixedSize(350, 300)
+        self.setFixedSize(400, 350)
 
         self.parent_window = parent
         self.user = user
@@ -103,15 +118,11 @@ class PreferencesDialog(QDialog):
         self.show_landmarks_checkbox.setChecked(user_data.get("show_landmarks", True))
 
         self.translation_combo = QComboBox()
-        self.translation_combo.addItems([
-            "No Translation", "English (US)", "English (UK)", "Afrikaans", "Spanish (Spain)", "French (France)"
-        ])
+        self.translation_combo.addItems(list(LANGUAGE_OPTIONS.keys()))
         self.translation_combo.setCurrentText(user_data.get("tts_translation", "No Translation"))
 
         self.voice_combo = QComboBox()
-        self.voice_combo.addItems([
-            "English (US)", "English (UK)", "Afrikaans", "Spanish (Spain)", "French (France)"
-        ])
+        self.voice_combo.addItems(list(GTTS_VOICES.keys()))
         self.voice_combo.setCurrentText(user_data.get("tts_voice", "English (US)"))
 
         self.speed_combo = QComboBox()
@@ -217,8 +228,8 @@ class EchoMeApp(QWidget):
         self.tts_translation = "No Translation"
         self.tts_voice = "English (US)"
         self.tts_speed = "Normal"
+        self.tts_worker = None
 
-        # ---- Layout setup ----
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(10)
@@ -266,14 +277,17 @@ class EchoMeApp(QWidget):
         self.menu_layout.setSpacing(20)
 
         self.text_to_speech_btn = QPushButton("Text to Speech")
-        self.text_to_speech_btn.setCheckable(True)
-        self.text_to_speech_btn.setChecked(True)
         self.text_to_speech_btn.setFixedSize(160, 30)
         self.menu_layout.addWidget(self.text_to_speech_btn, alignment=Qt.AlignLeft)
+        self.text_to_speech_btn.clicked.connect(self.handle_text_to_speech)
+
+        self.download_audio_btn = QPushButton("Download Audio")
+        self.download_audio_btn.setFixedSize(160, 30)
+        self.download_audio_btn.setEnabled(False)  # Disabled until TTS completes
+        self.menu_layout.addWidget(self.download_audio_btn, alignment=Qt.AlignCenter)
+        self.download_audio_btn.clicked.connect(self.handle_download_audio)
 
         self.speech_to_text_btn = QPushButton("Speech to Text")
-        self.speech_to_text_btn.setCheckable(True)
-        self.speech_to_text_btn.setChecked(True)
         self.speech_to_text_btn.setFixedSize(160, 30)
         self.menu_layout.addWidget(self.speech_to_text_btn, alignment=Qt.AlignRight)
 
@@ -305,8 +319,6 @@ class EchoMeApp(QWidget):
         self.show_landmarks = True
         self.signal_ready()
         self.set_dark_mode(self.dark_mode)
-
-        # Load user preferences
         self.load_user_preferences()
 
     def clear_placeholder(self, event):
@@ -319,14 +331,14 @@ class EchoMeApp(QWidget):
         if dark:
             bg_color = "#333333"
             top_bar_color = "#008080"
-            menu_btn_color = "#00b3b3"
+            btn_color = "#00b3b3"
             hover_color = "#66ffff"
             transcription_bg = "#008080"
             text_color = "white"
         else:
             bg_color = "#f5f5f5"
             top_bar_color = "#00b3b3"
-            menu_btn_color = "#008080"
+            btn_color = "#008080"
             hover_color = "#00cccc"
             transcription_bg = "#00b3b3"
             text_color = "black"
@@ -334,17 +346,29 @@ class EchoMeApp(QWidget):
         self.setStyleSheet(f"background-color: {bg_color};")
         self.top_bar.setStyleSheet(f"background-color: {top_bar_color};")
         self.logo_label.setStyleSheet(f"color: {text_color};")
-        for btn in [self.user_button, self.text_to_speech_btn, self.speech_to_text_btn]:
+
+        for btn in [
+            self.user_button,
+            self.text_to_speech_btn,
+            self.download_audio_btn,
+            self.speech_to_text_btn
+        ]:
             btn.setStyleSheet(f"""
                 QPushButton {{
-                    background-color: {menu_btn_color};
+                    background-color: {btn_color};
                     color: {text_color};
                     border-radius: 5px;
+                    height: 30px;
                 }}
                 QPushButton:hover {{
                     background-color: {hover_color};
                 }}
+                QPushButton:disabled {{
+                    background-color: #666666;
+                    color: #999999;
+                }}
             """)
+
         self.camera_frame.setStyleSheet(f"background-color: {bg_color}; border-radius: 10px;")
         self.transcription_label.setStyleSheet(f"background-color: {transcription_bg}; color: {text_color}; padding: 5px;")
         self.camera_label.setStyleSheet("background-color: black; border-radius: 10px;")
@@ -384,6 +408,7 @@ class EchoMeApp(QWidget):
             self.hand_detector.close()
         if READY_FILE.exists():
             READY_FILE.unlink()
+        cleanup()  # Clean up TTS resources
         event.accept()
 
     def load_user_preferences(self):
@@ -394,6 +419,74 @@ class EchoMeApp(QWidget):
         self.tts_translation = prefs.get("tts_translation", "No Translation")
         self.tts_voice = prefs.get("tts_voice", "English (US)")
         self.tts_speed = prefs.get("tts_speed", "Normal")
+        
+    def handle_text_to_speech(self):
+        """Convert text to speech and play it"""
+        text = self.transcription_content.toPlainText().strip()
+        
+        if not text or text == "Transcription goes here...":
+            QMessageBox.warning(self, "No Text", "Please enter text in the transcription area first.")
+            return
+
+        # Prepare preferences for TTS
+        prefs_for_tts = {
+            "translate_to": self.tts_translation,
+            "voice": self.tts_voice,
+            "speed": self.tts_speed
+        }
+
+        # Disable button while processing
+        self.text_to_speech_btn.setEnabled(False)
+        self.text_to_speech_btn.setText("Processing...")
+        self.download_audio_btn.setEnabled(False)
+
+        # Create and start worker thread
+        self.tts_worker = TTSWorker(text, prefs_for_tts)
+        self.tts_worker.finished.connect(self.on_tts_finished)
+        self.tts_worker.error.connect(self.on_tts_error)
+        self.tts_worker.start()
+
+    def on_tts_finished(self, translated_text):
+        """Called when TTS conversion and playback complete"""
+        self.text_to_speech_btn.setEnabled(True)
+        self.text_to_speech_btn.setText("Text to Speech")
+        self.download_audio_btn.setEnabled(True)
+        
+        original_text = self.transcription_content.toPlainText().strip()
+        
+        # Update transcription box with translated text if translation was used
+        if translated_text != original_text and self.tts_translation != "No Translation":
+            self.transcription_content.setText(translated_text)
+        
+        # Simple success message without showing the translated text
+        QMessageBox.information(self, "Playback Complete", "Audio playback finished successfully!")
+
+    def on_tts_error(self, error_message):
+        """Called when TTS conversion or playback fails"""
+        self.text_to_speech_btn.setEnabled(True)
+        self.text_to_speech_btn.setText("Text to Speech")
+        QMessageBox.critical(self, "TTS Error", f"Text-to-Speech failed:\n{error_message}")
+
+    def handle_download_audio(self):
+        """Download generated audio files to a selected folder"""
+        folder_selected = QFileDialog.getExistingDirectory(
+            self, 
+            "Select Download Folder",
+            str(Path.home() / "Downloads")
+        )
+        
+        if not folder_selected:
+            return
+
+        try:
+            num_files = download_audio_files(folder_selected)
+            QMessageBox.information(
+                self, 
+                "Download Complete", 
+                f"Successfully saved {num_files} audio file(s) to:\n{folder_selected}"
+            )
+        except Exception as e:
+            QMessageBox.critical(self, "Download Error", f"Failed to download audio files:\n{str(e)}")
 
 
 if __name__ == "__main__":
