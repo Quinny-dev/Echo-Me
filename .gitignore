@@ -15,3 +15,10 @@ data/
 
 # Zipped folder
 Hand Tracking.zip
+
+# Setup
+setup/python-portable/
+setup/venv/
+
+# Launcher
+scripts/launcher.py
