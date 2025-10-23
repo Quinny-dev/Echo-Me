@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/unittest/__init__.py(If you are already familiar with the basic concepts of testing, you might want to skip to the list of assert methods.) The unittest unit testing framework was ..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>unittest — Unit testing framework &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unittest — Unit testing framework &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="unittest.mock — mock object library" href="unittest.mock.html" />
     <link rel="prev" title="doctest — Test interactive Python examples" href="doctest.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/unittest.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/unittest.html" />
     
       
     
@@ -181,7 +181,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -395,8 +395,8 @@ on test fail or error and is added to the failure messages.</p>
 <dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-unittest-c">
 <span id="cmdoption-unittest-catch"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--catch</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-unittest-c" title="Link to this definition">¶</a></dt>
-<dd><p><kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd> during the test run waits for the current test to end and then
-reports all the results so far. A second <kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd> raises the normal
+<dd><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd></kbd> during the test run waits for the current test to end and then
+reports all the results so far. A second <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Control</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd></kbd> raises the normal
 <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> exception.</p>
 <p>See <a class="reference internal" href="#signal-handling">Signal Handling</a> for the functions that provide this functionality.</p>
 </dd></dl>
@@ -796,7 +796,7 @@ be considered a failure.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="unittest.SkipTest">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">SkipTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.SkipTest" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">SkipTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.SkipTest" title="Link to this definition">¶</a></dt>
 <dd><p>This exception is raised to skip a test.</p>
 <p>Usually you can use <a class="reference internal" href="#unittest.TestCase.skipTest" title="unittest.TestCase.skipTest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TestCase.skipTest()</span></code></a> or one of the skipping
 decorators instead of raising this directly.</p>
@@ -878,7 +878,7 @@ wouldn’t be displayed:</p>
 <span id="testcase-objects"></span><h3>Test cases<a class="headerlink" href="#test-cases" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TestCase">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase" title="Link to this definition">¶</a></dt>
 <dd><p>Instances of the <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> class represent the logical test units
 in the <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a> universe.  This class is intended to be used as a base
 class, with specific tests being implemented by concrete subclasses.  This class
@@ -1203,7 +1203,7 @@ with minimum <em>level</em></p></td>
 <dt class="sig sig-object py" id="unittest.TestCase.assertRaises">
 <span class="sig-name descname"><span class="pre">assertRaises</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.assertRaises" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">assertRaises</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<span class="sig-name descname"><span class="pre">assertRaises</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Test that an exception is raised when <em>callable</em> is called with any
 positional or keyword arguments that are also passed to
 <a class="reference internal" href="#unittest.TestCase.assertRaises" title="unittest.TestCase.assertRaises"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertRaises()</span></code></a>.  The test passes if <em>exception</em> is raised, is an
@@ -1244,7 +1244,7 @@ is to perform additional checks on the exception raised:</p>
 <dt class="sig sig-object py" id="unittest.TestCase.assertRaisesRegex">
 <span class="sig-name descname"><span class="pre">assertRaisesRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.assertRaisesRegex" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">assertRaisesRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<span class="sig-name descname"><span class="pre">assertRaisesRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Like <a class="reference internal" href="#unittest.TestCase.assertRaises" title="unittest.TestCase.assertRaises"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertRaises()</span></code></a> but also tests that <em>regex</em> matches
 on the string representation of the raised exception.  <em>regex</em> may be
 a regular expression object or a string containing a regular expression
@@ -1273,7 +1273,7 @@ suitable for use by <a class="reference internal" href="re.html#re.search" title
 <dt class="sig sig-object py" id="unittest.TestCase.assertWarns">
 <span class="sig-name descname"><span class="pre">assertWarns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.assertWarns" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">assertWarns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<span class="sig-name descname"><span class="pre">assertWarns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Test that a warning is triggered when <em>callable</em> is called with any
 positional or keyword arguments that are also passed to
 <a class="reference internal" href="#unittest.TestCase.assertWarns" title="unittest.TestCase.assertWarns"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertWarns()</span></code></a>.  The test passes if <em>warning</em> is triggered and
@@ -1315,7 +1315,7 @@ is called.</p>
 <dt class="sig sig-object py" id="unittest.TestCase.assertWarnsRegex">
 <span class="sig-name descname"><span class="pre">assertWarnsRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.assertWarnsRegex" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">assertWarnsRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<span class="sig-name descname"><span class="pre">assertWarnsRegex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Like <a class="reference internal" href="#unittest.TestCase.assertWarns" title="unittest.TestCase.assertWarns"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertWarns()</span></code></a> but also tests that <em>regex</em> matches on the
 message of the triggered warning.  <em>regex</em> may be a regular expression
 object or a string containing a regular expression suitable for use
@@ -1748,7 +1748,7 @@ with unittest extensions and adding the test name was moved to the
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.TestCase.addCleanup">
-<span class="sig-name descname"><span class="pre">addCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.addCleanup" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">addCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.addCleanup" title="Link to this definition">¶</a></dt>
 <dd><p>Add a function to be called after <a class="reference internal" href="#unittest.TestCase.tearDown" title="unittest.TestCase.tearDown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code></a> to cleanup resources
 used during the test. Functions will be called in reverse order to the
 order they are added (<abbr title="last-in, first-out">LIFO</abbr>).  They
@@ -1791,7 +1791,7 @@ functions one at a time, so it can be called at any time.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.TestCase.addClassCleanup">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addClassCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.addClassCleanup" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addClassCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.addClassCleanup" title="Link to this definition">¶</a></dt>
 <dd><p>Add a function to be called after <a class="reference internal" href="#unittest.TestCase.tearDownClass" title="unittest.TestCase.tearDownClass"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDownClass()</span></code></a> to cleanup
 resources used during the test class. Functions will be called in reverse
 order to the order they are added (<abbr title="last-in, first-out">LIFO</abbr>).
@@ -1806,7 +1806,7 @@ called, then any cleanup functions added will still be called.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.TestCase.enterClassContext">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enterClassContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.enterClassContext" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enterClassContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.enterClassContext" title="Link to this definition">¶</a></dt>
 <dd><p>Enter the supplied <a class="reference internal" href="../glossary.html#term-context-manager"><span class="xref std std-term">context manager</span></a>.  If successful, also
 add its <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__exit__()</span></code></a> method as a cleanup function by
 <a class="reference internal" href="#unittest.TestCase.addClassCleanup" title="unittest.TestCase.addClassCleanup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addClassCleanup()</span></code></a> and return the result of the
@@ -1818,7 +1818,7 @@ add its <a class="reference internal" href="../reference/datamodel.html#object._
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.TestCase.doClassCleanups">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">doClassCleanups</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.doClassCleanups" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">doClassCleanups</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestCase.doClassCleanups" title="Link to this definition">¶</a></dt>
 <dd><p>This method is called unconditionally after <a class="reference internal" href="#unittest.TestCase.tearDownClass" title="unittest.TestCase.tearDownClass"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDownClass()</span></code></a>, or
 after <a class="reference internal" href="#unittest.TestCase.setUpClass" title="unittest.TestCase.setUpClass"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUpClass()</span></code></a> if <a class="reference internal" href="#unittest.TestCase.setUpClass" title="unittest.TestCase.setUpClass"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUpClass()</span></code></a> raises an exception.</p>
 <p>It is responsible for calling all the cleanup functions added by
@@ -1836,7 +1836,7 @@ functions one at a time, so it can be called at any time.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.IsolatedAsyncioTestCase">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">IsolatedAsyncioTestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">IsolatedAsyncioTestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase" title="Link to this definition">¶</a></dt>
 <dd><p>This class provides an API similar to <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> and also accepts
 coroutines as test functions.</p>
 <div class="versionadded">
@@ -1844,7 +1844,7 @@ coroutines as test functions.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.IsolatedAsyncioTestCase.asyncSetUp">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asyncSetUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.asyncSetUp" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">coroutine</span> </em><span class="sig-name descname"><span class="pre">asyncSetUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.asyncSetUp" title="Link to this definition">¶</a></dt>
 <dd><p>Method called to prepare the test fixture. This is called after <code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code>.
 This is called immediately before calling the test method; other than
 <a class="reference internal" href="exceptions.html#AssertionError" title="AssertionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code></a> or <a class="reference internal" href="#unittest.SkipTest" title="unittest.SkipTest"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SkipTest</span></code></a>, any exception raised by this method
@@ -1854,7 +1854,7 @@ does nothing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.IsolatedAsyncioTestCase.asyncTearDown">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asyncTearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.asyncTearDown" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">coroutine</span> </em><span class="sig-name descname"><span class="pre">asyncTearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.asyncTearDown" title="Link to this definition">¶</a></dt>
 <dd><p>Method called immediately after the test method has been called and the
 result recorded.  This is called before <code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code>. This is called even if
 the test method raised an exception, so the implementation in subclasses may need
@@ -1868,13 +1868,13 @@ The default implementation does nothing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.IsolatedAsyncioTestCase.addAsyncCleanup">
-<span class="sig-name descname"><span class="pre">addAsyncCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.addAsyncCleanup" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">addAsyncCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.addAsyncCleanup" title="Link to this definition">¶</a></dt>
 <dd><p>This method accepts a coroutine that can be used as a cleanup function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.IsolatedAsyncioTestCase.enterAsyncContext">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enterAsyncContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.enterAsyncContext" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">coroutine</span> </em><span class="sig-name descname"><span class="pre">enterAsyncContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.IsolatedAsyncioTestCase.enterAsyncContext" title="Link to this definition">¶</a></dt>
 <dd><p>Enter the supplied <a class="reference internal" href="../glossary.html#term-asynchronous-context-manager"><span class="xref std std-term">asynchronous context manager</span></a>.  If successful,
 also add its <a class="reference internal" href="../reference/datamodel.html#object.__aexit__" title="object.__aexit__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__aexit__()</span></code></a> method as a cleanup function by
 <a class="reference internal" href="#unittest.IsolatedAsyncioTestCase.addAsyncCleanup" title="unittest.IsolatedAsyncioTestCase.addAsyncCleanup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addAsyncCleanup()</span></code></a> and return the result of the
@@ -1936,7 +1936,7 @@ in the event loop are cancelled.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.FunctionTestCase">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">FunctionTestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">testFunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setUp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tearDown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.FunctionTestCase" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">FunctionTestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">testFunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setUp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tearDown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.FunctionTestCase" title="Link to this definition">¶</a></dt>
 <dd><p>This class implements the portion of the <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> interface which
 allows the test runner to drive the test, but does not provide the methods
 which test code can use to check and report errors.  This is used to create
@@ -1949,7 +1949,7 @@ test cases using legacy test code, allowing it to be integrated into a
 <span id="testsuite-objects"></span><h3>Grouping tests<a class="headerlink" href="#grouping-tests" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TestSuite">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestSuite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestSuite" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestSuite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestSuite" title="Link to this definition">¶</a></dt>
 <dd><p>This class represents an aggregation of individual test cases and test suites.
 The class presents the interface needed by the test runner to allow it to be run
 as any other test case.  Running a <a class="reference internal" href="#unittest.TestSuite" title="unittest.TestSuite"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestSuite</span></code></a> instance is the same as
@@ -2034,7 +2034,7 @@ is invoked by a <code class="xref py py-class docutils literal notranslate"><spa
 <h3>Loading and running tests<a class="headerlink" href="#loading-and-running-tests" title="Link to this heading">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TestLoader">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestLoader</span></span><a class="headerlink" href="#unittest.TestLoader" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestLoader</span></span><a class="headerlink" href="#unittest.TestLoader" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#unittest.TestLoader" title="unittest.TestLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestLoader</span></code></a> class is used to create test suites from classes and
 modules.  Normally, there is no need to create an instance of this class; the
 <a class="reference internal" href="#module-unittest" title="unittest: Unit testing framework for Python."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a> module provides an instance that can be shared as
@@ -2069,7 +2069,7 @@ case is created for that method instead.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.TestLoader.loadTestsFromModule">
-<span class="sig-name descname"><span class="pre">loadTestsFromModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestLoader.loadTestsFromModule" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">loadTestsFromModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TestLoader.loadTestsFromModule" title="Link to this definition">¶</a></dt>
 <dd><p>Return a suite of all test cases contained in the given module. This
 method searches <em>module</em> for classes derived from <a class="reference internal" href="#unittest.TestCase" title="unittest.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> and
 creates an instance of the class for each test method defined for the
@@ -2249,7 +2249,7 @@ will have to be converted using <code class="docutils literal notranslate"><span
 
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TestResult">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestResult</span></span><a class="headerlink" href="#unittest.TestResult" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TestResult</span></span><a class="headerlink" href="#unittest.TestResult" title="Link to this definition">¶</a></dt>
 <dd><p>This class is used to compile information about which tests have succeeded
 and which have failed.</p>
 <p>A <a class="reference internal" href="#unittest.TestResult" title="unittest.TestResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestResult</span></code></a> object stores the results of a set of tests.  The
@@ -2501,7 +2501,7 @@ seconds, and it includes the execution of cleanup functions.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TextTestResult">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TextTestResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TextTestResult" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TextTestResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TextTestResult" title="Link to this definition">¶</a></dt>
 <dd><p>A concrete implementation of <a class="reference internal" href="#unittest.TestResult" title="unittest.TestResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestResult</span></code></a> used by the
 <a class="reference internal" href="#unittest.TextTestRunner" title="unittest.TextTestRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextTestRunner</span></code></a>. Subclasses should accept <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> to ensure
 compatibility as the interface changes.</p>
@@ -2523,7 +2523,7 @@ instead of repeatedly creating new instances.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="unittest.TextTestRunner">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TextTestRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failfast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resultclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">tb_locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TextTestRunner" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">TextTestRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failfast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resultclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tb_locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.TextTestRunner" title="Link to this definition">¶</a></dt>
 <dd><p>A basic test runner implementation that outputs results to a stream. If <em>stream</em>
 is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the default, <a class="reference internal" href="sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a> is used as the output stream. This class
 has a few configurable parameters, but is essentially very simple.  Graphical
@@ -2767,7 +2767,7 @@ instead of as an error.</p>
 <code class="docutils literal notranslate"><span class="pre">addModuleCleanup</span></code>:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="unittest.addModuleCleanup">
-<span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">addModuleCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.addModuleCleanup" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">addModuleCleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.addModuleCleanup" title="Link to this definition">¶</a></dt>
 <dd><p>Add a function to be called after <code class="xref py py-func docutils literal notranslate"><span class="pre">tearDownModule()</span></code> to cleanup
 resources used during the test class. Functions will be called in reverse
 order to the order they are added (<abbr title="last-in, first-out">LIFO</abbr>).
@@ -2782,7 +2782,7 @@ called, then any cleanup functions added will still be called.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="unittest.enterModuleContext">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">enterModuleContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.enterModuleContext" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">unittest.</span></span><span class="sig-name descname"><span class="pre">enterModuleContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#unittest.enterModuleContext" title="Link to this definition">¶</a></dt>
 <dd><p>Enter the supplied <a class="reference internal" href="../glossary.html#term-context-manager"><span class="xref std std-term">context manager</span></a>.  If successful, also
 add its <a class="reference internal" href="../reference/datamodel.html#object.__exit__" title="object.__exit__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__exit__()</span></code></a> method as a cleanup function by
 <a class="reference internal" href="#unittest.addModuleCleanup" title="unittest.addModuleCleanup"><code class="xref py py-func docutils literal notranslate"><span class="pre">addModuleCleanup()</span></code></a> and return the result of the
@@ -2970,7 +2970,7 @@ to temporarily remove the handler while the test is being executed:</p>
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -3022,13 +3022,13 @@ to temporarily remove the handler while the test is being executed:</p>
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

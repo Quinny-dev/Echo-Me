@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/ssl.py This module provides access to Transport Layer Security (often known as “Secure Sockets Layer”) encryption and peer authentication facilities for network sockets, both clien..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>ssl — TLS/SSL wrapper for socket objects &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ssl — TLS/SSL wrapper for socket objects &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="select — Waiting for I/O completion" href="select.html" />
     <link rel="prev" title="socket — Low-level networking interface" href="socket.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/ssl.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/ssl.html" />
     
       
     
@@ -195,7 +195,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -401,7 +401,7 @@ them using:</p>
 <h3>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading">¶</a></h3>
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLError</span></span><a class="headerlink" href="#ssl.SSLError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLError</span></span><a class="headerlink" href="#ssl.SSLError" title="Link to this definition">¶</a></dt>
 <dd><p>Raised to signal an error from the underlying SSL implementation
 (currently provided by the OpenSSL library).  This signifies some
 problem in the higher-level encryption and authentication layer that’s
@@ -437,7 +437,7 @@ values depends on the OpenSSL version.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLZeroReturnError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLZeroReturnError</span></span><a class="headerlink" href="#ssl.SSLZeroReturnError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLZeroReturnError</span></span><a class="headerlink" href="#ssl.SSLZeroReturnError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised when trying to read or write and
 the SSL connection has been closed cleanly.  Note that this doesn’t
 mean that the underlying transport (read TCP) has been closed.</p>
@@ -448,7 +448,7 @@ mean that the underlying transport (read TCP) has been closed.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLWantReadError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLWantReadError</span></span><a class="headerlink" href="#ssl.SSLWantReadError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLWantReadError</span></span><a class="headerlink" href="#ssl.SSLWantReadError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised by a <a class="reference internal" href="#ssl-nonblocking"><span class="std std-ref">non-blocking SSL socket</span></a> when trying to read or write data, but more data needs
 to be received on the underlying TCP transport before the request can be
 fulfilled.</p>
@@ -459,7 +459,7 @@ fulfilled.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLWantWriteError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLWantWriteError</span></span><a class="headerlink" href="#ssl.SSLWantWriteError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLWantWriteError</span></span><a class="headerlink" href="#ssl.SSLWantWriteError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised by a <a class="reference internal" href="#ssl-nonblocking"><span class="std std-ref">non-blocking SSL socket</span></a> when trying to read or write data, but more data needs
 to be sent on the underlying TCP transport before the request can be
 fulfilled.</p>
@@ -470,7 +470,7 @@ fulfilled.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLSyscallError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSyscallError</span></span><a class="headerlink" href="#ssl.SSLSyscallError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSyscallError</span></span><a class="headerlink" href="#ssl.SSLSyscallError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised when a system error was encountered
 while trying to fulfill an operation on a SSL socket.  Unfortunately,
 there is no easy way to inspect the original errno number.</p>
@@ -481,7 +481,7 @@ there is no easy way to inspect the original errno number.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLEOFError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLEOFError</span></span><a class="headerlink" href="#ssl.SSLEOFError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLEOFError</span></span><a class="headerlink" href="#ssl.SSLEOFError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised when the SSL connection has been
 terminated abruptly.  Generally, you shouldn’t try to reuse the underlying
 transport when this error is encountered.</p>
@@ -492,7 +492,7 @@ transport when this error is encountered.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.SSLCertVerificationError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLCertVerificationError</span></span><a class="headerlink" href="#ssl.SSLCertVerificationError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLCertVerificationError</span></span><a class="headerlink" href="#ssl.SSLCertVerificationError" title="Link to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#ssl.SSLError" title="ssl.SSLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLError</span></code></a> raised when certificate validation has
 failed.</p>
 <div class="versionadded">
@@ -514,7 +514,7 @@ failed.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="ssl.CertificateError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">CertificateError</span></span><a class="headerlink" href="#ssl.CertificateError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">CertificateError</span></span><a class="headerlink" href="#ssl.CertificateError" title="Link to this definition">¶</a></dt>
 <dd><p>An alias for <a class="reference internal" href="#ssl.SSLCertVerificationError" title="ssl.SSLCertVerificationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLCertVerificationError</span></code></a>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.7: </span>The exception is now an alias for <a class="reference internal" href="#ssl.SSLCertVerificationError" title="ssl.SSLCertVerificationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SSLCertVerificationError</span></code></a>.</p>
@@ -575,10 +575,10 @@ locale).</p>
 <p>Here’s an example:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">ssl</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">cert_time_to_seconds</span><span class="p">(</span><span class="s2">&quot;Jan  5 09:34:43 2018 GMT&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">timestamp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">timestamp</span>  
 <span class="go">1515144883</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">))</span>  
 <span class="go">2018-01-05 09:34:43</span>
 </pre></div>
 </div>
@@ -753,7 +753,7 @@ be passed to <a class="reference internal" href="#ssl.SSLContext.load_verify_loc
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.VerifyMode">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">VerifyMode</span></span><a class="headerlink" href="#ssl.VerifyMode" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">VerifyMode</span></span><a class="headerlink" href="#ssl.VerifyMode" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection of CERT_* constants.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.6.</span></p>
@@ -840,7 +840,7 @@ to trust its ancestor root CA.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.VerifyFlags">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">VerifyFlags</span></span><a class="headerlink" href="#ssl.VerifyFlags" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">VerifyFlags</span></span><a class="headerlink" href="#ssl.VerifyFlags" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntFlag" title="enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntFlag</span></code></a> collection of VERIFY_* constants.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.6.</span></p>
@@ -1112,7 +1112,7 @@ protocol supports its own compression scheme.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.Options">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">Options</span></span><a class="headerlink" href="#ssl.Options" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">Options</span></span><a class="headerlink" href="#ssl.Options" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntFlag" title="enum.IntFlag"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntFlag</span></code></a> collection of OP_* constants.</p>
 </dd></dl>
 
@@ -1341,7 +1341,7 @@ contains this list and references to the RFCs where their meaning is defined.</p
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.AlertDescription">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">AlertDescription</span></span><a class="headerlink" href="#ssl.AlertDescription" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">AlertDescription</span></span><a class="headerlink" href="#ssl.AlertDescription" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection of ALERT_DESCRIPTION_* constants.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.6.</span></p>
@@ -1374,7 +1374,7 @@ be used to create server-side sockets).</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.SSLErrorNumber">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLErrorNumber</span></span><a class="headerlink" href="#ssl.SSLErrorNumber" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLErrorNumber</span></span><a class="headerlink" href="#ssl.SSLErrorNumber" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection of SSL_ERROR_* constants.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.6.</span></p>
@@ -1383,7 +1383,7 @@ be used to create server-side sockets).</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.TLSVersion">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">TLSVersion</span></span><a class="headerlink" href="#ssl.TLSVersion" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">TLSVersion</span></span><a class="headerlink" href="#ssl.TLSVersion" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection of SSL and TLS versions for
 <a class="reference internal" href="#ssl.SSLContext.maximum_version" title="ssl.SSLContext.maximum_version"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.maximum_version</span></code></a> and <a class="reference internal" href="#ssl.SSLContext.minimum_version" title="ssl.SSLContext.minimum_version"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.minimum_version</span></code></a>.</p>
 <div class="versionadded">
@@ -1440,7 +1440,7 @@ TLS/SSL versions.</p>
 <h2>SSL Sockets<a class="headerlink" href="#ssl-sockets" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.SSLSocket">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">socket.socket</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLSocket" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">socket.socket</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLSocket" title="Link to this definition">¶</a></dt>
 <dd><p>SSL sockets provide the following methods of <a class="reference internal" href="socket.html#socket-objects"><span class="std std-ref">Socket Objects</span></a>:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="socket.html#socket.socket.accept" title="socket.socket.accept"><code class="xref py py-meth docutils literal notranslate"><span class="pre">accept()</span></code></a></p></li>
@@ -1827,7 +1827,7 @@ It also manages a cache of SSL sessions for server-side sockets, in order
 to speed up repeated connections from the same clients.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.SSLContext">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssl.SSLContext" title="Link to this definition">¶</a></dt>
 <dd><p>Create a new SSL context.  You may pass <em>protocol</em> which must be one
 of the <code class="docutils literal notranslate"><span class="pre">PROTOCOL_*</span></code> constants defined in this module.  The parameter
 specifies which version of the SSL protocol to use.  Typically, the
@@ -2471,7 +2471,7 @@ The default value is <a class="reference internal" href="#ssl.OP_ALL" title="ssl
 such as <a class="reference internal" href="#ssl.OP_NO_SSLv2" title="ssl.OP_NO_SSLv2"><code class="xref py py-data docutils literal notranslate"><span class="pre">OP_NO_SSLv2</span></code></a> by ORing them together.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span><a class="reference internal" href="#ssl.SSLContext.options" title="ssl.SSLContext.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.options</span></code></a> returns <a class="reference internal" href="#ssl.Options" title="ssl.Options"><code class="xref py py-class docutils literal notranslate"><span class="pre">Options</span></code></a> flags:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">options</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">options</span>  
 <span class="go">&lt;Options.OP_ALL|OP_NO_SSLv3|OP_NO_SSLv2|OP_NO_COMPRESSION: 2197947391&gt;</span>
 </pre></div>
 </div>
@@ -2545,7 +2545,7 @@ does neither require nor verify certificate revocation lists (CRLs).</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span><a class="reference internal" href="#ssl.SSLContext.verify_flags" title="ssl.SSLContext.verify_flags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.verify_flags</span></code></a> returns <a class="reference internal" href="#ssl.VerifyFlags" title="ssl.VerifyFlags"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerifyFlags</span></code></a> flags:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">verify_flags</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">verify_flags</span>  
 <span class="go">&lt;VerifyFlags.VERIFY_X509_TRUSTED_FIRST: 32768&gt;</span>
 </pre></div>
 </div>
@@ -2560,7 +2560,7 @@ if verification fails.  This attribute must be one of
 <a class="reference internal" href="#ssl.CERT_NONE" title="ssl.CERT_NONE"><code class="xref py py-data docutils literal notranslate"><span class="pre">CERT_NONE</span></code></a>, <a class="reference internal" href="#ssl.CERT_OPTIONAL" title="ssl.CERT_OPTIONAL"><code class="xref py py-data docutils literal notranslate"><span class="pre">CERT_OPTIONAL</span></code></a> or <a class="reference internal" href="#ssl.CERT_REQUIRED" title="ssl.CERT_REQUIRED"><code class="xref py py-data docutils literal notranslate"><span class="pre">CERT_REQUIRED</span></code></a>.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span><a class="reference internal" href="#ssl.SSLContext.verify_mode" title="ssl.SSLContext.verify_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.verify_mode</span></code></a> returns <a class="reference internal" href="#ssl.VerifyMode" title="ssl.VerifyMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerifyMode</span></code></a> enum:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">verify_mode</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span><span class="o">.</span><span class="n">verify_mode</span>  
 <span class="go">&lt;VerifyMode.CERT_REQUIRED: 2&gt;</span>
 </pre></div>
 </div>
@@ -2943,7 +2943,7 @@ reduced scope variant of <a class="reference internal" href="#ssl.SSLSocket" tit
 provided.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.SSLObject">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLObject</span></span><a class="headerlink" href="#ssl.SSLObject" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLObject</span></span><a class="headerlink" href="#ssl.SSLObject" title="Link to this definition">¶</a></dt>
 <dd><p>A reduced-scope variant of <a class="reference internal" href="#ssl.SSLSocket" title="ssl.SSLSocket"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSLSocket</span></code></a> representing an SSL protocol
 instance that does not contain any network IO methods. This class is
 typically used by framework authors that want to implement asynchronous IO
@@ -3016,7 +3016,7 @@ class <a class="reference internal" href="#ssl.MemoryBIO" title="ssl.MemoryBIO">
 purpose.  It wraps an OpenSSL memory BIO (Basic IO) object:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.MemoryBIO">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">MemoryBIO</span></span><a class="headerlink" href="#ssl.MemoryBIO" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">MemoryBIO</span></span><a class="headerlink" href="#ssl.MemoryBIO" title="Link to this definition">¶</a></dt>
 <dd><p>A memory buffer that can be used to pass data between Python and an SSL
 protocol instance.</p>
 <dl class="py attribute">
@@ -3066,7 +3066,7 @@ become true after all data currently in the buffer has been read.</p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="ssl.SSLSession">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSession</span></span><a class="headerlink" href="#ssl.SSLSession" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ssl.</span></span><span class="sig-name descname"><span class="pre">SSLSession</span></span><a class="headerlink" href="#ssl.SSLSession" title="Link to this definition">¶</a></dt>
 <dd><p>Session object used by <a class="reference internal" href="#ssl.SSLSocket.session" title="ssl.SSLSocket.session"><code class="xref py py-attr docutils literal notranslate"><span class="pre">session</span></code></a>.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ssl.SSLSession.id">
@@ -3346,7 +3346,7 @@ signature algorithm configuration, and rekeying are not supported yet.</p></li>
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -3398,13 +3398,13 @@ signature algorithm configuration, and rekeying are not supported yet.</p></li>
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

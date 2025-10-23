@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/abc.py This module provides the infrastructure for defining abstract base classes(ABCs) in Python, as outlined in PEP 3119; see the PEP for why this was added to Python. (See also ..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>abc — Abstract Base Classes &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abc — Abstract Base Classes &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="atexit — Exit handlers" href="atexit.html" />
     <link rel="prev" title="contextlib — Utilities for with-statement contexts" href="contextlib.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/abc.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/abc.html" />
     
       
     
@@ -147,7 +147,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -199,7 +199,7 @@ a class or instance provides a particular interface, for example, if it is
 a helper class <a class="reference internal" href="#abc.ABC" title="abc.ABC"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a> to alternatively define ABCs through inheritance:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="abc.ABC">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abc.</span></span><span class="sig-name descname"><span class="pre">ABC</span></span><a class="headerlink" href="#abc.ABC" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abc.</span></span><span class="sig-name descname"><span class="pre">ABC</span></span><a class="headerlink" href="#abc.ABC" title="Link to this definition">¶</a></dt>
 <dd><p>A helper class that has <a class="reference internal" href="#abc.ABCMeta" title="abc.ABCMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a> as its metaclass.  With this class,
 an abstract base class can be created by simply deriving from <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code>
 avoiding sometimes confusing metaclass usage, for example:</p>
@@ -227,7 +227,7 @@ keyword and using <code class="xref py py-class docutils literal notranslate"><s
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abc.ABCMeta">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abc.</span></span><span class="sig-name descname"><span class="pre">ABCMeta</span></span><a class="headerlink" href="#abc.ABCMeta" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abc.</span></span><span class="sig-name descname"><span class="pre">ABCMeta</span></span><a class="headerlink" href="#abc.ABCMeta" title="Link to this definition">¶</a></dt>
 <dd><p>Metaclass for defining Abstract Base Classes (ABCs).</p>
 <p>Use this metaclass to create an ABC.  An ABC can be subclassed directly, and
 then acts as a mix-in class.  You can also register unrelated concrete
@@ -311,16 +311,16 @@ mechanism.</p>
 </pre></div>
 </div>
 <p>The ABC <code class="docutils literal notranslate"><span class="pre">MyIterable</span></code> defines the standard iterable method,
-<a class="reference internal" href="../reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a>, as an abstract method.  The implementation given
+<a class="reference internal" href="stdtypes.html#iterator.__iter__" title="iterator.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a>, as an abstract method.  The implementation given
 here can still be called from subclasses.  The <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_iterator()</span></code> method
 is also part of the <code class="docutils literal notranslate"><span class="pre">MyIterable</span></code> abstract base class, but it does not have
 to be overridden in non-abstract derived classes.</p>
 <p>The <a class="reference internal" href="#abc.ABCMeta.__subclasshook__" title="abc.ABCMeta.__subclasshook__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__subclasshook__()</span></code></a> class method defined here says that any class
-that has an <a class="reference internal" href="../reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method in its
+that has an <a class="reference internal" href="stdtypes.html#iterator.__iter__" title="iterator.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method in its
 <a class="reference internal" href="../reference/datamodel.html#object.__dict__" title="object.__dict__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__dict__</span></code></a> (or in that of one of its base classes, accessed
 via the <a class="reference internal" href="../reference/datamodel.html#type.__mro__" title="type.__mro__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__mro__</span></code></a> list) is considered a <code class="docutils literal notranslate"><span class="pre">MyIterable</span></code> too.</p>
 <p>Finally, the last line makes <code class="docutils literal notranslate"><span class="pre">Foo</span></code> a virtual subclass of <code class="docutils literal notranslate"><span class="pre">MyIterable</span></code>,
-even though it does not define an <a class="reference internal" href="../reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method (it uses
+even though it does not define an <a class="reference internal" href="stdtypes.html#iterator.__iter__" title="iterator.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method (it uses
 the old-style iterable protocol, defined in terms of <a class="reference internal" href="../reference/datamodel.html#object.__len__" title="object.__len__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__len__()</span></code></a> and
 <a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a>).  Note that this will not make <code class="docutils literal notranslate"><span class="pre">get_iterator</span></code>
 available as a method of <code class="docutils literal notranslate"><span class="pre">Foo</span></code>, so it is provided separately.</p>
@@ -598,7 +598,7 @@ concept is not the same as C++’s.</p>
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -650,13 +650,13 @@ concept is not the same as C++’s.</p>
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

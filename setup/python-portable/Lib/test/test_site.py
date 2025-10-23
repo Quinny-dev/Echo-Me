@@ -354,7 +354,9 @@ class HelperFunctionsTests(unittest.TestCase):
 
         with EnvironmentVarGuard() as environ, \
              mock.patch('os.path.expanduser', lambda path: path):
-            environ.unset('PYTHONUSERBASE', 'APPDATA')
+
+            del environ['PYTHONUSERBASE']
+            del environ['APPDATA']
 
             user_base = site.getuserbase()
             self.assertTrue(user_base.startswith('~' + os.sep),

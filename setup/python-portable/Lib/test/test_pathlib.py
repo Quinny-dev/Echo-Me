@@ -3111,7 +3111,7 @@ class PosixPathTest(_BasePathTest, unittest.TestCase):
         p7 = P(f'~{fakename}/Documents')
 
         with os_helper.EnvironmentVarGuard() as env:
-            env.unset('HOME')
+            env.pop('HOME', None)
 
             self.assertEqual(p1.expanduser(), P(userhome) / 'Documents')
             self.assertEqual(p2.expanduser(), P(userhome) / 'Documents')
@@ -3222,7 +3222,10 @@ class WindowsPathTest(_BasePathTest, unittest.TestCase):
     def test_expanduser(self):
         P = self.cls
         with os_helper.EnvironmentVarGuard() as env:
-            env.unset('HOME', 'USERPROFILE', 'HOMEPATH', 'HOMEDRIVE')
+            env.pop('HOME', None)
+            env.pop('USERPROFILE', None)
+            env.pop('HOMEPATH', None)
+            env.pop('HOMEDRIVE', None)
             env['USERNAME'] = 'alice'
 
             # test that the path returns unchanged
@@ -3260,7 +3263,8 @@ class WindowsPathTest(_BasePathTest, unittest.TestCase):
             env['HOMEPATH'] = 'Users\\alice'
             check()
 
-            env.unset('HOMEDRIVE', 'HOMEPATH')
+            env.pop('HOMEDRIVE', None)
+            env.pop('HOMEPATH', None)
             env['USERPROFILE'] = 'C:\\Users\\alice'
             check()
 

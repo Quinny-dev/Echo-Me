@@ -589,7 +589,7 @@ class CompatPickleTests(unittest.TestCase):
 
 
 def load_tests(loader, tests, pattern):
-    tests.addTest(doctest.DocTestSuite(pickle))
+    tests.addTest(doctest.DocTestSuite())
     return tests
 
 

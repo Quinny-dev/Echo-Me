@@ -848,14 +848,10 @@ class SpooledTemporaryFile(_io.IOBase):
         return rv
 
     def writelines(self, iterable):
-        if self._max_size == 0 or self._rolled:
-            return self._file.writelines(iterable)
-
-        it = iter(iterable)
-        for line in it:
-            self.write(line)
-            if self._rolled:
-                return self._file.writelines(it)
+        file = self._file
+        rv = file.writelines(iterable)
+        self._check(file)
+        return rv
 
     def detach(self):
         return self._file.detach()

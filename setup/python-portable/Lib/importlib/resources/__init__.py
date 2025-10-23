@@ -4,7 +4,6 @@ from ._common import (
     as_file,
     files,
     Package,
-    Anchor,
 )
 
 from ._legacy import (
@@ -23,7 +22,6 @@ from .abc import ResourceReader
 
 __all__ = [
     'Package',
-    'Anchor',
     'Resource',
     'ResourceReader',
     'as_file',

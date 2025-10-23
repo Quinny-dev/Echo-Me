@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/xml/dom/__init__.py The Document Object Model, or “DOM,” is a cross-language API from the World Wide Web Consortium (W3C) for accessing and modifying XML documents. A DOM implement..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>xml.dom — The Document Object Model API &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xml.dom — The Document Object Model API &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="xml.dom.minidom — Minimal DOM implementation" href="xml.dom.minidom.html" />
     <link rel="prev" title="xml.etree.ElementTree — The ElementTree XML API" href="xml.etree.elementtree.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/xml.dom.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/xml.dom.html" />
     
       
     
@@ -177,7 +177,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -1039,14 +1039,14 @@ exception, each of which carries the appropriate value for the <a class="referen
 attribute.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.DOMException">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">DOMException</span></span><a class="headerlink" href="#xml.dom.DOMException" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">DOMException</span></span><a class="headerlink" href="#xml.dom.DOMException" title="Link to this definition">¶</a></dt>
 <dd><p>Base exception class used for all specific DOM exceptions.  This exception class
 cannot be directly instantiated.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.DomstringSizeErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">DomstringSizeErr</span></span><a class="headerlink" href="#xml.dom.DomstringSizeErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">DomstringSizeErr</span></span><a class="headerlink" href="#xml.dom.DomstringSizeErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when a specified range of text does not fit into a string. This is not
 known to be used in the Python DOM implementations, but may be received from DOM
 implementations not written in Python.</p>
@@ -1054,34 +1054,34 @@ implementations not written in Python.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.HierarchyRequestErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">HierarchyRequestErr</span></span><a class="headerlink" href="#xml.dom.HierarchyRequestErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">HierarchyRequestErr</span></span><a class="headerlink" href="#xml.dom.HierarchyRequestErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an attempt is made to insert a node where the node type is not
 allowed.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.IndexSizeErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">IndexSizeErr</span></span><a class="headerlink" href="#xml.dom.IndexSizeErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">IndexSizeErr</span></span><a class="headerlink" href="#xml.dom.IndexSizeErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an index or size parameter to a method is negative or exceeds the
 allowed values.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.InuseAttributeErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InuseAttributeErr</span></span><a class="headerlink" href="#xml.dom.InuseAttributeErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InuseAttributeErr</span></span><a class="headerlink" href="#xml.dom.InuseAttributeErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an attempt is made to insert an <code class="xref py py-class docutils literal notranslate"><span class="pre">Attr</span></code> node that is already
 present elsewhere in the document.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.InvalidAccessErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidAccessErr</span></span><a class="headerlink" href="#xml.dom.InvalidAccessErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidAccessErr</span></span><a class="headerlink" href="#xml.dom.InvalidAccessErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised if a parameter or an operation is not supported on the underlying object.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.InvalidCharacterErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidCharacterErr</span></span><a class="headerlink" href="#xml.dom.InvalidCharacterErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidCharacterErr</span></span><a class="headerlink" href="#xml.dom.InvalidCharacterErr" title="Link to this definition">¶</a></dt>
 <dd><p>This exception is raised when a string parameter contains a character that is
 not permitted in the context it’s being used in by the XML 1.0 recommendation.
 For example, attempting to create an <code class="xref py py-class docutils literal notranslate"><span class="pre">Element</span></code> node with a space in the
@@ -1090,20 +1090,20 @@ element type name will cause this error to be raised.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.InvalidModificationErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidModificationErr</span></span><a class="headerlink" href="#xml.dom.InvalidModificationErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidModificationErr</span></span><a class="headerlink" href="#xml.dom.InvalidModificationErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an attempt is made to modify the type of a node.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.InvalidStateErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidStateErr</span></span><a class="headerlink" href="#xml.dom.InvalidStateErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">InvalidStateErr</span></span><a class="headerlink" href="#xml.dom.InvalidStateErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an attempt is made to use an object that is not defined or is no
 longer usable.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.NamespaceErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NamespaceErr</span></span><a class="headerlink" href="#xml.dom.NamespaceErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NamespaceErr</span></span><a class="headerlink" href="#xml.dom.NamespaceErr" title="Link to this definition">¶</a></dt>
 <dd><p>If an attempt is made to change any object in a way that is not permitted with
 regard to the <a class="reference external" href="https://www.w3.org/TR/REC-xml-names/">Namespaces in XML</a>
 recommendation, this exception is raised.</p>
@@ -1111,7 +1111,7 @@ recommendation, this exception is raised.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.NotFoundErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NotFoundErr</span></span><a class="headerlink" href="#xml.dom.NotFoundErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NotFoundErr</span></span><a class="headerlink" href="#xml.dom.NotFoundErr" title="Link to this definition">¶</a></dt>
 <dd><p>Exception when a node does not exist in the referenced context.  For example,
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">NamedNodeMap.removeNamedItem()</span></code> will raise this if the node passed in does
 not exist in the map.</p>
@@ -1119,33 +1119,33 @@ not exist in the map.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.NotSupportedErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NotSupportedErr</span></span><a class="headerlink" href="#xml.dom.NotSupportedErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NotSupportedErr</span></span><a class="headerlink" href="#xml.dom.NotSupportedErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when the implementation does not support the requested type of object or
 operation.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.NoDataAllowedErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NoDataAllowedErr</span></span><a class="headerlink" href="#xml.dom.NoDataAllowedErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NoDataAllowedErr</span></span><a class="headerlink" href="#xml.dom.NoDataAllowedErr" title="Link to this definition">¶</a></dt>
 <dd><p>This is raised if data is specified for a node which does not support data.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.NoModificationAllowedErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NoModificationAllowedErr</span></span><a class="headerlink" href="#xml.dom.NoModificationAllowedErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">NoModificationAllowedErr</span></span><a class="headerlink" href="#xml.dom.NoModificationAllowedErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised on attempts to modify an object where modifications are not allowed (such
 as for read-only nodes).</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.SyntaxErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">SyntaxErr</span></span><a class="headerlink" href="#xml.dom.SyntaxErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">SyntaxErr</span></span><a class="headerlink" href="#xml.dom.SyntaxErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when an invalid or illegal string is specified.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="xml.dom.WrongDocumentErr">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">WrongDocumentErr</span></span><a class="headerlink" href="#xml.dom.WrongDocumentErr" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.dom.</span></span><span class="sig-name descname"><span class="pre">WrongDocumentErr</span></span><a class="headerlink" href="#xml.dom.WrongDocumentErr" title="Link to this definition">¶</a></dt>
 <dd><p>Raised when a node is inserted in a different document than it currently belongs
 to, and the implementation does not support migrating the node from one document
 to the other.</p>
@@ -1373,7 +1373,7 @@ implementations to enforce such requirements.</p>
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -1425,13 +1425,13 @@ implementations to enforce such requirements.</p>
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

@@ -417,11 +417,11 @@ class Random(_random.Random):
             cum_counts = list(_accumulate(counts))
             if len(cum_counts) != n:
                 raise ValueError('The number of counts does not match the population')
-            total = cum_counts.pop() if cum_counts else 0
+            total = cum_counts.pop()
             if not isinstance(total, int):
                 raise TypeError('Counts must be integers')
-            if total < 0:
-                raise ValueError('Counts must be non-negative')
+            if total <= 0:
+                raise ValueError('Total of counts must be greater than zero')
             selections = self.sample(range(total), k=k)
             bisect = _bisect
             return [population[bisect(cum_counts, s)] for s in selections]

@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/socketserver.py The socketserver module simplifies the task of writing network servers. Availability: not Emscripten, not WASI. This module does not work or is not available on Web..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>socketserver — A framework for network servers &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>socketserver — A framework for network servers &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="http.server — HTTP servers" href="http.server.html" />
     <link rel="prev" title="uuid — UUID objects according to RFC 4122" href="uuid.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/socketserver.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/socketserver.html" />
     
       
     
@@ -165,7 +165,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -214,7 +214,7 @@
 <p>There are four basic concrete server classes:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.TCPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">TCPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.TCPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">TCPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.TCPServer" title="Link to this definition">¶</a></dt>
 <dd><p>This uses the internet TCP protocol, which provides for
 continuous streams of data between the client and server.
 If <em>bind_and_activate</em> is true, the constructor automatically attempts to
@@ -225,7 +225,7 @@ the <a class="reference internal" href="#socketserver.BaseServer" title="sockets
 
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.UDPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UDPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UDPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UDPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UDPServer" title="Link to this definition">¶</a></dt>
 <dd><p>This uses datagrams, which are discrete packets of information that may
 arrive out of order or be lost while in transit.  The parameters are
 the same as for <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>.</p>
@@ -233,9 +233,9 @@ the same as for <a class="reference internal" href="#socketserver.TCPServer" tit
 
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.UnixStreamServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixStreamServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixStreamServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixStreamServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixStreamServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.UnixDatagramServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixDatagramServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixDatagramServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixDatagramServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixDatagramServer" title="Link to this definition">¶</a></dt>
 <dd><p>These more infrequently used classes are similar to the TCP and
 UDP classes, but use Unix domain sockets; they’re not available on
 non-Unix platforms.  The parameters are the same as for
@@ -294,9 +294,9 @@ synchronous servers of four types:</p>
 server is the address family.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.ForkingMixIn">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingMixIn</span></span><a class="headerlink" href="#socketserver.ForkingMixIn" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingMixIn</span></span><a class="headerlink" href="#socketserver.ForkingMixIn" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ThreadingMixIn">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingMixIn</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingMixIn</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn" title="Link to this definition">¶</a></dt>
 <dd><p>Forking and threading versions of each type of server can be created
 using these mix-in classes.  For instance, <a class="reference internal" href="#socketserver.ThreadingUDPServer" title="socketserver.ThreadingUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingUDPServer</span></code></a>
 is created as follows:</p>
@@ -339,21 +339,21 @@ attribute to opt-in for the pre-3.7 behaviour.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.ForkingTCPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingTCPServer</span></span><a class="headerlink" href="#socketserver.ForkingTCPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingTCPServer</span></span><a class="headerlink" href="#socketserver.ForkingTCPServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ForkingUDPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUDPServer</span></span><a class="headerlink" href="#socketserver.ForkingUDPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUDPServer</span></span><a class="headerlink" href="#socketserver.ForkingUDPServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ThreadingTCPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingTCPServer</span></span><a class="headerlink" href="#socketserver.ThreadingTCPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingTCPServer</span></span><a class="headerlink" href="#socketserver.ThreadingTCPServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ThreadingUDPServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUDPServer</span></span><a class="headerlink" href="#socketserver.ThreadingUDPServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUDPServer</span></span><a class="headerlink" href="#socketserver.ThreadingUDPServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ForkingUnixStreamServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixStreamServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixStreamServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ForkingUnixDatagramServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixDatagramServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixDatagramServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ThreadingUnixStreamServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixStreamServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixStreamServer" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.ThreadingUnixDatagramServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixDatagramServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixDatagramServer" title="Link to this definition">¶</a></dt>
 <dd><p>These classes are pre-defined using the mix-in classes.</p>
 </dd></dl>
 
@@ -395,7 +395,7 @@ connected for a long time (if threads or subprocesses cannot be used).</p>
 <h2>Server Objects<a class="headerlink" href="#server-objects" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.BaseServer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer" title="Link to this definition">¶</a></dt>
 <dd><p>This is the superclass of all Server objects in the module.  It defines the
 interface, given below, but does not implement most of the methods, which is
 done in subclasses.  The two parameters are stored in the respective
@@ -464,11 +464,8 @@ different thread otherwise it will deadlock.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="socketserver.BaseServer.address_family">
 <span class="sig-name descname"><span class="pre">address_family</span></span><a class="headerlink" href="#socketserver.BaseServer.address_family" title="Link to this definition">¶</a></dt>
-<dd><p>The family of protocols to which the server’s socket belongs.  Common
-examples are <a class="reference internal" href="socket.html#socket.AF_INET" title="socket.AF_INET"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_INET</span></code></a>, <a class="reference internal" href="socket.html#socket.AF_INET6" title="socket.AF_INET6"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_INET6</span></code></a>, and
-<a class="reference internal" href="socket.html#socket.AF_UNIX" title="socket.AF_UNIX"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_UNIX</span></code></a>.  Subclass the TCP or UDP server classes in this
-module with class attribute <code class="docutils literal notranslate"><span class="pre">address_family</span> <span class="pre">=</span> <span class="pre">AF_INET6</span></code> set if you
-want IPv6 server classes.</p>
+<dd><p>The family of protocols to which the server’s socket belongs.
+Common examples are <a class="reference internal" href="socket.html#socket.AF_INET" title="socket.AF_INET"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_INET</span></code></a> and <a class="reference internal" href="socket.html#socket.AF_UNIX" title="socket.AF_UNIX"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_UNIX</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -612,7 +609,7 @@ context manager is equivalent to calling <a class="reference internal" href="#so
 <h2>Request Handler Objects<a class="headerlink" href="#request-handler-objects" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.BaseRequestHandler">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseRequestHandler</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseRequestHandler</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler" title="Link to this definition">¶</a></dt>
 <dd><p>This is the superclass of all request handler objects.  It defines
 the interface, given below.  A concrete request handler subclass must
 define a new <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method, and can override any of
@@ -669,9 +666,9 @@ to be used to communicate with the client.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="socketserver.StreamRequestHandler">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">StreamRequestHandler</span></span><a class="headerlink" href="#socketserver.StreamRequestHandler" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">StreamRequestHandler</span></span><a class="headerlink" href="#socketserver.StreamRequestHandler" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="socketserver.DatagramRequestHandler">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">DatagramRequestHandler</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">DatagramRequestHandler</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler" title="Link to this definition">¶</a></dt>
 <dd><p>These <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> subclasses override the
 <a class="reference internal" href="#socketserver.BaseRequestHandler.setup" title="socketserver.BaseRequestHandler.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> and <a class="reference internal" href="#socketserver.BaseRequestHandler.finish" title="socketserver.BaseRequestHandler.finish"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish()</span></code></a>
 methods, and provide <a class="reference internal" href="#socketserver.DatagramRequestHandler.rfile" title="socketserver.DatagramRequestHandler.rfile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rfile</span></code></a> and <a class="reference internal" href="#socketserver.DatagramRequestHandler.wfile" title="socketserver.DatagramRequestHandler.wfile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">wfile</span></code></a> attributes.</p>
@@ -714,17 +711,11 @@ Support the <a class="reference internal" href="io.html#io.BufferedIOBase" title
 
     <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># self.request is the TCP socket connected to the client</span>
-        <span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pieces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">total</span> <span class="o">&lt;</span> <span class="mi">10_000</span><span class="p">:</span>
-            <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2000</span><span class="p">))</span>
-            <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pieces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received from </span><span class="si">{}</span><span class="s2">:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="c1"># just send back the same data, but upper-cased</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-        <span class="c1"># after we return, the socket will be closed.</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
@@ -741,12 +732,11 @@ objects that simplify communication by providing the standard file interface):</
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyTCPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">StreamRequestHandler</span><span class="p">):</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># self.rfile is a file-like object created by the handler.</span>
-        <span class="c1"># We can now use e.g. readline() instead of raw recv() calls.</span>
-        <span class="c1"># We limit ourselves to 10000 bytes to avoid abuse by the sender.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">readline</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> wrote:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="c1"># self.rfile is a file-like object created by the handler;</span>
+        <span class="c1"># we can now use e.g. readline() instead of raw recv() calls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="c1"># Likewise, self.wfile is a file-like object used to write back</span>
         <span class="c1"># to the client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
@@ -754,12 +744,9 @@ objects that simplify communication by providing the standard file interface):</
 </div>
 <p>The difference is that the <code class="docutils literal notranslate"><span class="pre">readline()</span></code> call in the second handler will call
 <code class="docutils literal notranslate"><span class="pre">recv()</span></code> multiple times until it encounters a newline character, while the
-the first handler had to use a <code class="docutils literal notranslate"><span class="pre">recv()</span></code> loop to accumulate data until a
-newline itself.  If it had just used a single <code class="docutils literal notranslate"><span class="pre">recv()</span></code> without the loop it
-would just have returned what has been received so far from the client.
-TCP is stream based: data arrives in the order it was sent, but there no
-correlation between client <code class="docutils literal notranslate"><span class="pre">send()</span></code> or <code class="docutils literal notranslate"><span class="pre">sendall()</span></code> calls and the number
-of <code class="docutils literal notranslate"><span class="pre">recv()</span></code> calls on the server required to receive it.</p>
+single <code class="docutils literal notranslate"><span class="pre">recv()</span></code> call in the first handler will just return what has been
+received so far from the client’s <code class="docutils literal notranslate"><span class="pre">sendall()</span></code> call (typically all of it, but
+this is not guaranteed by the TCP protocol).</p>
 <p>This is the client side:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -771,14 +758,13 @@ of <code class="docutils literal notranslate"><span class="pre">recv()</span></c
 <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
     <span class="c1"># Connect to server and send data</span>
     <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
 
     <span class="c1"># Receive data from the server and shut down</span>
     <span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:    &quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received:&quot;</span><span class="p">,</span> <span class="n">received</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The output of the example should look something like this:</p>
@@ -816,7 +802,7 @@ of <code class="docutils literal notranslate"><span class="pre">recv()</span></c
     <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> wrote:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">socket</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">)</span>
 
@@ -841,8 +827,8 @@ of <code class="docutils literal notranslate"><span class="pre">recv()</span></c
 <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
 <span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:    &quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received:&quot;</span><span class="p">,</span> <span class="n">received</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The output of the example should look exactly like for the TCP server example.</p>
@@ -992,7 +978,7 @@ Available only on POSIX platforms that support <a class="reference internal" hre
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -1044,13 +1030,13 @@ Available only on POSIX platforms that support <a class="reference internal" hre
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

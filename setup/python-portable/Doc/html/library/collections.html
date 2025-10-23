@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/collections/__init__.py This module implements specialized container datatypes providing alternatives to Python’s general purpose built-in containers, dict, list, set, and tuple.,,..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>collections — Container datatypes &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>collections — Container datatypes &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="collections.abc — Abstract Base Classes for Containers" href="collections.abc.html" />
     <link rel="prev" title="calendar — General calendar-related functions" href="calendar.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/collections.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/collections.html" />
     
       
     
@@ -177,7 +177,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -261,7 +261,7 @@ a new dictionary and running multiple <a class="reference internal" href="stdtyp
 <p>The class can be used to simulate nested scopes and is useful in templating.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.ChainMap">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">ChainMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">maps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.ChainMap" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">ChainMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">maps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.ChainMap" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#collections.ChainMap" title="collections.ChainMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChainMap</span></code></a> groups multiple dicts or other mappings together to
 create a single, updateable view.  If no <em>maps</em> are specified, a single empty
 dictionary is provided so that a new chain always has at least one mapping.</p>
@@ -449,7 +449,7 @@ For example:</p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.Counter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">Counter</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">iterable-or-mapping</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.Counter" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">Counter</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">iterable-or-mapping</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.Counter" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#collections.Counter" title="collections.Counter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Counter</span></code></a> is a <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> subclass for counting <a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a> objects.
 It is a collection where elements are stored as dictionary keys
 and their counts are stored as dictionary values.  Counts are allowed to be
@@ -672,7 +672,7 @@ elements, see <a class="reference internal" href="itertools.html#itertools.combi
 <h2><a class="reference internal" href="#collections.deque" title="collections.deque"><code class="xref py py-class docutils literal notranslate"><span class="pre">deque</span></code></a> objects<a class="headerlink" href="#deque-objects" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.deque">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">deque</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxlen</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.deque" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">deque</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxlen</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.deque" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a new deque object initialized left-to-right (using <a class="reference internal" href="#collections.deque.append" title="collections.deque.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a>) with
 data from <em>iterable</em>.  If <em>iterable</em> is not specified, the new deque is empty.</p>
 <p>Deques are a generalization of stacks and queues (the name is pronounced “deck”
@@ -942,7 +942,7 @@ stack manipulations such as <code class="docutils literal notranslate"><span cla
 <h2><a class="reference internal" href="#collections.defaultdict" title="collections.defaultdict"><code class="xref py py-class docutils literal notranslate"><span class="pre">defaultdict</span></code></a> objects<a class="headerlink" href="#defaultdict-objects" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.defaultdict">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">defaultdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_factory=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">/</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.defaultdict" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">defaultdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_factory=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">/</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.defaultdict" title="Link to this definition">¶</a></dt>
 <dd><p>Return a new dictionary-like object.  <a class="reference internal" href="#collections.defaultdict" title="collections.defaultdict"><code class="xref py py-class docutils literal notranslate"><span class="pre">defaultdict</span></code></a> is a subclass of the
 built-in <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> class.  It overrides one method and adds one writable
 instance variable.  The remaining functionality is the same as for the
@@ -967,8 +967,8 @@ propagated unchanged.</p>
 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> class when the requested key is not found; whatever it
 returns or raises is then returned or raised by <a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a>.</p>
 <p>Note that <a class="reference internal" href="#collections.defaultdict.__missing__" title="collections.defaultdict.__missing__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__missing__()</span></code></a> is <em>not</em> called for any operations besides
-<a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a>. This means that <a class="reference internal" href="stdtypes.html#dict.get" title="dict.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a> will, like
-normal dictionaries, return <code class="docutils literal notranslate"><span class="pre">None</span></code> as a default rather than using
+<a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a>. This means that <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code> will, like normal
+dictionaries, return <code class="docutils literal notranslate"><span class="pre">None</span></code> as a default rather than using
 <a class="reference internal" href="#collections.defaultdict.default_factory" title="collections.defaultdict.default_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_factory</span></code></a>.</p>
 </dd></dl>
 
@@ -1063,13 +1063,12 @@ self-documenting code.  They can be used wherever regular tuples are used, and
 they add the ability to access fields by name instead of position index.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="collections.namedtuple">
-<span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">namedtuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">rename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.namedtuple" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">namedtuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">typename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.namedtuple" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a new tuple subclass named <em>typename</em>.  The new subclass is used to
 create tuple-like objects that have fields accessible by attribute lookup as
 well as being indexable and iterable.  Instances of the subclass also have a
-helpful docstring (with <em>typename</em> and <em>field_names</em>) and a helpful
-<a class="reference internal" href="../reference/datamodel.html#object.__repr__" title="object.__repr__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__repr__()</span></code></a> method which lists the tuple contents in a <code class="docutils literal notranslate"><span class="pre">name=value</span></code>
-format.</p>
+helpful docstring (with typename and field_names) and a helpful <code class="xref py py-meth docutils literal notranslate"><span class="pre">__repr__()</span></code>
+method which lists the tuple contents in a <code class="docutils literal notranslate"><span class="pre">name=value</span></code> format.</p>
 <p>The <em>field_names</em> are a sequence of strings such as <code class="docutils literal notranslate"><span class="pre">['x',</span> <span class="pre">'y']</span></code>.
 Alternatively, <em>field_names</em> can be a single string with each fieldname
 separated by whitespace and/or commas, for example <code class="docutils literal notranslate"><span class="pre">'x</span> <span class="pre">y'</span></code> or <code class="docutils literal notranslate"><span class="pre">'x,</span> <span class="pre">y'</span></code>.</p>
@@ -1108,7 +1107,7 @@ that matches <em>typename</em>.</p>
 <p><span class="versionmodified changed">Changed in version 3.7: </span>Removed the <em>verbose</em> parameter and the <code class="xref py py-attr docutils literal notranslate"><span class="pre">_source</span></code> attribute.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.7: </span>Added the <em>defaults</em> parameter and the <a class="reference internal" href="#collections.somenamedtuple._field_defaults" title="collections.somenamedtuple._field_defaults"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_field_defaults</span></code></a>
+<p><span class="versionmodified changed">Changed in version 3.7: </span>Added the <em>defaults</em> parameter and the <code class="xref py py-attr docutils literal notranslate"><span class="pre">_field_defaults</span></code>
 attribute.</p>
 </div>
 </dd></dl>
@@ -1148,7 +1147,7 @@ three additional methods and two attributes.  To prevent conflicts with
 field names, the method and attribute names start with an underscore.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="collections.somenamedtuple._make">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">somenamedtuple.</span></span><span class="sig-name descname"><span class="pre">_make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.somenamedtuple._make" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">somenamedtuple.</span></span><span class="sig-name descname"><span class="pre">_make</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.somenamedtuple._make" title="Link to this definition">¶</a></dt>
 <dd><p>Class method that makes a new instance from an existing sequence or iterable.</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
@@ -1313,7 +1312,7 @@ suitable for implementing various kinds of LRU caches.</p></li>
 <p>A regular <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> can emulate the order sensitive equality test with
 <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">==</span> <span class="pre">q</span> <span class="pre">and</span> <span class="pre">all(k1</span> <span class="pre">==</span> <span class="pre">k2</span> <span class="pre">for</span> <span class="pre">k1,</span> <span class="pre">k2</span> <span class="pre">in</span> <span class="pre">zip(p,</span> <span class="pre">q))</span></code>.</p>
 </li>
-<li><p>The <a class="reference internal" href="#collections.OrderedDict.popitem" title="collections.OrderedDict.popitem"><code class="xref py py-meth docutils literal notranslate"><span class="pre">popitem()</span></code></a> method of <a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> has a different
+<li><p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">popitem()</span></code> method of <a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> has a different
 signature.  It accepts an optional argument to specify which item is popped.</p>
 <p>A regular <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> can emulate OrderedDict’s <code class="docutils literal notranslate"><span class="pre">od.popitem(last=True)</span></code>
 with <code class="docutils literal notranslate"><span class="pre">d.popitem()</span></code> which is guaranteed to pop the rightmost (last) item.</p>
@@ -1321,7 +1320,7 @@ with <code class="docutils literal notranslate"><span class="pre">d.popitem()</s
 with <code class="docutils literal notranslate"><span class="pre">(k</span> <span class="pre">:=</span> <span class="pre">next(iter(d)),</span> <span class="pre">d.pop(k))</span></code> which will return and remove the
 leftmost (first) item if it exists.</p>
 </li>
-<li><p><a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> has a <a class="reference internal" href="#collections.OrderedDict.move_to_end" title="collections.OrderedDict.move_to_end"><code class="xref py py-meth docutils literal notranslate"><span class="pre">move_to_end()</span></code></a> method to efficiently
+<li><p><a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> has a <code class="xref py py-meth docutils literal notranslate"><span class="pre">move_to_end()</span></code> method to efficiently
 reposition an element to an endpoint.</p>
 <p>A regular <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> can emulate OrderedDict’s <code class="docutils literal notranslate"><span class="pre">od.move_to_end(k,</span>
 <span class="pre">last=True)</span></code> with <code class="docutils literal notranslate"><span class="pre">d[k]</span> <span class="pre">=</span> <span class="pre">d.pop(k)</span></code> which will move the key and its
@@ -1330,11 +1329,11 @@ associated value to the rightmost (last) position.</p>
 OrderedDict’s <code class="docutils literal notranslate"><span class="pre">od.move_to_end(k,</span> <span class="pre">last=False)</span></code> which moves the key
 and its associated value to the leftmost (first) position.</p>
 </li>
-<li><p>Until Python 3.8, <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> lacked a <a class="reference internal" href="../reference/datamodel.html#object.__reversed__" title="object.__reversed__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__reversed__()</span></code></a> method.</p></li>
+<li><p>Until Python 3.8, <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> lacked a <code class="xref py py-meth docutils literal notranslate"><span class="pre">__reversed__()</span></code> method.</p></li>
 </ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.OrderedDict">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">OrderedDict</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.OrderedDict" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">OrderedDict</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.OrderedDict" title="Link to this definition">¶</a></dt>
 <dd><p>Return an instance of a <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> subclass that has methods
 specialized for rearranging dictionary order.</p>
 <div class="versionadded">
@@ -1386,7 +1385,7 @@ of <a class="reference internal" href="#collections.OrderedDict" title="collecti
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span>With the acceptance of <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0468/"><strong>PEP 468</strong></a>, order is retained for keyword arguments
-passed to the <a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> constructor and its <a class="reference internal" href="stdtypes.html#dict.update" title="dict.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a>
+passed to the <a class="reference internal" href="#collections.OrderedDict" title="collections.OrderedDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> constructor and its <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code>
 method.</p>
 </div>
 <div class="versionchanged">
@@ -1479,7 +1478,7 @@ to work with because the underlying dictionary is accessible as an
 attribute.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.UserDict">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserDict</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">initialdata</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserDict" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserDict</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">initialdata</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserDict" title="Link to this definition">¶</a></dt>
 <dd><p>Class that simulates a dictionary.  The instance’s contents are kept in a
 regular dictionary, which is accessible via the <a class="reference internal" href="#collections.UserDict.data" title="collections.UserDict.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute of
 <a class="reference internal" href="#collections.UserDict" title="collections.UserDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDict</span></code></a> instances.  If <em>initialdata</em> is provided, <a class="reference internal" href="#collections.UserDict.data" title="collections.UserDict.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> is
@@ -1508,7 +1507,7 @@ subclass directly from <a class="reference internal" href="stdtypes.html#list" t
 to work with because the underlying list is accessible as an attribute.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.UserList">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserList</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserList" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserList</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserList" title="Link to this definition">¶</a></dt>
 <dd><p>Class that simulates a list.  The instance’s contents are kept in a regular
 list, which is accessible via the <a class="reference internal" href="#collections.UserList.data" title="collections.UserList.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute of <a class="reference internal" href="#collections.UserList" title="collections.UserList"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserList</span></code></a>
 instances.  The instance’s contents are initially set to a copy of <em>list</em>,
@@ -1545,7 +1544,7 @@ to work with because the underlying string is accessible as an
 attribute.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="collections.UserString">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserString" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">collections.</span></span><span class="sig-name descname"><span class="pre">UserString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#collections.UserString" title="Link to this definition">¶</a></dt>
 <dd><p>Class that simulates a string object.  The instance’s
 content is kept in a regular string object, which is accessible via the
 <a class="reference internal" href="#collections.UserString.data" title="collections.UserString.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute of <a class="reference internal" href="#collections.UserString" title="collections.UserString"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserString</span></code></a> instances.  The instance’s
@@ -1662,7 +1661,7 @@ be any object which can be converted into a string using the built-in
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -1714,13 +1713,13 @@ be any object which can be converted into a string using the built-in
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

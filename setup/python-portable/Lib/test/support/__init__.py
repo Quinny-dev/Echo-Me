@@ -799,11 +799,7 @@ def python_is_optimized():
     for opt in cflags.split():
         if opt.startswith('-O'):
             final_opt = opt
-    if sysconfig.get_config_var("CC") == "gcc":
-        non_opts = ('', '-O0', '-Og')
-    else:
-        non_opts = ('', '-O0')
-    return final_opt not in non_opts
+    return final_opt not in ('', '-O0', '-Og')
 
 
 def check_cflags_pgo():

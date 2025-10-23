@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/graphlib.py Exceptions: The graphlib module defines the following exception classes:" />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>graphlib — Functionality to operate with graph-like structures &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>graphlib — Functionality to operate with graph-like structures &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="Numeric and Mathematical Modules" href="numeric.html" />
     <link rel="prev" title="enum — Support for enumerations" href="enum.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/graphlib.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/graphlib.html" />
     
       
     
@@ -157,7 +157,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -198,7 +198,7 @@
 <hr class="docutils" />
 <dl class="py class">
 <dt class="sig sig-object py" id="graphlib.TopologicalSorter">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">graphlib.</span></span><span class="sig-name descname"><span class="pre">TopologicalSorter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphlib.TopologicalSorter" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">graphlib.</span></span><span class="sig-name descname"><span class="pre">TopologicalSorter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphlib.TopologicalSorter" title="Link to this definition">¶</a></dt>
 <dd><p>Provides functionality to topologically sort a graph of <a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a> nodes.</p>
 <p>A topological order is a linear ordering of the vertices in a graph such that
 for every directed edge u -&gt; v from vertex u to vertex v, vertex u comes
@@ -380,7 +380,7 @@ determined by the order of insertion.</p>
 <p>The <a class="reference internal" href="#module-graphlib" title="graphlib: Functionality to operate with graph-like structures"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code></a> module defines the following exception classes:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="graphlib.CycleError">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">graphlib.</span></span><span class="sig-name descname"><span class="pre">CycleError</span></span><a class="headerlink" href="#graphlib.CycleError" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">graphlib.</span></span><span class="sig-name descname"><span class="pre">CycleError</span></span><a class="headerlink" href="#graphlib.CycleError" title="Link to this definition">¶</a></dt>
 <dd><p>Subclass of <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> raised by <a class="reference internal" href="#graphlib.TopologicalSorter.prepare" title="graphlib.TopologicalSorter.prepare"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TopologicalSorter.prepare()</span></code></a> if cycles exist
 in the working graph. If multiple cycles exist, only one undefined choice among them will
 be reported and included in the exception.</p>
@@ -465,7 +465,7 @@ the first and the last node will be the same, to make it clear that it is cyclic
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -517,13 +517,13 @@ the first and the last node will be the same, to make it clear that it is cyclic
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

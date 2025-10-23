@@ -588,16 +588,12 @@ class _TestProcess(BaseTestCase):
     def test_active_children(self):
         self.assertEqual(type(self.active_children()), list)
 
-        event = self.Event()
-        p = self.Process(target=event.wait, args=())
+        p = self.Process(target=time.sleep, args=(DELTA,))
         self.assertNotIn(p, self.active_children())
 
-        try:
-            p.daemon = True
-            p.start()
-            self.assertIn(p, self.active_children())
-        finally:
-            event.set()
+        p.daemon = True
+        p.start()
+        self.assertIn(p, self.active_children())
 
         p.join()
         self.assertNotIn(p, self.active_children())
@@ -1581,13 +1577,14 @@ class _TestCondition(BaseTestCase):
         cond.release()
 
     def assertReachesEventually(self, func, value):
-        for _ in support.sleeping_retry(support.SHORT_TIMEOUT):
+        for i in range(10):
             try:
                 if func() == value:
                     break
             except NotImplementedError:
                 break
-
+            time.sleep(DELTA)
+        time.sleep(DELTA)
         self.assertReturnsIfImplemented(value, func)
 
     def check_invariant(self, cond):
@@ -1609,17 +1606,20 @@ class _TestCondition(BaseTestCase):
         p = self.Process(target=self.f, args=(cond, sleeping, woken))
         p.daemon = True
         p.start()
+        self.addCleanup(p.join)
 
-        t = threading.Thread(target=self.f, args=(cond, sleeping, woken))
-        t.daemon = True
-        t.start()
+        p = threading.Thread(target=self.f, args=(cond, sleeping, woken))
+        p.daemon = True
+        p.start()
+        self.addCleanup(p.join)
 
         # wait for both children to start sleeping
         sleeping.acquire()
         sleeping.acquire()
 
         # check no process/thread has woken up
-        self.assertReachesEventually(lambda: get_value(woken), 0)
+        time.sleep(DELTA)
+        self.assertReturnsIfImplemented(0, get_value, woken)
 
         # wake up one process/thread
         cond.acquire()
@@ -1627,7 +1627,8 @@ class _TestCondition(BaseTestCase):
         cond.release()
 
         # check one process/thread has woken up
-        self.assertReachesEventually(lambda: get_value(woken), 1)
+        time.sleep(DELTA)
+        self.assertReturnsIfImplemented(1, get_value, woken)
 
         # wake up another
         cond.acquire()
@@ -1635,13 +1636,12 @@ class _TestCondition(BaseTestCase):
         cond.release()
 
         # check other has woken up
-        self.assertReachesEventually(lambda: get_value(woken), 2)
+        time.sleep(DELTA)
+        self.assertReturnsIfImplemented(2, get_value, woken)
 
         # check state is not mucked up
         self.check_invariant(cond)
-
-        threading_helper.join_thread(t)
-        join_process(p)
+        p.join()
 
     def test_notify_all(self):
         cond = self.Condition()
@@ -1649,19 +1649,18 @@ class _TestCondition(BaseTestCase):
         woken = self.Semaphore(0)
 
         # start some threads/processes which will timeout
-        workers = []
         for i in range(3):
             p = self.Process(target=self.f,
                              args=(cond, sleeping, woken, TIMEOUT1))
             p.daemon = True
             p.start()
-            workers.append(p)
+            self.addCleanup(p.join)
 
             t = threading.Thread(target=self.f,
                                  args=(cond, sleeping, woken, TIMEOUT1))
             t.daemon = True
             t.start()
-            workers.append(t)
+            self.addCleanup(t.join)
 
         # wait for them all to sleep
         for i in range(6):
@@ -1680,12 +1679,12 @@ class _TestCondition(BaseTestCase):
             p = self.Process(target=self.f, args=(cond, sleeping, woken))
             p.daemon = True
             p.start()
-            workers.append(p)
+            self.addCleanup(p.join)
 
             t = threading.Thread(target=self.f, args=(cond, sleeping, woken))
             t.daemon = True
             t.start()
-            workers.append(t)
+            self.addCleanup(t.join)
 
         # wait for them to all sleep
         for i in range(6):
@@ -1701,16 +1700,10 @@ class _TestCondition(BaseTestCase):
         cond.release()
 
         # check they have all woken
-        for i in range(6):
-            woken.acquire()
-        self.assertReturnsIfImplemented(0, get_value, woken)
+        self.assertReachesEventually(lambda: get_value(woken), 6)
 
         # check state is not mucked up
         self.check_invariant(cond)
-
-        for w in workers:
-            # NOTE: join_process and join_thread are the same
-            threading_helper.join_thread(w)
 
     def test_notify_n(self):
         cond = self.Condition()
@@ -1718,17 +1711,16 @@ class _TestCondition(BaseTestCase):
         woken = self.Semaphore(0)
 
         # start some threads/processes
-        workers = []
         for i in range(3):
             p = self.Process(target=self.f, args=(cond, sleeping, woken))
             p.daemon = True
             p.start()
-            workers.append(p)
+            self.addCleanup(p.join)
 
             t = threading.Thread(target=self.f, args=(cond, sleeping, woken))
             t.daemon = True
             t.start()
-            workers.append(t)
+            self.addCleanup(t.join)
 
         # wait for them to all sleep
         for i in range(6):
@@ -1762,10 +1754,6 @@ class _TestCondition(BaseTestCase):
 
         # check state is not mucked up
         self.check_invariant(cond)
-
-        for w in workers:
-            # NOTE: join_process and join_thread are the same
-            threading_helper.join_thread(w)
 
     def test_timeout(self):
         cond = self.Condition()

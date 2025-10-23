@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Unicode Objects: Since the implementation of PEP 393 in Python 3.3, Unicode objects internally use a variety of representations, in order to allow handling the complete range of Unicode characters ..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>Unicode Objects and Codecs &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Objects and Codecs &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="Tuple Objects" href="tuple.html" />
     <link rel="prev" title="Byte Array Objects" href="bytearray.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/c-api/unicode.html">
+    <link rel="canonical" href="https://docs.python.org/3/c-api/unicode.html" />
     
       
     
@@ -181,7 +181,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API Reference Manual</a> &#187;</li>
@@ -502,8 +502,13 @@ the Python configuration.</p>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.Py_UNICODE_ISPRINTABLE">
 <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Py_UNICODE_ISPRINTABLE</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_UCS4" title="Py_UCS4"><span class="n"><span class="pre">Py_UCS4</span></span></a><span class="w"> </span><span class="n"><span class="pre">ch</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_UNICODE_ISPRINTABLE" title="Link to this definition">¶</a><br /></dt>
-<dd><p>Return <code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span></code> depending on whether <em>ch</em> is a printable character,
-in the sense of <a class="reference internal" href="../library/stdtypes.html#str.isprintable" title="str.isprintable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.isprintable()</span></code></a>.</p>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span></code> depending on whether <em>ch</em> is a printable character.
+Nonprintable characters are those characters defined in the Unicode character
+database as “Other” or “Separator”, excepting the ASCII space (0x20) which is
+considered printable.  (Note that printable characters in this context are
+those which should not be escaped when <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a> is invoked on a string.
+It has no bearing on the handling of strings written to <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdout</span></code></a> or
+<a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a>.)</p>
 </dd></dl>
 
 <p>These APIs can be used for fast direct character conversions:</p>
@@ -854,15 +859,6 @@ values (see <a class="reference internal" href="#builtincodecs"><span class="std
 set.</p>
 <p>The API returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if there was an error.  The caller is responsible for
 decref’ing the returned objects.</p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.PyUnicode_GetDefaultEncoding">
-<span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_GetDefaultEncoding</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_GetDefaultEncoding" title="Link to this definition">¶</a><br /></dt>
-<dd><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>Return the name of the default string encoding, <code class="docutils literal notranslate"><span class="pre">&quot;utf-8&quot;</span></code>.
-See <a class="reference internal" href="../library/sys.html#sys.getdefaultencoding" title="sys.getdefaultencoding"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getdefaultencoding()</span></code></a>.</p>
-<p>The returned string does not need to be freed, and is valid
-until interpreter shutdown.</p>
 </dd></dl>
 
 <dl class="c function">
@@ -1573,13 +1569,6 @@ in <em>consumed</em>.</p>
 </dd></dl>
 
 <dl class="c function">
-<dt class="sig sig-object c" id="c.PyUnicode_DecodeCodePageStateful">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_DecodeCodePageStateful</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">code_page</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">str</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">size</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">errors</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">consumed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_DecodeCodePageStateful" title="Link to this definition">¶</a><br /></dt>
-<dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a> on Windows since version 3.7.</em><p>Similar to <a class="reference internal" href="#c.PyUnicode_DecodeMBCSStateful" title="PyUnicode_DecodeMBCSStateful"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyUnicode_DecodeMBCSStateful()</span></code></a>, except uses the code page
-specified by <em>code_page</em>.</p>
-</dd></dl>
-
-<dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnicode_AsMBCSString">
 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_AsMBCSString</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">unicode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_AsMBCSString" title="Link to this definition">¶</a><br /></dt>
 <dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a> on Windows since version 3.7.</em><p>Encode a Unicode object using MBCS and return the result as Python bytes
@@ -1622,17 +1611,6 @@ integers as appropriate.</p>
 will be done at all whitespace substrings.  Otherwise, splits occur at the given
 separator.  At most <em>maxsplit</em> splits will be done.  If negative, no limit is
 set.  Separators are not included in the resulting list.</p>
-<p>On error, return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> with an exception set.</p>
-<p>Equivalent to <a class="reference internal" href="../library/stdtypes.html#str.split" title="str.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.split()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.PyUnicode_RSplit">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_RSplit</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">unicode</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sep</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">maxsplit</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_RSplit" title="Link to this definition">¶</a><br /></dt>
-<dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>Similar to <a class="reference internal" href="#c.PyUnicode_Split" title="PyUnicode_Split"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyUnicode_Split()</span></code></a>, but splitting will be done beginning
-at the end of the string.</p>
-<p>On error, return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> with an exception set.</p>
-<p>Equivalent to <a class="reference internal" href="../library/stdtypes.html#str.rsplit" title="str.rsplit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.rsplit()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="c function">
@@ -1641,29 +1619,6 @@ at the end of the string.</p>
 <dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>Split a Unicode string at line breaks, returning a list of Unicode strings.
 CRLF is considered to be one line break.  If <em>keepends</em> is <code class="docutils literal notranslate"><span class="pre">0</span></code>, the Line break
 characters are not included in the resulting strings.</p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.PyUnicode_Partition">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_Partition</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">unicode</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sep</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_Partition" title="Link to this definition">¶</a><br /></dt>
-<dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>Split a Unicode string at the first occurrence of <em>sep</em>, and return
-a 3-tuple containing the part before the separator, the separator itself,
-and the part after the separator. If the separator is not found,
-return a 3-tuple containing the string itself, followed by two empty strings.</p>
-<p><em>sep</em> must not be empty.</p>
-<p>On error, return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> with an exception set.</p>
-<p>Equivalent to <a class="reference internal" href="../library/stdtypes.html#str.partition" title="str.partition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.partition()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="c function">
-<dt class="sig sig-object c" id="c.PyUnicode_RPartition">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnicode_RPartition</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">unicode</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sep</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnicode_RPartition" title="Link to this definition">¶</a><br /></dt>
-<dd><em class="refcount return_new_ref">Return value: New reference.</em><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>Similar to <a class="reference internal" href="#c.PyUnicode_Partition" title="PyUnicode_Partition"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyUnicode_Partition()</span></code></a>, but split a Unicode string at the
-last occurrence of <em>sep</em>. If the separator is not found, return a 3-tuple
-containing two empty strings, followed by the string itself.</p>
-<p><em>sep</em> must not be empty.</p>
-<p>On error, return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> with an exception set.</p>
-<p>Equivalent to <a class="reference internal" href="../library/stdtypes.html#str.rpartition" title="str.rpartition"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.rpartition()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="c function">
@@ -1906,7 +1861,7 @@ from user input, prefer calling <a class="reference internal" href="#c.PyUnicode
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >Python/C API Reference Manual</a> &#187;</li>
@@ -1958,13 +1913,13 @@ from user input, prefer calling <a class="reference internal" href="#c.PyUnicode
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

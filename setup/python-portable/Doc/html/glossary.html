@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content=">>>, The default Python prompt of the interactive shell. Often seen for code examples which can be executed interactively in the interpreter.,,..., Can refer to:- The default Python prompt of the i..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>Glossary &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossary &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="_static/documentation_options.js?v=9c91bd08"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="About this documentation" href="about.html" />
     <link rel="prev" title="Deprecations" href="deprecations/index.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/glossary.html">
+    <link rel="canonical" href="https://docs.python.org/3/glossary.html" />
     
       
     
@@ -147,7 +147,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="index.html">3.12.10 Documentation</a> &#187;
+      <a href="index.html">3.12.9 Documentation</a> &#187;
     </li>
 
         <li class="nav-item nav-item-this"><a href="">Glossary</a></li>
@@ -667,7 +667,7 @@ compare unequal (except with themselves), and their hash value is derived
 from their <a class="reference internal" href="library/functions.html#id" title="id"><code class="xref py py-func docutils literal notranslate"><span class="pre">id()</span></code></a>.</p>
 </dd>
 <dt id="term-IDLE">IDLE<a class="headerlink" href="#term-IDLE" title="Link to this term">¶</a></dt><dd><p>An Integrated Development and Learning Environment for Python.
-<a class="reference internal" href="library/idle.html#idle"><span class="std std-ref">IDLE — Python editor and shell</span></a> is a basic editor and interpreter environment
+<a class="reference internal" href="library/idle.html#idle"><span class="std std-ref">IDLE</span></a> is a basic editor and interpreter environment
 which ships with the standard distribution of Python.</p>
 </dd>
 <dt id="term-immortal">immortal<a class="headerlink" href="#term-immortal" title="Link to this term">¶</a></dt><dd><p><em>Immortal objects</em> are a CPython implementation detail introduced
@@ -724,7 +724,7 @@ or the script being run has finished executing.</p>
 iterables include all sequence types (such as <a class="reference internal" href="library/stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference internal" href="library/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>,
 and <a class="reference internal" href="library/stdtypes.html#tuple" title="tuple"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>) and some non-sequence types like <a class="reference internal" href="library/stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>,
 <a class="reference internal" href="#term-file-object"><span class="xref std std-term">file objects</span></a>, and objects of any classes you define
-with an <a class="reference internal" href="reference/datamodel.html#object.__iter__" title="object.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method or with a
+with an <a class="reference internal" href="library/stdtypes.html#iterator.__iter__" title="iterator.__iter__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__iter__()</span></code></a> method or with a
 <a class="reference internal" href="reference/datamodel.html#object.__getitem__" title="object.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a> method
 that implements <a class="reference internal" href="#term-sequence"><span class="xref std std-term">sequence</span></a> semantics.</p>
 <p>Iterables can be
@@ -789,8 +789,6 @@ race condition between “the looking” and “the leaping”.  For example, th
 code, <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">mapping:</span> <span class="pre">return</span> <span class="pre">mapping[key]</span></code> can fail if another
 thread removes <em>key</em> from <em>mapping</em> after the test, but before the lookup.
 This issue can be solved with locks or by using the EAFP approach.</p>
-</dd>
-<dt id="term-lexical-analyzer">lexical analyzer<a class="headerlink" href="#term-lexical-analyzer" title="Link to this term">¶</a></dt><dd><p>Formal name for the <em>tokenizer</em>; see <a class="reference internal" href="#term-token"><span class="xref std std-term">token</span></a>.</p>
 </dd>
 <dt id="term-list">list<a class="headerlink" href="#term-list" title="Link to this term">¶</a></dt><dd><p>A built-in Python <a class="reference internal" href="#term-sequence"><span class="xref std std-term">sequence</span></a>.  Despite its name it is more akin
 to an array in other languages than to a linked list since access to
@@ -903,13 +901,10 @@ making it clear which module implements a function.  For instance, writing
 functions are implemented by the <a class="reference internal" href="library/random.html#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code></a> and <a class="reference internal" href="library/itertools.html#module-itertools" title="itertools: Functions creating iterators for efficient looping."><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code></a>
 modules, respectively.</p>
 </dd>
-<dt id="term-namespace-package">namespace package<a class="headerlink" href="#term-namespace-package" title="Link to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-package"><span class="xref std std-term">package</span></a> which serves only as a container for subpackages.
-Namespace packages may have no physical representation,
+<dt id="term-namespace-package">namespace package<a class="headerlink" href="#term-namespace-package" title="Link to this term">¶</a></dt><dd><p>A <span class="target" id="index-25"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> <a class="reference internal" href="#term-package"><span class="xref std std-term">package</span></a> which serves only as a container for
+subpackages.  Namespace packages may have no physical representation,
 and specifically are not like a <a class="reference internal" href="#term-regular-package"><span class="xref std std-term">regular package</span></a> because they
 have no <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file.</p>
-<p>Namespace packages allow several individually installable packages to have a common parent package.
-Otherwise, it is recommended to use a <a class="reference internal" href="#term-regular-package"><span class="xref std std-term">regular package</span></a>.</p>
-<p>For more information, see <span class="target" id="index-25"></span><a class="pep reference external" href="https://peps.python.org/pep-0420/"><strong>PEP 420</strong></a> and <a class="reference internal" href="reference/import.html#reference-namespace-package"><span class="std std-ref">Namespace packages</span></a>.</p>
 <p>See also <a class="reference internal" href="#term-module"><span class="xref std std-term">module</span></a>.</p>
 </dd>
 <dt id="term-nested-scope">nested scope<a class="headerlink" href="#term-nested-scope" title="Link to this term">¶</a></dt><dd><p>The ability to refer to a variable in an enclosing definition.  For
@@ -1192,14 +1187,6 @@ Examples of text files are files opened in text mode (<code class="docutils lite
 <p>See also <a class="reference internal" href="#term-binary-file"><span class="xref std std-term">binary file</span></a> for a file object able to read and write
 <a class="reference internal" href="#term-bytes-like-object"><span class="xref std std-term">bytes-like objects</span></a>.</p>
 </dd>
-<dt id="term-token">token<a class="headerlink" href="#term-token" title="Link to this term">¶</a></dt><dd><p>A small unit of source code, generated by the
-<a class="reference internal" href="reference/lexical_analysis.html#lexical"><span class="std std-ref">lexical analyzer</span></a> (also called the <em>tokenizer</em>).
-Names, numbers, strings, operators,
-newlines and similar are represented by tokens.</p>
-<p>The <a class="reference internal" href="library/tokenize.html#module-tokenize" title="tokenize: Lexical scanner for Python source code."><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code></a> module exposes Python’s lexical analyzer.
-The <a class="reference internal" href="library/token.html#module-token" title="token: Constants representing terminal nodes of the parse tree."><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code></a> module contains information on the various types
-of tokens.</p>
-</dd>
 <dt id="term-triple-quoted-string">triple-quoted string<a class="headerlink" href="#term-triple-quoted-string" title="Link to this term">¶</a></dt><dd><p>A string which is bound by three instances of either a quotation mark
 (”) or an apostrophe (‘).  While they don’t provide any functionality
 not available with single-quoted strings, they are useful for a number
@@ -1342,7 +1329,7 @@ understanding and using the language.  The listing can be found by typing
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="index.html">3.12.10 Documentation</a> &#187;
+      <a href="index.html">3.12.9 Documentation</a> &#187;
     </li>
 
         <li class="nav-item nav-item-this"><a href="">Glossary</a></li>
@@ -1392,13 +1379,13 @@ understanding and using the language.  The listing can be found by typing
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

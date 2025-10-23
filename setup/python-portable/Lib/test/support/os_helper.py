@@ -676,10 +676,9 @@ else:
 
 
 class EnvironmentVarGuard(collections.abc.MutableMapping):
-    """Class to help protect the environment variable properly.
 
-    Can be used as a context manager.
-    """
+    """Class to help protect the environment variable properly.  Can be used as
+    a context manager."""
 
     def __init__(self):
         self._environ = os.environ
@@ -713,10 +712,8 @@ class EnvironmentVarGuard(collections.abc.MutableMapping):
     def set(self, envvar, value):
         self[envvar] = value
 
-    def unset(self, envvar, /, *envvars):
-        """Unset one or more environment variables."""
-        for ev in (envvar, *envvars):
-            del self[ev]
+    def unset(self, envvar):
+        del self[envvar]
 
     def copy(self):
         # We do what os.environ.copy() does.

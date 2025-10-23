@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/struct.py This module converts between Python values and C structs represented as Python bytes objects. Compact format strings describe the intended conversions to/from Python valu..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>struct — Interpret bytes as packed binary data &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>struct — Interpret bytes as packed binary data &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="codecs — Codec registry and base classes" href="codecs.html" />
     <link rel="prev" title="Binary Data Services" href="binary.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/struct.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/struct.html" />
     
       
     
@@ -169,7 +169,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -238,7 +238,7 @@ they can be read/filled without additional copying from a <a class="reference in
 <p>The module defines the following exception and functions:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="struct.error">
-<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#struct.error" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#struct.error" title="Link to this definition">¶</a></dt>
 <dd><p>Exception raised on various occasions; argument is a string describing what
 is wrong.</p>
 </dd></dl>
@@ -270,7 +270,7 @@ size required by the format, as reflected by <a class="reference internal" href=
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.unpack_from">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack_from" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack_from" title="Link to this definition">¶</a></dt>
 <dd><p>Unpack from <em>buffer</em> starting at position <em>offset</em>, according to the format
 string <em>format</em>.  The result is a tuple even if it contains exactly one
 item.  The buffer’s size in bytes, starting at position <em>offset</em>, must be at
@@ -792,7 +792,7 @@ below were executed on a 32-bit machine:</p>
 <p>The <a class="reference internal" href="#module-struct" title="struct: Interpret bytes as packed binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a> module also defines the following type:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="struct.Struct">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">Struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">Struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct" title="Link to this definition">¶</a></dt>
 <dd><p>Return a new Struct object which writes and reads binary data according to
 the format string <em>format</em>.  Creating a <code class="docutils literal notranslate"><span class="pre">Struct</span></code> object once and calling its
 methods is more efficient than calling module-level functions with the
@@ -948,7 +948,7 @@ by the <a class="reference internal" href="#struct.pack" title="struct.pack"><co
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -1000,13 +1000,13 @@ by the <a class="reference internal" href="#struct.pack" title="struct.pack"><co
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

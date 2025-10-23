@@ -3,8 +3,7 @@
 
 import time
 import unittest
-from test import support
-from test.support import import_helper
+from test.support import import_helper, requires_resource, LOOPBACK_TIMEOUT
 
 
 # Do this first so test will be skipped if module doesn't exist
@@ -13,16 +12,15 @@ _wmi = import_helper.import_module('_wmi', required_on=['win'])
 
 def wmi_exec_query(query):
     # gh-112278: WMI maybe slow response when first call.
-    for _ in support.sleeping_retry(support.LONG_TIMEOUT):
-        try:
-            return _wmi.exec_query(query)
-        except BrokenPipeError:
-            pass
-            # retry on pipe error
-        except WindowsError as exc:
-            if exc.winerror != 258:
-                raise
-            # retry on timeout
+    try:
+        return _wmi.exec_query(query)
+    except BrokenPipeError:
+        pass
+    except WindowsError as e:
+        if e.winerror != 258:
+            raise
+    time.sleep(LOOPBACK_TIMEOUT)
+    return _wmi.exec_query(query)
 
 
 class WmiTests(unittest.TestCase):
@@ -60,7 +58,7 @@ class WmiTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             wmi_exec_query("not select, just in case someone tries something")
 
-    @support.requires_resource('cpu')
+    @requires_resource('cpu')
     def test_wmi_query_overflow(self):
         # Ensure very big queries fail
         # Test multiple times to ensure consistency

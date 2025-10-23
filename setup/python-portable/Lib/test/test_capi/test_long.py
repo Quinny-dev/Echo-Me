@@ -208,8 +208,9 @@ class LongTests(unittest.TestCase):
 
         self.assertEqual(func(min_val - 1), (-1, -1))
         self.assertEqual(func(max_val + 1), (-1, +1))
-        self.assertRaises(SystemError, func, None)
-        self.assertRaises(TypeError, func, 1.0)
+
+        # CRASHES func(1.0)
+        # CRASHES func(NULL)
 
     def test_long_aslong(self):
         # Test PyLong_AsLong() and PyLong_FromLong()

@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="Source code: Lib/email/parser.py Message object structures can be created in one of two ways: they can be created from whole cloth by creating an EmailMessage object, adding headers using the dicti..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>email.parser: Parsing email messages &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>email.parser: Parsing email messages &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="email.generator: Generating MIME documents" href="email.generator.html" />
     <link rel="prev" title="email.message: Representing an email message" href="email.message.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/email.parser.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/email.parser.html" />
     
       
     
@@ -159,7 +159,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -253,7 +253,7 @@ list of defects that it can find.</p>
 <p>Here is the API for the <a class="reference internal" href="#email.parser.BytesFeedParser" title="email.parser.BytesFeedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesFeedParser</span></code></a>:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.BytesFeedParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesFeedParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesFeedParser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesFeedParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesFeedParser" title="Link to this definition">¶</a></dt>
 <dd><p>Create a <a class="reference internal" href="#email.parser.BytesFeedParser" title="email.parser.BytesFeedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesFeedParser</span></code></a> instance.  Optional <em>_factory</em> is a
 no-argument callable; if not specified use the
 <a class="reference internal" href="email.policy.html#email.policy.Policy.message_factory" title="email.policy.Policy.message_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">message_factory</span></code></a> from the <em>policy</em>.  Call
@@ -299,7 +299,7 @@ after this method has been called.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.FeedParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">FeedParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.FeedParser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">FeedParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.FeedParser" title="Link to this definition">¶</a></dt>
 <dd><p>Works like <a class="reference internal" href="#email.parser.BytesFeedParser" title="email.parser.BytesFeedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesFeedParser</span></code></a> except that the input to the
 <a class="reference internal" href="#email.parser.BytesFeedParser.feed" title="email.parser.BytesFeedParser.feed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">feed()</span></code></a> method must be a string.  This is of limited
 utility, since the only way for such a message to be valid is for it to
@@ -324,7 +324,7 @@ can be much faster in these situations, since they do not attempt to parse the
 message body, instead setting the payload to the raw body.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.BytesParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesParser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesParser" title="Link to this definition">¶</a></dt>
 <dd><p>Create a <a class="reference internal" href="#email.parser.BytesParser" title="email.parser.BytesParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesParser</span></code></a> instance.  The <em>_class</em> and <em>policy</em>
 arguments have the same meaning and semantics as the <em>_factory</em>
 and <em>policy</em> arguments of <a class="reference internal" href="#email.parser.BytesFeedParser" title="email.parser.BytesFeedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesFeedParser</span></code></a>.</p>
@@ -373,7 +373,7 @@ object</span></a> instead of a file-like object.  Calling this method on a
 
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.BytesHeaderParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesHeaderParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesHeaderParser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">BytesHeaderParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.BytesHeaderParser" title="Link to this definition">¶</a></dt>
 <dd><p>Exactly like <a class="reference internal" href="#email.parser.BytesParser" title="email.parser.BytesParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesParser</span></code></a>, except that <em>headersonly</em>
 defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 <div class="versionadded">
@@ -383,7 +383,7 @@ defaults to <code class="docutils literal notranslate"><span class="pre">True</s
 
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.Parser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">Parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.Parser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">Parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.Parser" title="Link to this definition">¶</a></dt>
 <dd><p>This class is parallel to <a class="reference internal" href="#email.parser.BytesParser" title="email.parser.BytesParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesParser</span></code></a>, but handles string input.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.3: </span>Removed the <em>strict</em> argument.  Added the <em>policy</em> keyword.</p>
@@ -416,7 +416,7 @@ and calling <a class="reference internal" href="#email.parser.Parser.parse" titl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="email.parser.HeaderParser">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">HeaderParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.HeaderParser" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">email.parser.</span></span><span class="sig-name descname"><span class="pre">HeaderParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.parser.HeaderParser" title="Link to this definition">¶</a></dt>
 <dd><p>Exactly like <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a>, except that <em>headersonly</em>
 defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd></dl>
@@ -426,7 +426,7 @@ a common task, four functions are provided as a convenience.  They are available
 in the top-level <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code></a> package namespace.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="email.message_from_bytes">
-<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_bytes" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_bytes" title="Link to this definition">¶</a></dt>
 <dd><p>Return a message object structure from a <a class="reference internal" href="../glossary.html#term-bytes-like-object"><span class="xref std std-term">bytes-like object</span></a>.  This is
 equivalent to <code class="docutils literal notranslate"><span class="pre">BytesParser().parsebytes(s)</span></code>.  Optional <em>_class</em> and
 <em>policy</em> are interpreted as with the <a class="reference internal" href="#email.parser.BytesParser" title="email.parser.BytesParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesParser</span></code></a> class
@@ -441,7 +441,7 @@ constructor.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="email.message_from_binary_file">
-<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_binary_file" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_binary_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_binary_file" title="Link to this definition">¶</a></dt>
 <dd><p>Return a message object structure tree from an open binary <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file
 object</span></a>.  This is equivalent to <code class="docutils literal notranslate"><span class="pre">BytesParser().parse(fp)</span></code>.  <em>_class</em> and
 <em>policy</em> are interpreted as with the <a class="reference internal" href="#email.parser.BytesParser" title="email.parser.BytesParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesParser</span></code></a> class
@@ -456,7 +456,7 @@ constructor.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="email.message_from_string">
-<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_string" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_string" title="Link to this definition">¶</a></dt>
 <dd><p>Return a message object structure from a string.  This is equivalent to
 <code class="docutils literal notranslate"><span class="pre">Parser().parsestr(s)</span></code>.  <em>_class</em> and <em>policy</em> are interpreted as
 with the <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a> class constructor.</p>
@@ -467,7 +467,7 @@ with the <a class="reference internal" href="#email.parser.Parser" title="email.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="email.message_from_file">
-<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_file" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">email.</span></span><span class="sig-name descname"><span class="pre">message_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">policy.compat32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#email.message_from_file" title="Link to this definition">¶</a></dt>
 <dd><p>Return a message object structure tree from an open <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file object</span></a>.
 This is equivalent to <code class="docutils literal notranslate"><span class="pre">Parser().parse(fp)</span></code>.  <em>_class</em> and <em>policy</em> are
 interpreted as with the <a class="reference internal" href="#email.parser.Parser" title="email.parser.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a> class constructor.</p>
@@ -482,7 +482,7 @@ interpreted as with the <a class="reference internal" href="#email.parser.Parser
 <p>Here’s an example of how you might use <a class="reference internal" href="#email.message_from_bytes" title="email.message_from_bytes"><code class="xref py py-func docutils literal notranslate"><span class="pre">message_from_bytes()</span></code></a> at an
 interactive Python prompt:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">email</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_bytes</span><span class="p">(</span><span class="n">myBytes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_bytes</span><span class="p">(</span><span class="n">myBytes</span><span class="p">)</span>  
 </pre></div>
 </div>
 </section>
@@ -511,7 +511,7 @@ their <em class="mimetype">multipart</em>-edness.  Such messages may have a
 <a class="reference internal" href="email.message.html#email.message.EmailMessage.is_multipart" title="email.message.EmailMessage.is_multipart"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_multipart()</span></code></a> method may return <code class="docutils literal notranslate"><span class="pre">False</span></code>.
 If such messages were parsed with the <a class="reference internal" href="#email.parser.FeedParser" title="email.parser.FeedParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeedParser</span></code></a>,
 they will have an instance of the
-<a class="reference internal" href="email.errors.html#email.errors.MultipartInvariantViolationDefect" title="email.errors.MultipartInvariantViolationDefect"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipartInvariantViolationDefect</span></code></a> class in their
+<code class="xref py py-class docutils literal notranslate"><span class="pre">MultipartInvariantViolationDefect</span></code> class in their
 <em>defects</em> attribute list.  See <a class="reference internal" href="email.errors.html#module-email.errors" title="email.errors: The exception classes used by the email package."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code></a> for details.</p></li>
 </ul>
 </section>
@@ -591,7 +591,7 @@ they will have an instance of the
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -644,13 +644,13 @@ they will have an instance of the
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>

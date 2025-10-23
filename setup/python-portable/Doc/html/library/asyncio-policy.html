@@ -12,24 +12,24 @@
 <meta property="og:image" content="https://docs.python.org/3/_static/og-image.png" />
 <meta property="og:image:alt" content="Python documentation" />
 <meta name="description" content="An event loop policy is a global object used to get and set the current event loop, as well as create new event loops. The default policy can be replaced with built-in alternatives to use different..." />
-<meta property="og:image:width" content="200">
-<meta property="og:image:height" content="200">
-<meta name="theme-color" content="#3776ab">
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta name="theme-color" content="#3776ab" />
 
-    <title>Policies &#8212; Python 3.12.10 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies &#8212; Python 3.12.9 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=23252803" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=5349f25f" />
     
-    <script src="../_static/documentation_options.js?v=e5e5df70"></script>
+    <script src="../_static/documentation_options.js?v=9c91bd08"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <script src="../_static/sidebar.js"></script>
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Python 3.12.10 documentation"
+          title="Search within Python 3.12.9 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -38,7 +38,7 @@
     <link rel="next" title="Platform Support" href="asyncio-platforms.html" />
     <link rel="prev" title="Transports and Protocols" href="asyncio-protocol.html" />
     
-    <link rel="canonical" href="https://docs.python.org/3/library/asyncio-policy.html">
+    <link rel="canonical" href="https://docs.python.org/3/library/asyncio-policy.html" />
     
       
     
@@ -160,7 +160,7 @@
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -237,7 +237,7 @@ for the current process:</p>
 <p>The abstract event loop policy base class is defined as follows:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.AbstractEventLoopPolicy" title="Link to this definition">¶</a></dt>
 <dd><p>An abstract base class for asyncio policies.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="asyncio.AbstractEventLoopPolicy.get_event_loop">
@@ -291,7 +291,7 @@ for the current process:</p>
 <p id="asyncio-policy-builtin">asyncio ships with the following built-in policies:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.DefaultEventLoopPolicy">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">DefaultEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.DefaultEventLoopPolicy" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">DefaultEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.DefaultEventLoopPolicy" title="Link to this definition">¶</a></dt>
 <dd><p>The default asyncio policy.  Uses <a class="reference internal" href="asyncio-eventloop.html#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorEventLoop</span></code></a>
 on Unix and <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a> on Windows.</p>
 <p>There is no need to install the default policy manually. asyncio
@@ -309,7 +309,7 @@ In some future Python release this will become an error.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.WindowsSelectorEventLoopPolicy">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsSelectorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsSelectorEventLoopPolicy" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsSelectorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsSelectorEventLoopPolicy" title="Link to this definition">¶</a></dt>
 <dd><p>An alternative event loop policy that uses the
 <a class="reference internal" href="asyncio-eventloop.html#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorEventLoop</span></code></a> event loop implementation.</p>
 <div class="availability docutils container">
@@ -319,7 +319,7 @@ In some future Python release this will become an error.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.WindowsProactorEventLoopPolicy">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsProactorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsProactorEventLoopPolicy" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">WindowsProactorEventLoopPolicy</span></span><a class="headerlink" href="#asyncio.WindowsProactorEventLoopPolicy" title="Link to this definition">¶</a></dt>
 <dd><p>An alternative event loop policy that uses the
 <a class="reference internal" href="asyncio-eventloop.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProactorEventLoop</span></code></a> event loop implementation.</p>
 <div class="availability docutils container">
@@ -373,7 +373,7 @@ custom child watchers.  For such event loops, using
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.AbstractChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractChildWatcher</span></span><a class="headerlink" href="#asyncio.AbstractChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">AbstractChildWatcher</span></span><a class="headerlink" href="#asyncio.AbstractChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="asyncio.AbstractChildWatcher.add_child_handler">
 <span class="sig-name descname"><span class="pre">add_child_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.AbstractChildWatcher.add_child_handler" title="Link to this definition">¶</a></dt>
@@ -428,7 +428,7 @@ resources are cleaned-up.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.ThreadedChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">ThreadedChildWatcher</span></span><a class="headerlink" href="#asyncio.ThreadedChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">ThreadedChildWatcher</span></span><a class="headerlink" href="#asyncio.ThreadedChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><p>This implementation starts a new waiting thread for every subprocess spawn.</p>
 <p>It works reliably even when the asyncio event loop is run in a non-main OS thread.</p>
 <p>There is no noticeable overhead when handling a big number of children (<em>O</em>(1) each
@@ -441,7 +441,7 @@ time a child terminates), but starting a thread per process requires extra memor
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.MultiLoopChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">MultiLoopChildWatcher</span></span><a class="headerlink" href="#asyncio.MultiLoopChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">MultiLoopChildWatcher</span></span><a class="headerlink" href="#asyncio.MultiLoopChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><p>This implementation registers a <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code> signal handler on
 instantiation. That can break third-party code that installs a custom handler for
 <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code> signal.</p>
@@ -462,7 +462,7 @@ handling a big number of processes (<em>O</em>(<em>n</em>) each time a
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.SafeChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">SafeChildWatcher</span></span><a class="headerlink" href="#asyncio.SafeChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">SafeChildWatcher</span></span><a class="headerlink" href="#asyncio.SafeChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><p>This implementation uses active event loop from the main thread to handle
 <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code> signal. If the main thread has no running event loop another
 thread cannot spawn a subprocess (<a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> is raised).</p>
@@ -477,7 +477,7 @@ complexity but requires a running event loop in the main thread to work.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.FastChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">FastChildWatcher</span></span><a class="headerlink" href="#asyncio.FastChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">FastChildWatcher</span></span><a class="headerlink" href="#asyncio.FastChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><p>This implementation reaps every terminated processes by calling
 <code class="docutils literal notranslate"><span class="pre">os.waitpid(-1)</span></code> directly, possibly breaking other code spawning
 processes and waiting for their termination.</p>
@@ -492,7 +492,7 @@ children (<em>O</em>(1) each time a child terminates).</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="asyncio.PidfdChildWatcher">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">PidfdChildWatcher</span></span><a class="headerlink" href="#asyncio.PidfdChildWatcher" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">asyncio.</span></span><span class="sig-name descname"><span class="pre">PidfdChildWatcher</span></span><a class="headerlink" href="#asyncio.PidfdChildWatcher" title="Link to this definition">¶</a></dt>
 <dd><p>This implementation polls process file descriptors (pidfds) to await child
 process termination. In some respects, <a class="reference internal" href="#asyncio.PidfdChildWatcher" title="asyncio.PidfdChildWatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">PidfdChildWatcher</span></code></a> is a
 “Goldilocks” child watcher implementation. It doesn’t require signals or
@@ -603,7 +603,7 @@ custom behavior is wanted, e.g.:</p>
               
           </li>
     <li id="cpython-language-and-version">
-      <a href="../index.html">3.12.10 Documentation</a> &#187;
+      <a href="../index.html">3.12.9 Documentation</a> &#187;
     </li>
 
           <li class="nav-item nav-item-1"><a href="index.html" >The Python Standard Library</a> &#187;</li>
@@ -656,13 +656,13 @@ custom behavior is wanted, e.g.:</p>
 <a href="https://www.python.org/psf/donations/">Please donate.</a>
 <br />
     <br />
-      Last updated on Apr 08, 2025 (11:58 UTC).
+      Last updated on Feb 04, 2025 (15:07 UTC).
     
       <a href="/bugs.html">Found a bug</a>?
     
     <br />
 
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
 
   </body>
