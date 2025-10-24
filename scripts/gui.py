@@ -9,15 +9,12 @@ from PySide6.QtCore import Qt, QThread, Signal
 from camera_feed import CameraFeed
 from hand_landmarking.hand_landmarking import HandLandmarkDetector
 from tts import LANGUAGE_OPTIONS, GTTS_VOICES, convert_and_play, download_audio_files, cleanup
+from login import show_login_flow
 from pathlib import Path
 import json
-import bcrypt
 
 READY_FILE = Path("gui_ready.flag")
 USER_PREF_FILE = Path("user_preferences.json")
-
-if not USER_PREF_FILE.exists():
-    USER_PREF_FILE.write_text(json.dumps({}))
 
 def load_user_data():
     with open(USER_PREF_FILE, "r") as f:
@@ -43,61 +40,6 @@ class TTSWorker(QThread):
             self.finished.emit(translated_text)
         except Exception as e:
             self.error.emit(str(e))
-
-# ---- Login Dialog ----
-class LoginDialog(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("Login")
-        self.setWindowFlags(Qt.Dialog | Qt.CustomizeWindowHint)
-        self.setFixedSize(300, 180)
-
-        layout = QFormLayout(self)
-        self.username_input = QLineEdit()
-        self.password_input = QLineEdit()
-        self.password_input.setEchoMode(QLineEdit.Password)
-
-        self.login_btn = QPushButton("Login / Register")
-        self.login_btn.clicked.connect(self.login_or_register)
-
-        layout.addRow(QLabel("Username:"), self.username_input)
-        layout.addRow(QLabel("Password:"), self.password_input)
-        layout.addRow(self.login_btn)
-
-        self.user_data = load_user_data()
-        self.logged_in_user = None
-
-    def login_or_register(self):
-        username = self.username_input.text().strip()
-        password = self.password_input.text().encode("utf-8")
-
-        if not username or not password:
-            QMessageBox.warning(self, "Error", "Username and password cannot be empty")
-            return
-
-        if username in self.user_data:
-            hashed_pw = self.user_data[username]["password"].encode("utf-8")
-            if bcrypt.checkpw(password, hashed_pw):
-                self.logged_in_user = username
-                self.accept()
-            else:
-                QMessageBox.warning(self, "Error", "Incorrect password")
-        else:
-            hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
-            self.user_data[username] = {
-                "password": hashed_pw.decode("utf-8"),
-                "preferences": {
-                    "dark_mode": True,
-                    "show_landmarks": True,
-                    "tts_translation": "No Translation",
-                    "tts_voice": "English (US)",
-                    "tts_speed": "Normal"
-                }
-            }
-            save_user_data(self.user_data)
-            self.logged_in_user = username
-            QMessageBox.information(self, "Account Created", "New account registered")
-            self.accept()
 
 # ---- User Preferences Dialog ----
 class PreferencesDialog(QDialog):
@@ -492,9 +434,13 @@ class EchoMeApp(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    login_dialog = LoginDialog()
-    if login_dialog.exec() == QDialog.Accepted:
-        username = login_dialog.logged_in_user
+    # Show login flow (handles both login and signup)
+    username = show_login_flow()
+    
+    if username:
         window = EchoMeApp(username)
         window.show()
         app.exec()
+    else:
+        # User cancelled login/signup
+        print("Login cancelled by user")
