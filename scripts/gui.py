@@ -26,7 +26,7 @@ def save_user_data(data):
 
 # ---- TTS Worker Thread ----
 class TTSWorker(QThread):
-    finished = Signal(str)  # emits translated text
+    finished = Signal(str)
     error = Signal(str)
     
     def __init__(self, text, preferences):
@@ -47,7 +47,7 @@ class PreferencesDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("User Preferences")
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
-        self.setFixedSize(400, 350)
+        self.setFixedSize(450, 400)
 
         self.parent_window = parent
         self.user = user
@@ -85,53 +85,185 @@ class PreferencesDialog(QDialog):
         self.apply_styles(self.dark_mode_checkbox.isChecked())
 
     def apply_styles(self, dark_mode):
+        # ---- Color Palette Configuration ----
+        # Define all colors based on dark/light mode preference
         if dark_mode:
-            bg_color = "#222"
-            text_color = "white"
-            checkbox_border = "#008080"
-            checkbox_checked = "#339999"
-            button_color = "#008080"
-            button_hover = "#00b3b3"
-            combobox_bg = "#333333"
-            combobox_text = "white"
+            # Dark mode: GitHub-inspired dark theme with blue accents
+            bg_color = "#0d1117"              # Main dialog background
+            card_bg = "#161b22"               # Card/panel backgrounds
+            text_color = "#e6edf3"            # Primary text color
+            accent = "#1f6feb"                # Primary accent/brand color
+            accent_hover = "#58a6ff"          # Lighter accent for hover states
+            accent_glow = "rgba(88, 166, 255, 0.4)"  # Glow effect color
+            checkbox_bg = "#161b22"           # Checkbox background
+            combo_bg = "#0d1117"              # Dropdown background
+            border_color = "#30363d"          # Subtle border color
+            shadow_color = "rgba(0, 0, 0, 0.6)"  # Shadow for depth
         else:
-            bg_color = "white"
-            text_color = "black"
-            checkbox_border = "#008080"
-            checkbox_checked = "#339999"
-            button_color = "#008080"
-            button_hover = "#00b3b3"
-            combobox_bg = "white"
-            combobox_text = "black"
+            # Light mode: Clean, professional palette with blue accents
+            bg_color = "#f6f8fa"              # Main dialog background
+            card_bg = "#ffffff"               # Card/panel backgrounds
+            text_color = "#24292f"            # Primary text color
+            accent = "#0969da"                # Primary accent/brand color
+            accent_hover = "#0550ae"          # Darker accent for hover states
+            accent_glow = "rgba(9, 105, 218, 0.3)"  # Glow effect color
+            checkbox_bg = "#ffffff"           # Checkbox background
+            combo_bg = "#f6f8fa"              # Dropdown background
+            border_color = "#d0d7de"          # Subtle border color
+            shadow_color = "rgba(0, 0, 0, 0.08)"  # Light shadow for depth
 
         self.setStyleSheet(f"""
-            QDialog {{ background-color: {bg_color}; color: {text_color}; border-radius: 10px; }}
-            QLabel {{ color: {text_color}; }}
-            QCheckBox {{ spacing: 6px; color: {text_color}; }}
+            /* ---- Dialog Container ---- */
+            /* Main preferences dialog window styling */
+            QDialog {{ 
+                background-color: {bg_color}; 
+                color: {text_color}; 
+                border-radius: 20px; 
+            }}
+            
+            /* ---- Labels ---- */
+            /* Form labels and text displays */
+            QLabel {{ 
+                color: {text_color}; 
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                font-weight: 500;
+                letter-spacing: 0.3px;  /* Improved readability */
+            }}
+            
+            /* ---- Frame Containers ---- */
+            /* Generic frame/panel styling (currently unused in this dialog) */
+            QFrame {{
+                background-color: {card_bg};
+                border-radius: 12px;
+                padding: 15px;
+                border: 1px solid {border_color};
+            }}
+            
+            /* ---- Checkboxes ---- */
+            /* Checkbox text and container */
+            QCheckBox {{ 
+                spacing: 12px;              /* Space between checkbox and label */
+                color: {text_color};
+                font-size: 13px;
+                font-weight: 500;
+                padding: 8px;
+                border-radius: 6px;
+            }}
+            /* Hover effect for entire checkbox area */
+            QCheckBox:hover {{
+                background-color: {combo_bg};
+            }}
+            
+            /* Checkbox indicator box (the actual checkbox square) */
             QCheckBox::indicator {{
-                width: 18px; height: 18px; border-radius: 4px;
-                border: 2px solid {checkbox_border}; background-color: transparent;
+                width: 20px; 
+                height: 20px; 
+                border-radius: 6px;
+                border: 2px solid {border_color}; 
+                background-color: {checkbox_bg};
+                transition: all 0.2s ease;
             }}
+            /* Checkbox hover state with glow effect */
+            QCheckBox::indicator:hover {{
+                border: 2px solid {accent};
+                box-shadow: 0 0 0 3px {accent_glow};  /* Glow ring effect */
+            }}
+            /* Checked state with checkmark icon */
             QCheckBox::indicator:checked {{
-                background-color: {checkbox_checked}; border: 2px solid {checkbox_checked};
+                background-color: {accent}; 
+                border: 2px solid {accent};
+                /* SVG checkmark embedded as base64 */
+                image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEzLjMzMzMgNEw2IDExLjMzMzNMMi42NjY2NyA4IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=);
             }}
+            /* Checked checkbox hover state */
+            QCheckBox::indicator:checked:hover {{
+                background-color: {accent_hover};
+                border: 2px solid {accent_hover};
+            }}
+            
+            /* ---- Buttons ---- */
+            /* Primary action buttons (e.g., Save button) */
             QPushButton {{
-                background-color: {button_color}; color: {text_color}; border-radius: 5px; height: 30px;
+                /* Horizontal gradient from accent to hover color */
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 {accent}, stop:1 {accent_hover});
+                color: white; 
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 12px 24px;
+                border: none;
+                letter-spacing: 0.5px;
             }}
+            /* Button hover state with reversed gradient and glow */
             QPushButton:hover {{
-                background-color: {button_hover};
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 {accent_hover}, stop:1 {accent});
+                box-shadow: 0 4px 12px {accent_glow};  /* Elevated glow effect */
             }}
+            /* Button pressed/clicked state */
+            QPushButton:pressed {{
+                background: {accent};
+                padding-top: 13px;          /* Subtle downward press effect */
+                padding-bottom: 11px;
+            }}
+            
+            /* ---- Dropdown/Combo Boxes ---- */
+            /* Main dropdown styling */
             QComboBox {{
-                background-color: {combobox_bg};
-                color: {combobox_text};
-                border-radius: 5px;
-                padding: 2px 5px;
+                background-color: {combo_bg};
+                color: {text_color};
+                border: 2px solid {border_color};
+                border-radius: 10px;
+                padding: 10px 14px;
+                font-size: 13px;
+                font-weight: 500;
+                min-height: 28px;
             }}
+            /* Dropdown hover state */
+            QComboBox:hover {{
+                border: 2px solid {accent};
+                background-color: {card_bg};
+                box-shadow: 0 0 0 3px {accent_glow};  /* Focus ring effect */
+            }}
+            /* Dropdown focus state (when clicked/opened) */
+            QComboBox:focus {{
+                border: 2px solid {accent};
+                box-shadow: 0 0 0 3px {accent_glow};
+            }}
+            /* Dropdown arrow button area */
+            QComboBox::drop-down {{
+                border: none;
+                padding-right: 10px;
+                width: 20px;
+            }}
+            /* Dropdown arrow icon */
+            QComboBox::down-arrow {{
+                width: 12px;
+                height: 12px;
+            }}
+            
+            /* ---- Dropdown Menu List ---- */
+            /* The popup list that appears when dropdown is opened */
             QComboBox QAbstractItemView {{
-                background-color: {combobox_bg};
-                color: {combobox_text};
-                selection-background-color: #339999;
-                selection-color: {combobox_text};
+                background-color: {card_bg};
+                color: {text_color};
+                selection-background-color: {accent};  /* Selected item background */
+                selection-color: white;                /* Selected item text */
+                border: 2px solid {border_color};
+                border-radius: 10px;
+                padding: 6px;
+                outline: none;
+            }}
+            /* Individual items in dropdown list */
+            QComboBox QAbstractItemView::item {{
+                padding: 8px 12px;
+                border-radius: 6px;
+                margin: 2px;
+            }}
+            /* Item hover state in dropdown list */
+            QComboBox QAbstractItemView::item:hover {{
+                background-color: {accent_glow};
             }}
         """)
 
@@ -178,7 +310,7 @@ class EchoMeApp(QWidget):
 
         # ---- Top bar ----
         self.top_bar = QFrame()
-        self.top_bar.setFixedHeight(60)
+        self.top_bar.setFixedHeight(80)
         self.top_layout = QHBoxLayout(self.top_bar)
         self.top_layout.setContentsMargins(10, 0, 10, 0)
 
@@ -225,7 +357,7 @@ class EchoMeApp(QWidget):
 
         self.download_audio_btn = QPushButton("Download Audio")
         self.download_audio_btn.setFixedSize(160, 30)
-        self.download_audio_btn.setEnabled(False)  # Disabled until TTS completes
+        self.download_audio_btn.setEnabled(False)
         self.menu_layout.addWidget(self.download_audio_btn, alignment=Qt.AlignCenter)
         self.download_audio_btn.clicked.connect(self.handle_download_audio)
 
@@ -270,50 +402,210 @@ class EchoMeApp(QWidget):
 
     def set_dark_mode(self, dark: bool):
         self.dark_mode = dark
+        
+        # ---- Color Palette Configuration ----
+        # Define all colors based on dark/light mode preference
         if dark:
-            bg_color = "#333333"
-            top_bar_color = "#008080"
-            btn_color = "#00b3b3"
-            hover_color = "#66ffff"
-            transcription_bg = "#008080"
-            text_color = "white"
+            # Dark mode: GitHub-inspired dark theme with blue accents
+            bg_color = "#0d1117"                      # Main window background
+            top_bar_color = "#161b22"                 # Top bar base color
+            top_bar_gradient = "#1f6feb"              # Top bar gradient accent
+            btn_primary = "#1f6feb"                   # Primary button color
+            btn_hover = "#58a6ff"                     # Button hover state
+            btn_glow = "rgba(88, 166, 255, 0.4)"      # Button glow effect
+            transcription_bg = "#161b22"              # Transcription label background
+            text_color = "#e6edf3"                    # All text color
+            camera_bg = "#161b22"                     # Camera frame background
+            menu_bg = "#161b22"                       # Menu panel background
+            scroll_bg = "#161b22"                     # Scroll area background
+            text_edit_bg = "#0d1117"                  # Text editor background
+            border_color = "#30363d"                  # Border color for all elements
+            shadow_dark = "rgba(0, 0, 0, 0.6)"        # Strong shadow for elevation
+            shadow_light = "rgba(0, 0, 0, 0.3)"       # Light shadow for subtle depth
         else:
-            bg_color = "#f5f5f5"
-            top_bar_color = "#00b3b3"
-            btn_color = "#008080"
-            hover_color = "#00cccc"
-            transcription_bg = "#00b3b3"
-            text_color = "black"
+            # Light mode: Clean, professional palette with blue accents
+            bg_color = "#f6f8fa"                      # Main window background
+            top_bar_color = "#ffffff"                 # Top bar base color
+            top_bar_gradient = "#0969da"              # Top bar gradient accent
+            btn_primary = "#0969da"                   # Primary button color
+            btn_hover = "#0550ae"                     # Button hover state
+            btn_glow = "rgba(9, 105, 218, 0.3)"       # Button glow effect
+            transcription_bg = "#ffffff"              # Transcription label background
+            text_color = "#24292f"                    # All text color
+            camera_bg = "#ffffff"                     # Camera frame background
+            menu_bg = "#ffffff"                       # Menu panel background
+            scroll_bg = "#ffffff"                     # Scroll area background
+            text_edit_bg = "#f6f8fa"                  # Text editor background
+            border_color = "#d0d7de"                  # Border color for all elements
+            shadow_dark = "rgba(0, 0, 0, 0.15)"       # Strong shadow for elevation
+            shadow_light = "rgba(0, 0, 0, 0.08)"      # Light shadow for subtle depth
 
-        self.setStyleSheet(f"background-color: {bg_color};")
-        self.top_bar.setStyleSheet(f"background-color: {top_bar_color};")
-        self.logo_label.setStyleSheet(f"color: {text_color};")
+        # ---- Main Window Background ----
+        # Base styling for entire application window
+        self.setStyleSheet(f"""
+            QWidget {{
+                background-color: {bg_color};
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            }}
+        """)
+        
+        # ---- Top Bar Header ----
+        # Header bar with logo and user button, includes gradient effect
+        self.top_bar.setStyleSheet(f"""
+            QFrame {{
+                /* Horizontal gradient from solid color to accent */
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 {top_bar_color}, stop:0.7 {top_bar_color}, stop:1 {top_bar_gradient});
+                border-radius: 18px;
+                border: 1px solid {border_color};
+            }}
+        """)
+        
+        # ---- Logo Text ----
+        # "ECHO ME" branding text in top bar
+        self.logo_label.setStyleSheet(f"""
+            color: {text_color};
+            font-weight: 700;              /* Extra bold for prominence */
+            letter-spacing: 1px;           /* Spaced out for brand effect */
+        """)
 
+        # ---- Button Styling ----
+        # Universal button style for all buttons (user, TTS, download, STT)
+        btn_style = f"""
+            QPushButton {{
+                /* Vertical gradient from primary to hover color */
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 {btn_primary}, stop:1 {btn_hover});
+                color: white;
+                border-radius: 10px;
+                font-size: 13px;
+                font-weight: 600;
+                border: none;
+                letter-spacing: 0.3px;     /* Slight spacing for readability */
+            }}
+            /* Hover state with reversed gradient and glow */
+            QPushButton:hover {{
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 {btn_hover}, stop:1 {btn_primary});
+                box-shadow: 0 4px 12px {btn_glow};  /* Elevated shadow effect */
+            }}
+            /* Pressed/clicked state */
+            QPushButton:pressed {{
+                background: {btn_hover};
+                padding-top: 1px;          /* Subtle downward press animation */
+            }}
+            /* Disabled state (e.g., Download Audio when inactive) */
+            QPushButton:disabled {{
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 #4a4a4a, stop:1 #3a3a3a);
+                color: #888888;            /* Muted text for disabled state */
+            }}
+        """
+
+        # ---- Apply Button Styles ----
+        # Apply the unified button styling to all button widgets
         for btn in [
-            self.user_button,
-            self.text_to_speech_btn,
-            self.download_audio_btn,
-            self.speech_to_text_btn
+            self.user_button,           # Username button in top bar
+            self.text_to_speech_btn,    # Text to Speech button
+            self.download_audio_btn,    # Download Audio button
+            self.speech_to_text_btn     # Speech to Text button
         ]:
-            btn.setStyleSheet(f"""
-                QPushButton {{
-                    background-color: {btn_color};
-                    color: {text_color};
-                    border-radius: 5px;
-                    height: 30px;
-                }}
-                QPushButton:hover {{
-                    background-color: {hover_color};
-                }}
-                QPushButton:disabled {{
-                    background-color: #666666;
-                    color: #999999;
-                }}
-            """)
+            btn.setStyleSheet(btn_style)
 
-        self.camera_frame.setStyleSheet(f"background-color: {bg_color}; border-radius: 10px;")
-        self.transcription_label.setStyleSheet(f"background-color: {transcription_bg}; color: {text_color}; padding: 5px;")
-        self.camera_label.setStyleSheet("background-color: black; border-radius: 10px;")
+        # ---- Camera Frame Container ----
+        # Container that holds the camera feed display
+        self.camera_frame.setStyleSheet(f"""
+            QFrame {{
+                background-color: {camera_bg}; 
+                border-radius: 18px;
+                border: 1px solid {border_color};
+            }}
+        """)
+        
+        # ---- Menu Panel ----
+        # Panel containing the three main action buttons
+        self.menu_frame.setStyleSheet(f"""
+            QFrame {{
+                background-color: {menu_bg}; 
+                border-radius: 18px;
+                border: 1px solid {border_color};
+            }}
+        """)
+        
+        # ---- Transcription Header Label ----
+        # "Transcription" title above the text editor
+        self.transcription_label.setStyleSheet(f"""
+            QLabel {{
+                background-color: {transcription_bg}; 
+                color: {text_color}; 
+                padding: 12px;
+                border-radius: 12px;
+                border: 1px solid {border_color};
+                font-weight: 600;          /* Semi-bold for emphasis */
+                font-size: 14px;
+                letter-spacing: 0.5px;     /* Spaced for clarity */
+            }}
+        """)
+        
+        # ---- Camera Display Label ----
+        # The actual video feed display area with black background
+        self.camera_label.setStyleSheet(f"""
+            QLabel {{
+                background-color: #000000;  /* Black for video feed */
+                border-radius: 14px;
+                border: 2px solid {border_color};
+            }}
+        """)
+        
+        # ---- Scroll Area Container ----
+        # Scrollable container for the transcription text editor
+        self.scroll_area.setStyleSheet(f"""
+            QScrollArea {{
+                background-color: {scroll_bg};
+                border: 1px solid {border_color};
+                border-radius: 12px;
+            }}
+            
+            /* ---- Custom Scrollbar ---- */
+            /* Vertical scrollbar track */
+            QScrollBar:vertical {{
+                background: {text_edit_bg};
+                width: 10px;
+                border-radius: 5px;
+                margin: 2px;
+            }}
+            /* Scrollbar handle (draggable part) */
+            QScrollBar::handle:vertical {{
+                background: {btn_primary};
+                border-radius: 5px;
+                min-height: 30px;
+            }}
+            /* Scrollbar handle hover state */
+            QScrollBar::handle:vertical:hover {{
+                background: {btn_hover};
+            }}
+            /* Hide scrollbar arrow buttons */
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
+                height: 0px;
+            }}
+        """)
+        
+        # ---- Transcription Text Editor ----
+        # Main text editing area for transcribed/translated text
+        self.transcription_content.setStyleSheet(f"""
+            QTextEdit {{
+                background-color: {text_edit_bg};
+                color: {text_color};
+                border: none;
+                border-radius: 10px;
+                padding: 16px;
+                font-size: 11pt;
+                line-height: 1.6;          /* Comfortable line spacing */
+                font-weight: 400;          /* Regular weight for body text */
+                selection-background-color: {btn_primary};  /* Highlighted text background */
+                selection-color: white;                      /* Highlighted text color */
+            }}
+        """)
 
     def open_preferences(self):
         dialog = PreferencesDialog(self, self.username)
@@ -350,7 +642,7 @@ class EchoMeApp(QWidget):
             self.hand_detector.close()
         if READY_FILE.exists():
             READY_FILE.unlink()
-        cleanup()  # Clean up TTS resources
+        cleanup()
         event.accept()
 
     def load_user_preferences(self):
@@ -363,54 +655,45 @@ class EchoMeApp(QWidget):
         self.tts_speed = prefs.get("tts_speed", "Normal")
         
     def handle_text_to_speech(self):
-        """Convert text to speech and play it"""
         text = self.transcription_content.toPlainText().strip()
         
         if not text or text == "Transcription goes here...":
             QMessageBox.warning(self, "No Text", "Please enter text in the transcription area first.")
             return
 
-        # Prepare preferences for TTS
         prefs_for_tts = {
             "translate_to": self.tts_translation,
             "voice": self.tts_voice,
             "speed": self.tts_speed
         }
 
-        # Disable button while processing
         self.text_to_speech_btn.setEnabled(False)
         self.text_to_speech_btn.setText("Processing...")
         self.download_audio_btn.setEnabled(False)
 
-        # Create and start worker thread
         self.tts_worker = TTSWorker(text, prefs_for_tts)
         self.tts_worker.finished.connect(self.on_tts_finished)
         self.tts_worker.error.connect(self.on_tts_error)
         self.tts_worker.start()
 
     def on_tts_finished(self, translated_text):
-        """Called when TTS conversion and playback complete"""
         self.text_to_speech_btn.setEnabled(True)
         self.text_to_speech_btn.setText("Text to Speech")
         self.download_audio_btn.setEnabled(True)
         
         original_text = self.transcription_content.toPlainText().strip()
         
-        # Update transcription box with translated text if translation was used
         if translated_text != original_text and self.tts_translation != "No Translation":
             self.transcription_content.setText(translated_text)
         
-        # Simple success message without showing the translated text
         QMessageBox.information(self, "Playback Complete", "Audio playback finished successfully!")
 
     def on_tts_error(self, error_message):
-        """Called when TTS conversion or playback fails"""
         self.text_to_speech_btn.setEnabled(True)
         self.text_to_speech_btn.setText("Text to Speech")
         QMessageBox.critical(self, "TTS Error", f"Text-to-Speech failed:\n{error_message}")
 
     def handle_download_audio(self):
-        """Download generated audio files to a selected folder"""
         folder_selected = QFileDialog.getExistingDirectory(
             self, 
             "Select Download Folder",
@@ -434,7 +717,6 @@ class EchoMeApp(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    # Show login flow (handles both login and signup)
     username = show_login_flow()
     
     if username:
@@ -442,5 +724,4 @@ if __name__ == "__main__":
         window.show()
         app.exec()
     else:
-        # User cancelled login/signup
         print("Login cancelled by user")
