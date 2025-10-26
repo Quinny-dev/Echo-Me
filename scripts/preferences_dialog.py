@@ -1,6 +1,6 @@
 """
-Preferences Dialog Module
-Handles user preferences dialog and settings
+Preferences Dialog Module - Fixed Color Contrast
+Handles user preferences dialog and settings with improved visibility
 """
 
 from PySide6.QtWidgets import QDialog, QFormLayout, QCheckBox, QComboBox, QPushButton, QLabel
@@ -59,27 +59,33 @@ class PreferencesDialog(QDialog):
         """Apply styling based on dark/light mode"""
         # Color palette configuration
         if dark_mode:
-            # Dark mode colors
+            # Dark mode colors - FIXED for better contrast
             bg_color = "#0d1117"
             card_bg = "#161b22"
-            text_color = "#e6edf3"
-            accent = "#1f6feb"
-            accent_hover = "#58a6ff"
+            text_color = "#c9d1d9"  # Lighter text for better visibility
+            label_color = "#e6edf3"  # Even lighter for form labels
+            accent = "#58a6ff"  # Brighter accent
+            accent_hover = "#79b8ff"
             accent_glow = "rgba(88, 166, 255, 0.4)"
-            checkbox_bg = "#161b22"
+            checkbox_bg = "#21262d"  # Slightly lighter background
             combo_bg = "#0d1117"
+            combo_text = "#e6edf3"  # Bright text for dropdown
             border_color = "#30363d"
+            hover_bg = "#21262d"  # Visible hover state
         else:
             # Light mode colors
             bg_color = "#f6f8fa"
             card_bg = "#ffffff"
             text_color = "#24292f"
+            label_color = "#24292f"
             accent = "#0969da"
             accent_hover = "#0550ae"
             accent_glow = "rgba(9, 105, 218, 0.3)"
             checkbox_bg = "#ffffff"
             combo_bg = "#f6f8fa"
+            combo_text = "#24292f"
             border_color = "#d0d7de"
+            hover_bg = "#f3f4f6"
 
         self.setStyleSheet(f"""
             QDialog {{ 
@@ -89,10 +95,11 @@ class PreferencesDialog(QDialog):
             }}
             
             QLabel {{ 
-                color: {text_color}; 
+                color: {label_color}; 
                 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
                 font-weight: 500;
                 letter-spacing: 0.3px;
+                font-size: 13px;
             }}
             
             QFrame {{
@@ -104,14 +111,14 @@ class PreferencesDialog(QDialog):
             
             QCheckBox {{ 
                 spacing: 12px;
-                color: {text_color};
+                color: {label_color};
                 font-size: 13px;
                 font-weight: 500;
                 padding: 8px;
                 border-radius: 6px;
             }}
             QCheckBox:hover {{
-                background-color: {combo_bg};
+                background-color: {hover_bg};
             }}
             
             QCheckBox::indicator {{
@@ -159,7 +166,7 @@ class PreferencesDialog(QDialog):
             
             QComboBox {{
                 background-color: {combo_bg};
-                color: {text_color};
+                color: {combo_text};
                 border: 2px solid {border_color};
                 border-radius: 10px;
                 padding: 10px 14px;
@@ -169,7 +176,7 @@ class PreferencesDialog(QDialog):
             }}
             QComboBox:hover {{
                 border: 2px solid {accent};
-                background-color: {card_bg};
+                background-color: {hover_bg};
                 box-shadow: 0 0 0 3px {accent_glow};
             }}
             QComboBox:focus {{
@@ -185,12 +192,12 @@ class PreferencesDialog(QDialog):
                 image: none;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                border-top: 6px solid {text_color};
+                border-top: 6px solid {combo_text};
                 margin-right: 6px;
             }}
             QComboBox QAbstractItemView {{
                 background-color: {card_bg};
-                color: {text_color};
+                color: {combo_text};
                 border: 2px solid {accent};
                 border-radius: 8px;
                 selection-background-color: {accent};
@@ -201,10 +208,11 @@ class PreferencesDialog(QDialog):
                 padding: 8px 12px;
                 border-radius: 4px;
                 margin: 2px;
+                color: {combo_text};
             }}
             QComboBox QAbstractItemView::item:hover {{
-                background-color: {accent_glow};
-                color: {text_color};
+                background-color: {hover_bg};
+                color: {combo_text};
             }}
             QComboBox QAbstractItemView::item:selected {{
                 background-color: {accent};

@@ -1,6 +1,6 @@
 """
-Styling and Themes Module
-Handles all UI styling and theme management
+Styling and Themes Module - Fixed Color Contrast
+Handles all UI styling and theme management with improved visibility
 """
 
 
@@ -14,41 +14,47 @@ class ThemeManager:
         """Get color palette for the specified theme"""
         if dark_mode:
             return {
-                # Dark mode: GitHub-inspired dark theme with blue accents
+                # Dark mode: GitHub-inspired dark theme with blue accents - IMPROVED CONTRAST
                 'bg_color': "#0d1117",                      # Main window background
                 'top_bar_color': "#161b22",                 # Top bar base color
-                'top_bar_gradient': "#1f6feb",              # Top bar gradient accent
-                'btn_primary': "#1f6feb",                   # Primary button color
-                'btn_hover': "#58a6ff",                     # Button hover state
+                'top_bar_gradient': "#1c2938",              # Darker gradient (less blue, more readable)
+                'btn_primary': "#58a6ff",                   # Brighter primary button
+                'btn_hover': "#79b8ff",                     # Lighter hover state
                 'btn_glow': "rgba(88, 166, 255, 0.4)",      # Button glow effect
                 'transcription_bg': "#161b22",              # Transcription label background
-                'text_color': "#e6edf3",                    # All text color
+                'text_color': "#c9d1d9",                    # Main text color (better contrast)
+                'text_color_bright': "#e6edf3",             # Bright text for emphasis
                 'camera_bg': "#161b22",                     # Camera frame background
                 'menu_bg': "#161b22",                       # Menu panel background
                 'scroll_bg': "#161b22",                     # Scroll area background
                 'text_edit_bg': "#0d1117",                  # Text editor background
                 'border_color': "#30363d",                  # Border color for all elements
                 'shadow_dark': "rgba(0, 0, 0, 0.6)",        # Strong shadow for elevation
-                'shadow_light': "rgba(0, 0, 0, 0.3)"        # Light shadow for subtle depth
+                'shadow_light': "rgba(0, 0, 0, 0.3)",       # Light shadow for subtle depth
+                'disabled_bg': "#21262d",                   # Disabled button background
+                'disabled_text': "#8b949e"                  # Disabled button text
             }
         else:
             return {
                 # Light mode: Clean, professional palette with blue accents
                 'bg_color': "#f6f8fa",                      # Main window background
                 'top_bar_color': "#ffffff",                 # Top bar base color
-                'top_bar_gradient': "#0969da",              # Top bar gradient accent
+                'top_bar_gradient': "#e8f0fe",              # Light blue gradient
                 'btn_primary': "#0969da",                   # Primary button color
                 'btn_hover': "#0550ae",                     # Button hover state
                 'btn_glow': "rgba(9, 105, 218, 0.3)",       # Button glow effect
                 'transcription_bg': "#ffffff",              # Transcription label background
-                'text_color': "#24292f",                    # All text color
+                'text_color': "#24292f",                    # Main text color
+                'text_color_bright': "#24292f",             # Same in light mode
                 'camera_bg': "#ffffff",                     # Camera frame background
                 'menu_bg': "#ffffff",                       # Menu panel background
                 'scroll_bg': "#ffffff",                     # Scroll area background
                 'text_edit_bg': "#f6f8fa",                  # Text editor background
                 'border_color': "#d0d7de",                  # Border color for all elements
                 'shadow_dark': "rgba(0, 0, 0, 0.15)",       # Strong shadow for elevation
-                'shadow_light': "rgba(0, 0, 0, 0.08)"       # Light shadow for subtle depth
+                'shadow_light': "rgba(0, 0, 0, 0.08)",      # Light shadow for subtle depth
+                'disabled_bg': "#94a3b8",                   # Disabled button background
+                'disabled_text': "#64748b"                  # Disabled button text
             }
     
     def get_button_style(self, colors):
@@ -78,9 +84,8 @@ class ThemeManager:
             }}
             /* Disabled state (e.g., Download Audio when inactive) */
             QPushButton:disabled {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                    stop:0 #4a4a4a, stop:1 #3a3a3a);
-                color: #888888;            /* Muted text for disabled state */
+                background: {colors['disabled_bg']};
+                color: {colors['disabled_text']};  /* Muted text for disabled state */
             }}
         """
     
@@ -123,7 +128,7 @@ class ThemeManager:
         return f"""
             QTextEdit {{
                 background-color: {colors['text_edit_bg']};
-                color: {colors['text_color']};
+                color: {colors['text_color_bright']};  /* Use bright text for readability */
                 border: none;
                 border-radius: 10px;
                 padding: 16px;
@@ -167,12 +172,13 @@ class ThemeManager:
         return f"""
             QWidget {{
                 background-color: {colors['bg_color']};
+                color: {colors['text_color']};
                 font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             }}
         """
     
     def get_top_bar_style(self, colors):
-        """Get top bar styling"""
+        """Get top bar styling with better text visibility"""
         return f"""
             QFrame {{
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
@@ -181,11 +187,14 @@ class ThemeManager:
                 border: 1px solid {colors['border_color']};
             }}
             QLabel {{
-                color: white;
+                color: {colors['text_color_bright']};  /* Use bright text instead of white */
                 font-size: 20px;
                 font-weight: 700;
                 letter-spacing: 2px;
                 text-shadow: 2px 2px 4px {colors['shadow_dark']};
+            }}
+            QPushButton {{
+                color: {colors['text_color_bright']};  /* Ensure button text is visible */
             }}
         """
     
