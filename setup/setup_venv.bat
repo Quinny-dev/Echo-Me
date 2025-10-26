@@ -47,12 +47,12 @@ if errorlevel 1 (
 )
 
 echo [INFO] Verifying TensorFlow installation...
-python -c "import tensorflow as tf; print('TensorFlow Version:', tf.__version__')" || (
+python -c "import tensorflow as tf; print('TensorFlow Version:', tf.__version__)" || (
     echo [WARNING] TensorFlow not found!
 )
 
 echo [INFO] Verifying MediaPipe installation...
-python -c "import mediapipe as mp; print('MediaPipe Version:', mp.__version__')" || (
+python -c "import mediapipe as mp; print('MediaPipe Version:', mp.__version__)" || (
     echo [WARNING] MediaPipe not found!
 )
 
