@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *.pyo
 
+/tts_chunks
+
+*.flag
+
 # OS‑generated files
 .DS_Store
 Thumbs.db
