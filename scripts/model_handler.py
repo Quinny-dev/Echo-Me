@@ -1,3 +1,4 @@
+
 """
 model_handler.py
 Handles loading the trained sign language model and running real-time predictions.
@@ -69,6 +70,9 @@ class ModelHandler(QObject):
         self.LABELS = []
         self.TIMESTEPS = 30
         self.window = None
+        
+        # ✅ Track last prediction to avoid duplicates
+        self.last_predicted_label = None
 
         self._load_model()
         self._load_labels()
@@ -172,11 +176,18 @@ class ModelHandler(QObject):
 
             print(f"🔮 Prediction attempt: {label} ({confidence:.2f})")
 
-            if confidence > 0.5:
+            # ✅ Filter out "None", low confidence, and duplicate consecutive predictions
+            if confidence > 0.5 and label != "None" and label != self.last_predicted_label:
                 print(f"✅ Emitting prediction: {label} ({confidence:.2f})")
                 self.prediction_made.emit(label, confidence)
+                self.last_predicted_label = label  # ✅ Update last prediction
             else:
-                print(f"⚠️ Prediction confidence too low: {confidence:.2f}")
+                if label == "None":
+                    print(f"🚫 Filtered out 'None' prediction")
+                elif label == self.last_predicted_label:
+                    print(f"🔁 Filtered out duplicate prediction: {label}")
+                else:
+                    print(f"⚠️ Prediction confidence too low: {confidence:.2f}")
 
         except Exception as e:
             print(f"❌ Error during model prediction: {e}")

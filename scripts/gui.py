@@ -14,6 +14,7 @@ from PySide6.QtCore import Qt
 # Import external modules
 import tensorflow as tf
 import numpy as np
+from pathlib import Path
 from model_handler import ModelHandler
 from user_data import get_user_preferences
 from tts_handler import TTSHandler
@@ -23,6 +24,9 @@ from styling import ThemeManager, apply_theme
 from camera_handler import CameraHandler
 from model_handler import ModelHandler
 from login import show_login_flow
+
+# ✅ Ready flag for splash screen
+READY_FILE = Path("gui_ready.flag")
 
 
 class EchoMeApp(QWidget):
@@ -38,6 +42,9 @@ class EchoMeApp(QWidget):
         self.stt_handler = None
         self.camera_handler = None
         self.model_handler = None
+        
+        # ✅ Track last word added to prevent GUI-level duplicates
+        self.last_displayed_word = None
         
         self.setup_window()
         self.setup_ui()
@@ -140,11 +147,12 @@ class EchoMeApp(QWidget):
         btn_layout.addStretch()
         layout.addLayout(btn_layout)
 
-        # Text Area
+        # ✅ Text Area - READ-ONLY for model predictions
         self.tts_scroll = QScrollArea()
         self.tts_content = QTextEdit()
-        self.tts_content.setText("Enter text here for Text-To-Speech...")
-        self.tts_content.focusInEvent = self.clear_placeholder_tts
+        self.tts_content.setReadOnly(True)  # ✅ Read-only
+        self.tts_content.setText("Model predictions will appear here...")  # ✅ Updated placeholder
+        # ✅ Removed focusInEvent since it's read-only
         self.tts_scroll.setWidgetResizable(True)
         self.tts_scroll.setWidget(self.tts_content)
         layout.addWidget(self.tts_scroll)
@@ -205,9 +213,43 @@ class EchoMeApp(QWidget):
             print("❌ Failed to start camera.")
     
     def on_model_prediction(self, label, confidence):
+        """
+        Handle model predictions - display as sentence without confidence scores.
+        Filters out duplicates and formats as continuous text.
+        """
         print(f"🔮 PREDICTION RECEIVED: {label} ({confidence:.2f})")
-        self.tts_content.append(f"[Model]: {label} ({confidence:.2f})")
-
+        
+        # ✅ Case-insensitive duplicate check
+        if self.last_displayed_word and label.lower() == self.last_displayed_word.lower():
+            print(f"🔁 GUI-level duplicate filter blocked: {label}")
+            return
+        
+        # ✅ Get current text
+        current_text = self.tts_content.toPlainText()
+        
+        # ✅ Clear placeholder on first real prediction
+        if current_text == "Model predictions will appear here...":
+            self.tts_content.clear()
+            current_text = ""
+        
+        # ✅ Build sentence format (append with space, not new line)
+        if current_text:
+            # Add space before new word
+            new_text = current_text + " " + label
+        else:
+            # First word - capitalize it
+            new_text = label.capitalize()
+        
+        # ✅ Set the text (replaces everything, so it's on one line)
+        self.tts_content.setText(new_text)
+        
+        # ✅ Update last displayed word (store in lowercase for comparison)
+        self.last_displayed_word = label
+        
+        # ✅ Move cursor to end for visual feedback
+        cursor = self.tts_content.textCursor()
+        cursor.movePosition(cursor.End)
+        self.tts_content.setTextCursor(cursor)
     
     # ------------------- TTS & STT Delegation -------------------
     def handle_text_to_speech(self):
@@ -226,10 +268,7 @@ class EchoMeApp(QWidget):
     def show_microphone_selection(self):
         self.stt_handler.show_microphone_selection()
     
-    def clear_placeholder_tts(self, event):
-        if self.tts_content.toPlainText() == "Enter text here for Text-To-Speech...":
-            self.tts_content.clear()
-        QTextEdit.focusInEvent(self.tts_content, event)
+    # ✅ Removed clear_placeholder_tts method since text area is now read-only
     
     def open_preferences(self):
         dialog = PreferencesDialog(self, self.username)

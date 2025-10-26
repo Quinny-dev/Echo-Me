@@ -73,17 +73,33 @@ def splash_screen():
 
     # Center window
     root.eval('tk::PlaceWindow . center')
+    
+    # Delete old ready file if it exists
+    if READY_FILE.exists():
+        try:
+            READY_FILE.unlink()
+        except Exception:
+            pass
 
     # Launch GUI in background
     pythonw_path = BASE_DIR / "setup" / "venv" / "Scripts" / "pythonw.exe"
     gui_path = BASE_DIR / "scripts" / "gui.py"
-    subprocess.Popen([str(pythonw_path), str(gui_path)], shell=False)
+    
+    subprocess.Popen([str(pythonw_path), str(gui_path)], shell=False, cwd=str(BASE_DIR))
 
     # Wait for GUI ready flag, then close splash
     def wait_for_gui_ready():
-        while not READY_FILE.exists():
-            time.sleep(0.1)
-        time.sleep(1)
+        max_wait = 60
+        wait_time = 0
+        check_interval = 0.2
+        
+        while not READY_FILE.exists() and wait_time < max_wait:
+            time.sleep(check_interval)
+            wait_time += check_interval
+        
+        if READY_FILE.exists():
+            time.sleep(0.5)
+        
         root.destroy()
 
     threading.Thread(target=wait_for_gui_ready, daemon=True).start()
