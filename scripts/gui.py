@@ -1,3 +1,11 @@
+# ================================================================
+# STYLED VERSION - No current model built for  (Keras 3.x)
+# to run double click executable on screen
+# ================================================================
+import tensorflow as tf
+import numpy as np
+from tools.holistic import normalize_features, to_landmark_row
+from pathlib import Path
 from PySide6.QtWidgets import ( 
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QTextEdit, QFrame, QGraphicsDropShadowEffect,
@@ -10,7 +18,6 @@ from camera_feed import CameraFeed
 from hand_landmarking.hand_landmarking import HandLandmarkDetector
 from tts import LANGUAGE_OPTIONS, GTTS_VOICES, convert_and_play, download_audio_files, cleanup
 from login import show_login_flow
-from pathlib import Path
 import json
 
 READY_FILE = Path("gui_ready.flag")
@@ -286,6 +293,41 @@ class PreferencesDialog(QDialog):
             save_user_data(data)
         self.accept()
 
+def load_labels_from_data_folder():
+    """
+    Automatically loads class labels from your data folder in alphabetical order.
+    Matches training pipeline logic.
+    """
+    data_dir = Path("data")
+    label_dirs = []
+
+    folder_order = ["None", "holds_data", "nonholds_data"]
+
+    for folder_name in folder_order:
+        folder_path = data_dir / folder_name
+        if folder_name == "None":
+            label_dirs.append("None")
+        else:
+            for f in sorted(folder_path.iterdir()):
+                if f.is_dir():
+                    label_dirs.append(f.name)
+
+    print("✅ Loaded labels:", label_dirs)
+    return label_dirs        
+class ModelLoader(QThread):
+    model_loaded = Signal(object, list, int)  # model, labels, timesteps
+    error = Signal(str)
+
+    def run(self):
+        try:
+            model_path = "models/model_fast"
+            model = tf.keras.models.load_model(model_path)
+            labels = load_labels_from_data_folder()
+            timesteps = model.input_shape[1]
+            self.model_loaded.emit(model, labels, timesteps)
+        except Exception as e:
+            self.error.emit(str(e))
+
 # ---- Main App ----
 class EchoMeApp(QWidget):
     def __init__(self, username):
@@ -293,17 +335,18 @@ class EchoMeApp(QWidget):
         self.username = username
         self.setWindowTitle(f"ECHO ME - {username}")
         self.setWindowIcon(QIcon("assets/Echo_Me_Logo.ico"))
-
         self.setFixedSize(658, 780)
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         self.dark_mode = True
         self.center_top()
 
+        # ---- User TTS Settings ----
         self.tts_translation = "No Translation"
         self.tts_voice = "English (US)"
         self.tts_speed = "Normal"
         self.tts_worker = None
 
+        # ---- Main Layout ----
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(10)
@@ -343,7 +386,24 @@ class EchoMeApp(QWidget):
         self.camera_layout.addWidget(self.camera_label)
         self.main_layout.addWidget(self.camera_frame)
 
-        # ---- Menu panel ----
+        # ---- Loading Placeholder ----
+        self.model = None
+        self.LABELS = []
+        self.TIMESTEPS = 0
+        self.window = None
+        self.frame_counter = 0
+
+        self.loading_label = QLabel("Loading model... Please wait")
+        self.loading_label.setAlignment(Qt.AlignCenter)
+        self.loading_label.setFont(QFont("Arial", 14, QFont.Bold))
+        self.main_layout.addWidget(self.loading_label)
+
+        self.model_loader = ModelLoader()
+        self.model_loader.model_loaded.connect(self.on_model_loaded)
+        self.model_loader.error.connect(self.on_model_error)
+        self.model_loader.start()
+
+        # ---- Menu Panel ----
         self.menu_frame = QFrame()
         self.menu_frame.setFixedHeight(60)
         self.menu_layout = QHBoxLayout(self.menu_frame)
@@ -352,14 +412,14 @@ class EchoMeApp(QWidget):
 
         self.text_to_speech_btn = QPushButton("Text to Speech")
         self.text_to_speech_btn.setFixedSize(160, 30)
-        self.menu_layout.addWidget(self.text_to_speech_btn, alignment=Qt.AlignLeft)
         self.text_to_speech_btn.clicked.connect(self.handle_text_to_speech)
+        self.menu_layout.addWidget(self.text_to_speech_btn, alignment=Qt.AlignLeft)
 
         self.download_audio_btn = QPushButton("Download Audio")
         self.download_audio_btn.setFixedSize(160, 30)
         self.download_audio_btn.setEnabled(False)
-        self.menu_layout.addWidget(self.download_audio_btn, alignment=Qt.AlignCenter)
         self.download_audio_btn.clicked.connect(self.handle_download_audio)
+        self.menu_layout.addWidget(self.download_audio_btn, alignment=Qt.AlignCenter)
 
         self.speech_to_text_btn = QPushButton("Speech to Text")
         self.speech_to_text_btn.setFixedSize(160, 30)
@@ -367,7 +427,7 @@ class EchoMeApp(QWidget):
 
         self.main_layout.addWidget(self.menu_frame)
 
-        # ---- Transcription panel ----
+        # ---- Transcription Panel ----
         self.transcription_label = QLabel("Transcription")
         self.transcription_label.setAlignment(Qt.AlignCenter)
         self.transcription_label.setFixedHeight(40)
@@ -395,236 +455,52 @@ class EchoMeApp(QWidget):
         self.set_dark_mode(self.dark_mode)
         self.load_user_preferences()
 
-    def clear_placeholder(self, event):
-        if self.transcription_content.toPlainText() == "Transcription goes here...":
-            self.transcription_content.clear()
-        QTextEdit.focusInEvent(self.transcription_content, event)
+    # ------------------------ MODEL CALLBACKS ------------------------
 
-    def set_dark_mode(self, dark: bool):
-        self.dark_mode = dark
-        
-        # ---- Color Palette Configuration ----
-        # Define all colors based on dark/light mode preference
-        if dark:
-            # Dark mode: GitHub-inspired dark theme with blue accents
-            bg_color = "#0d1117"                      # Main window background
-            top_bar_color = "#161b22"                 # Top bar base color
-            top_bar_gradient = "#1f6feb"              # Top bar gradient accent
-            btn_primary = "#1f6feb"                   # Primary button color
-            btn_hover = "#58a6ff"                     # Button hover state
-            btn_glow = "rgba(88, 166, 255, 0.4)"      # Button glow effect
-            transcription_bg = "#161b22"              # Transcription label background
-            text_color = "#e6edf3"                    # All text color
-            camera_bg = "#161b22"                     # Camera frame background
-            menu_bg = "#161b22"                       # Menu panel background
-            scroll_bg = "#161b22"                     # Scroll area background
-            text_edit_bg = "#0d1117"                  # Text editor background
-            border_color = "#30363d"                  # Border color for all elements
-            shadow_dark = "rgba(0, 0, 0, 0.6)"        # Strong shadow for elevation
-            shadow_light = "rgba(0, 0, 0, 0.3)"       # Light shadow for subtle depth
-        else:
-            # Light mode: Clean, professional palette with blue accents
-            bg_color = "#f6f8fa"                      # Main window background
-            top_bar_color = "#ffffff"                 # Top bar base color
-            top_bar_gradient = "#0969da"              # Top bar gradient accent
-            btn_primary = "#0969da"                   # Primary button color
-            btn_hover = "#0550ae"                     # Button hover state
-            btn_glow = "rgba(9, 105, 218, 0.3)"       # Button glow effect
-            transcription_bg = "#ffffff"              # Transcription label background
-            text_color = "#24292f"                    # All text color
-            camera_bg = "#ffffff"                     # Camera frame background
-            menu_bg = "#ffffff"                       # Menu panel background
-            scroll_bg = "#ffffff"                     # Scroll area background
-            text_edit_bg = "#f6f8fa"                  # Text editor background
-            border_color = "#d0d7de"                  # Border color for all elements
-            shadow_dark = "rgba(0, 0, 0, 0.15)"       # Strong shadow for elevation
-            shadow_light = "rgba(0, 0, 0, 0.08)"      # Light shadow for subtle depth
+    def on_model_loaded(self, model, labels, timesteps):
+        self.model = model
+        self.LABELS = labels
+        self.TIMESTEPS = timesteps
+        self.window = np.zeros((self.TIMESTEPS, 130))  # ✅ Your confirmed vector size
 
-        # ---- Main Window Background ----
-        # Base styling for entire application window
-        self.setStyleSheet(f"""
-            QWidget {{
-                background-color: {bg_color};
-                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            }}
-        """)
-        
-        # ---- Top Bar Header ----
-        # Header bar with logo and user button, includes gradient effect
-        self.top_bar.setStyleSheet(f"""
-            QFrame {{
-                /* Horizontal gradient from solid color to accent */
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
-                    stop:0 {top_bar_color}, stop:0.7 {top_bar_color}, stop:1 {top_bar_gradient});
-                border-radius: 18px;
-                border: 1px solid {border_color};
-            }}
-        """)
-        
-        # ---- Logo Text ----
-        # "ECHO ME" branding text in top bar
-        self.logo_label.setStyleSheet(f"""
-            color: {text_color};
-            font-weight: 700;              /* Extra bold for prominence */
-            letter-spacing: 1px;           /* Spaced out for brand effect */
-        """)
+        if self.loading_label:
+            self.loading_label.deleteLater()
 
-        # ---- Button Styling ----
-        # Universal button style for all buttons (user, TTS, download, STT)
-        btn_style = f"""
-            QPushButton {{
-                /* Vertical gradient from primary to hover color */
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                    stop:0 {btn_primary}, stop:1 {btn_hover});
-                color: white;
-                border-radius: 10px;
-                font-size: 13px;
-                font-weight: 600;
-                border: none;
-                letter-spacing: 0.3px;     /* Slight spacing for readability */
-            }}
-            /* Hover state with reversed gradient and glow */
-            QPushButton:hover {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                    stop:0 {btn_hover}, stop:1 {btn_primary});
-                box-shadow: 0 4px 12px {btn_glow};  /* Elevated shadow effect */
-            }}
-            /* Pressed/clicked state */
-            QPushButton:pressed {{
-                background: {btn_hover};
-                padding-top: 1px;          /* Subtle downward press animation */
-            }}
-            /* Disabled state (e.g., Download Audio when inactive) */
-            QPushButton:disabled {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                    stop:0 #4a4a4a, stop:1 #3a3a3a);
-                color: #888888;            /* Muted text for disabled state */
-            }}
-        """
+        self.transcription_content.append("[System]: ✅ Model loaded successfully!")
+        print("✅ Model is ready and prediction will start automatically.")
 
-        # ---- Apply Button Styles ----
-        # Apply the unified button styling to all button widgets
-        for btn in [
-            self.user_button,           # Username button in top bar
-            self.text_to_speech_btn,    # Text to Speech button
-            self.download_audio_btn,    # Download Audio button
-            self.speech_to_text_btn     # Speech to Text button
-        ]:
-            btn.setStyleSheet(btn_style)
+    def on_model_error(self, error_message):
+        QMessageBox.critical(self, "Model Load Error", f"Failed to load model:\n{error_message}")
+        print(f"❌ Model load failed: {error_message}")
 
-        # ---- Camera Frame Container ----
-        # Container that holds the camera feed display
-        self.camera_frame.setStyleSheet(f"""
-            QFrame {{
-                background-color: {camera_bg}; 
-                border-radius: 18px;
-                border: 1px solid {border_color};
-            }}
-        """)
-        
-        # ---- Menu Panel ----
-        # Panel containing the three main action buttons
-        self.menu_frame.setStyleSheet(f"""
-            QFrame {{
-                background-color: {menu_bg}; 
-                border-radius: 18px;
-                border: 1px solid {border_color};
-            }}
-        """)
-        
-        # ---- Transcription Header Label ----
-        # "Transcription" title above the text editor
-        self.transcription_label.setStyleSheet(f"""
-            QLabel {{
-                background-color: {transcription_bg}; 
-                color: {text_color}; 
-                padding: 12px;
-                border-radius: 12px;
-                border: 1px solid {border_color};
-                font-weight: 600;          /* Semi-bold for emphasis */
-                font-size: 14px;
-                letter-spacing: 0.5px;     /* Spaced for clarity */
-            }}
-        """)
-        
-        # ---- Camera Display Label ----
-        # The actual video feed display area with black background
-        self.camera_label.setStyleSheet(f"""
-            QLabel {{
-                background-color: #000000;  /* Black for video feed */
-                border-radius: 14px;
-                border: 2px solid {border_color};
-            }}
-        """)
-        
-        # ---- Scroll Area Container ----
-        # Scrollable container for the transcription text editor
-        self.scroll_area.setStyleSheet(f"""
-            QScrollArea {{
-                background-color: {scroll_bg};
-                border: 1px solid {border_color};
-                border-radius: 12px;
-            }}
-            
-            /* ---- Custom Scrollbar ---- */
-            /* Vertical scrollbar track */
-            QScrollBar:vertical {{
-                background: {text_edit_bg};
-                width: 10px;
-                border-radius: 5px;
-                margin: 2px;
-            }}
-            /* Scrollbar handle (draggable part) */
-            QScrollBar::handle:vertical {{
-                background: {btn_primary};
-                border-radius: 5px;
-                min-height: 30px;
-            }}
-            /* Scrollbar handle hover state */
-            QScrollBar::handle:vertical:hover {{
-                background: {btn_hover};
-            }}
-            /* Hide scrollbar arrow buttons */
-            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
-                height: 0px;
-            }}
-        """)
-        
-        # ---- Transcription Text Editor ----
-        # Main text editing area for transcribed/translated text
-        self.transcription_content.setStyleSheet(f"""
-            QTextEdit {{
-                background-color: {text_edit_bg};
-                color: {text_color};
-                border: none;
-                border-radius: 10px;
-                padding: 16px;
-                font-size: 11pt;
-                line-height: 1.6;          /* Comfortable line spacing */
-                font-weight: 400;          /* Regular weight for body text */
-                selection-background-color: {btn_primary};  /* Highlighted text background */
-                selection-color: white;                      /* Highlighted text color */
-            }}
-        """)
-
-    def open_preferences(self):
-        dialog = PreferencesDialog(self, self.username)
-        dialog.exec()
-
-    def landmark_toggle_btn_state(self, state):
-        self.show_landmarks = state
-        if self.camera:
-            self.camera.set_draw_landmarks(state)
-        print(f"Hand landmark overlay {'enabled' if state else 'disabled'}")
-
-    def signal_ready(self):
-        try:
-            READY_FILE.write_text("ready")
-        except Exception:
-            pass
+    # ------------------------ FRAME PROCESSING ------------------------
 
     def process_frame(self, frame, landmarks):
-        pass
+        if self.model is None or self.window is None:
+            return  # Model not ready yet
+
+        if landmarks is None:
+            return
+
+        try:
+            features = to_landmark_row(landmarks, use_holistic=False)
+            normalized = normalize_features(features)
+            self.window[:-1] = self.window[1:]
+            self.window[-1] = normalized
+
+            self.frame_counter += 1
+            if self.frame_counter >= 5:
+                self.frame_counter = 0
+                preds = self.model(np.array([self.window]))
+                class_index = int(np.argmax(preds))
+                confidence = float(np.max(preds))
+                label = self.LABELS[class_index]
+
+                if confidence > 0.5:
+                    self.transcription_content.append(f"[Model]: {label} ({confidence:.2f})")
+
+        except Exception as e:
+            print(f"⚠️ Error during frame processing: {e}")
 
     def center_top(self):
         screen_geometry = QApplication.primaryScreen().availableGeometry()
