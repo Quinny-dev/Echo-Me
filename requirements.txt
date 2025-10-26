@@ -6,6 +6,10 @@ pygame>=2.5.2
 gTTS>=2.3.1
 pyttsx3>=2.90
 
+# Speech Recognition
+SpeechRecognition>=3.10.0
+PyAudio>=0.2.11
+
 # Translation
 deep-translator
 
