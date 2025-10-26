@@ -1,3 +1,11 @@
+# ================================================================
+# STYLED VERSION - No current model built for  (Keras 3.x)
+# to run double click executable on screen
+# ================================================================
+import tensorflow as tf
+import numpy as np
+from tools.holistic import normalize_features, to_landmark_row
+from pathlib import Path
 from PySide6.QtWidgets import ( 
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QTextEdit, QFrame, QGraphicsDropShadowEffect,
@@ -10,7 +18,6 @@ from camera_feed import CameraFeed
 from hand_landmarking.hand_landmarking import HandLandmarkDetector
 from tts import LANGUAGE_OPTIONS, GTTS_VOICES, convert_and_play, download_audio_files, cleanup
 from login import show_login_flow
-from pathlib import Path
 import json
 import speech_recognition as sr
 import queue
@@ -28,7 +35,7 @@ def save_user_data(data):
 
 # ---- TTS Worker Thread ----
 class TTSWorker(QThread):
-    finished = Signal(str)  # emits translated text
+    finished = Signal(str)
     error = Signal(str)
     
     def __init__(self, text, preferences):
@@ -113,7 +120,7 @@ class PreferencesDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("User Preferences")
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
-        self.setFixedSize(400, 350)
+        self.setFixedSize(450, 400)
 
         self.parent_window = parent
         self.user = user
@@ -151,53 +158,185 @@ class PreferencesDialog(QDialog):
         self.apply_styles(self.dark_mode_checkbox.isChecked())
 
     def apply_styles(self, dark_mode):
+        # ---- Color Palette Configuration ----
+        # Define all colors based on dark/light mode preference
         if dark_mode:
-            bg_color = "#222"
-            text_color = "white"
-            checkbox_border = "#008080"
-            checkbox_checked = "#339999"
-            button_color = "#008080"
-            button_hover = "#00b3b3"
-            combobox_bg = "#333333"
-            combobox_text = "white"
+            # Dark mode: GitHub-inspired dark theme with blue accents
+            bg_color = "#0d1117"              # Main dialog background
+            card_bg = "#161b22"               # Card/panel backgrounds
+            text_color = "#e6edf3"            # Primary text color
+            accent = "#1f6feb"                # Primary accent/brand color
+            accent_hover = "#58a6ff"          # Lighter accent for hover states
+            accent_glow = "rgba(88, 166, 255, 0.4)"  # Glow effect color
+            checkbox_bg = "#161b22"           # Checkbox background
+            combo_bg = "#0d1117"              # Dropdown background
+            border_color = "#30363d"          # Subtle border color
+            shadow_color = "rgba(0, 0, 0, 0.6)"  # Shadow for depth
         else:
-            bg_color = "white"
-            text_color = "black"
-            checkbox_border = "#008080"
-            checkbox_checked = "#339999"
-            button_color = "#008080"
-            button_hover = "#00b3b3"
-            combobox_bg = "white"
-            combobox_text = "black"
+            # Light mode: Clean, professional palette with blue accents
+            bg_color = "#f6f8fa"              # Main dialog background
+            card_bg = "#ffffff"               # Card/panel backgrounds
+            text_color = "#24292f"            # Primary text color
+            accent = "#0969da"                # Primary accent/brand color
+            accent_hover = "#0550ae"          # Darker accent for hover states
+            accent_glow = "rgba(9, 105, 218, 0.3)"  # Glow effect color
+            checkbox_bg = "#ffffff"           # Checkbox background
+            combo_bg = "#f6f8fa"              # Dropdown background
+            border_color = "#d0d7de"          # Subtle border color
+            shadow_color = "rgba(0, 0, 0, 0.08)"  # Light shadow for depth
 
         self.setStyleSheet(f"""
-            QDialog {{ background-color: {bg_color}; color: {text_color}; border-radius: 10px; }}
-            QLabel {{ color: {text_color}; }}
-            QCheckBox {{ spacing: 6px; color: {text_color}; }}
+            /* ---- Dialog Container ---- */
+            /* Main preferences dialog window styling */
+            QDialog {{ 
+                background-color: {bg_color}; 
+                color: {text_color}; 
+                border-radius: 20px; 
+            }}
+            
+            /* ---- Labels ---- */
+            /* Form labels and text displays */
+            QLabel {{ 
+                color: {text_color}; 
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                font-weight: 500;
+                letter-spacing: 0.3px;  /* Improved readability */
+            }}
+            
+            /* ---- Frame Containers ---- */
+            /* Generic frame/panel styling (currently unused in this dialog) */
+            QFrame {{
+                background-color: {card_bg};
+                border-radius: 12px;
+                padding: 15px;
+                border: 1px solid {border_color};
+            }}
+            
+            /* ---- Checkboxes ---- */
+            /* Checkbox text and container */
+            QCheckBox {{ 
+                spacing: 12px;              /* Space between checkbox and label */
+                color: {text_color};
+                font-size: 13px;
+                font-weight: 500;
+                padding: 8px;
+                border-radius: 6px;
+            }}
+            /* Hover effect for entire checkbox area */
+            QCheckBox:hover {{
+                background-color: {combo_bg};
+            }}
+            
+            /* Checkbox indicator box (the actual checkbox square) */
             QCheckBox::indicator {{
-                width: 18px; height: 18px; border-radius: 4px;
-                border: 2px solid {checkbox_border}; background-color: transparent;
+                width: 20px; 
+                height: 20px; 
+                border-radius: 6px;
+                border: 2px solid {border_color}; 
+                background-color: {checkbox_bg};
+                transition: all 0.2s ease;
             }}
+            /* Checkbox hover state with glow effect */
+            QCheckBox::indicator:hover {{
+                border: 2px solid {accent};
+                box-shadow: 0 0 0 3px {accent_glow};  /* Glow ring effect */
+            }}
+            /* Checked state with checkmark icon */
             QCheckBox::indicator:checked {{
-                background-color: {checkbox_checked}; border: 2px solid {checkbox_checked};
+                background-color: {accent}; 
+                border: 2px solid {accent};
+                /* SVG checkmark embedded as base64 */
+                image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEzLjMzMzMgNEw2IDExLjMzMzNMMi42NjY2NyA4IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=);
             }}
+            /* Checked checkbox hover state */
+            QCheckBox::indicator:checked:hover {{
+                background-color: {accent_hover};
+                border: 2px solid {accent_hover};
+            }}
+            
+            /* ---- Buttons ---- */
+            /* Primary action buttons (e.g., Save button) */
             QPushButton {{
-                background-color: {button_color}; color: {text_color}; border-radius: 5px; height: 30px;
+                /* Horizontal gradient from accent to hover color */
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 {accent}, stop:1 {accent_hover});
+                color: white; 
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 12px 24px;
+                border: none;
+                letter-spacing: 0.5px;
             }}
+            /* Button hover state with reversed gradient and glow */
             QPushButton:hover {{
-                background-color: {button_hover};
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                    stop:0 {accent_hover}, stop:1 {accent});
+                box-shadow: 0 4px 12px {accent_glow};  /* Elevated glow effect */
             }}
+            /* Button pressed/clicked state */
+            QPushButton:pressed {{
+                background: {accent};
+                padding-top: 13px;          /* Subtle downward press effect */
+                padding-bottom: 11px;
+            }}
+            
+            /* ---- Dropdown/Combo Boxes ---- */
+            /* Main dropdown styling */
             QComboBox {{
-                background-color: {combobox_bg};
-                color: {combobox_text};
-                border-radius: 5px;
-                padding: 2px 5px;
+                background-color: {combo_bg};
+                color: {text_color};
+                border: 2px solid {border_color};
+                border-radius: 10px;
+                padding: 10px 14px;
+                font-size: 13px;
+                font-weight: 500;
+                min-height: 28px;
             }}
+            /* Dropdown hover state */
+            QComboBox:hover {{
+                border: 2px solid {accent};
+                background-color: {card_bg};
+                box-shadow: 0 0 0 3px {accent_glow};  /* Focus ring effect */
+            }}
+            /* Dropdown focus state (when clicked/opened) */
+            QComboBox:focus {{
+                border: 2px solid {accent};
+                box-shadow: 0 0 0 3px {accent_glow};
+            }}
+            /* Dropdown arrow button area */
+            QComboBox::drop-down {{
+                border: none;
+                padding-right: 10px;
+                width: 20px;
+            }}
+            /* Dropdown arrow icon */
+            QComboBox::down-arrow {{
+                width: 12px;
+                height: 12px;
+            }}
+            
+            /* ---- Dropdown Menu List ---- */
+            /* The popup list that appears when dropdown is opened */
             QComboBox QAbstractItemView {{
-                background-color: {combobox_bg};
-                color: {combobox_text};
-                selection-background-color: #339999;
-                selection-color: {combobox_text};
+                background-color: {card_bg};
+                color: {text_color};
+                selection-background-color: {accent};  /* Selected item background */
+                selection-color: white;                /* Selected item text */
+                border: 2px solid {border_color};
+                border-radius: 10px;
+                padding: 6px;
+                outline: none;
+            }}
+            /* Individual items in dropdown list */
+            QComboBox QAbstractItemView::item {{
+                padding: 8px 12px;
+                border-radius: 6px;
+                margin: 2px;
+            }}
+            /* Item hover state in dropdown list */
+            QComboBox QAbstractItemView::item:hover {{
+                background-color: {accent_glow};
             }}
         """)
 
@@ -220,6 +359,41 @@ class PreferencesDialog(QDialog):
             save_user_data(data)
         self.accept()
 
+def load_labels_from_data_folder():
+    """
+    Automatically loads class labels from your data folder in alphabetical order.
+    Matches training pipeline logic.
+    """
+    data_dir = Path("data")
+    label_dirs = []
+
+    folder_order = ["None", "holds_data", "nonholds_data"]
+
+    for folder_name in folder_order:
+        folder_path = data_dir / folder_name
+        if folder_name == "None":
+            label_dirs.append("None")
+        else:
+            for f in sorted(folder_path.iterdir()):
+                if f.is_dir():
+                    label_dirs.append(f.name)
+
+    print("✅ Loaded labels:", label_dirs)
+    return label_dirs        
+class ModelLoader(QThread):
+    model_loaded = Signal(object, list, int)  # model, labels, timesteps
+    error = Signal(str)
+
+    def run(self):
+        try:
+            model_path = "models/model_fast"
+            model = tf.keras.models.load_model(model_path)
+            labels = load_labels_from_data_folder()
+            timesteps = model.input_shape[1]
+            self.model_loaded.emit(model, labels, timesteps)
+        except Exception as e:
+            self.error.emit(str(e))
+
 # ---- Main App ----
 class EchoMeApp(QWidget):
     def __init__(self, username):
@@ -227,12 +401,12 @@ class EchoMeApp(QWidget):
         self.username = username
         self.setWindowTitle(f"ECHO ME - {username}")
         self.setWindowIcon(QIcon("assets/Echo_Me_Logo.ico"))
-
         self.setFixedSize(658, 780)
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         self.dark_mode = True
         self.center_top()
 
+        # ---- User TTS Settings ----
         self.tts_translation = "No Translation"
         self.tts_voice = "English (US)"
         self.tts_speed = "Normal"
@@ -242,13 +416,14 @@ class EchoMeApp(QWidget):
         self.stt_is_recording = False
         self.mic_device_index = None
 
+        # ---- Main Layout ----
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(10)
 
         # ---- Top bar ----
         self.top_bar = QFrame()
-        self.top_bar.setFixedHeight(60)
+        self.top_bar.setFixedHeight(80)
         self.top_layout = QHBoxLayout(self.top_bar)
         self.top_layout.setContentsMargins(10, 0, 10, 0)
 
@@ -281,14 +456,29 @@ class EchoMeApp(QWidget):
         self.camera_layout.addWidget(self.camera_label)
         self.main_layout.addWidget(self.camera_frame)
 
-        # ---- Transcription panel ----
+        # ---- Loading Placeholder ----
+        self.model = None
+        self.LABELS = []
+        self.TIMESTEPS = 0
+        self.window = None
+        self.frame_counter = 0
 
-        self.transcription_label = QLabel("Transcription")
-        self.transcription_label.setAlignment(Qt.AlignCenter)
-        self.transcription_label.setFixedHeight(40)
-        self.main_layout.addWidget(self.transcription_label)
+        self.loading_label = QLabel("Loading model... Please wait")
+        self.loading_label.setAlignment(Qt.AlignCenter)
+        self.loading_label.setFont(QFont("Arial", 14, QFont.Bold))
+        self.main_layout.addWidget(self.loading_label)
 
-        self.tabs = QTabWidget()
+        self.model_loader = ModelLoader()
+        self.model_loader.model_loaded.connect(self.on_model_loaded)
+        self.model_loader.error.connect(self.on_model_error)
+        self.model_loader.start()
+
+        # ---- Menu Panel ----
+        self.menu_frame = QFrame()
+        self.menu_frame.setFixedHeight(60)
+        self.menu_layout = QHBoxLayout(self.menu_frame)
+        self.menu_layout.setContentsMargins(10, 10, 10, 10)
+        self.menu_layout.setSpacing(20)
 
         self.tts_tab = QWidget()
         self.tts_layout = QVBoxLayout(self.tts_tab)
@@ -442,14 +632,50 @@ class EchoMeApp(QWidget):
             self.camera.set_draw_landmarks(state)
         print(f"Hand landmark overlay {'enabled' if state else 'disabled'}")
 
-    def signal_ready(self):
-        try:
-            READY_FILE.write_text("ready")
-        except Exception:
-            pass
+    def on_model_loaded(self, model, labels, timesteps):
+        self.model = model
+        self.LABELS = labels
+        self.TIMESTEPS = timesteps
+        self.window = np.zeros((self.TIMESTEPS, 130))  # ✅ Your confirmed vector size
+
+        if self.loading_label:
+            self.loading_label.deleteLater()
+
+        self.transcription_content.append("[System]: ✅ Model loaded successfully!")
+        print("✅ Model is ready and prediction will start automatically.")
+
+    def on_model_error(self, error_message):
+        QMessageBox.critical(self, "Model Load Error", f"Failed to load model:\n{error_message}")
+        print(f"❌ Model load failed: {error_message}")
+
+    # ------------------------ FRAME PROCESSING ------------------------
 
     def process_frame(self, frame, landmarks):
-        pass
+        if self.model is None or self.window is None:
+            return  # Model not ready yet
+
+        if landmarks is None:
+            return
+
+        try:
+            features = to_landmark_row(landmarks, use_holistic=False)
+            normalized = normalize_features(features)
+            self.window[:-1] = self.window[1:]
+            self.window[-1] = normalized
+
+            self.frame_counter += 1
+            if self.frame_counter >= 5:
+                self.frame_counter = 0
+                preds = self.model(np.array([self.window]))
+                class_index = int(np.argmax(preds))
+                confidence = float(np.max(preds))
+                label = self.LABELS[class_index]
+
+                if confidence > 0.5:
+                    self.transcription_content.append(f"[Model]: {label} ({confidence:.2f})")
+
+        except Exception as e:
+            print(f"⚠️ Error during frame processing: {e}")
 
     def center_top(self):
         screen_geometry = QApplication.primaryScreen().availableGeometry()
@@ -467,7 +693,7 @@ class EchoMeApp(QWidget):
             self.hand_detector.close()
         if READY_FILE.exists():
             READY_FILE.unlink()
-        cleanup()  # Clean up TTS resources
+        cleanup()
         event.accept()
 
     def load_user_preferences(self):
@@ -521,47 +747,39 @@ class EchoMeApp(QWidget):
             QMessageBox.warning(self, "No Text", "Please enter text in the TTS area first.")
             return
 
-        # Prepare preferences for TTS
         prefs_for_tts = {
             "translate_to": self.tts_translation,
             "voice": self.tts_voice,
             "speed": self.tts_speed
         }
 
-        # Disable button while processing
         self.text_to_speech_btn.setEnabled(False)
         self.text_to_speech_btn.setText("Processing...")
         self.download_audio_btn.setEnabled(False)
 
-        # Create and start worker thread
         self.tts_worker = TTSWorker(text, prefs_for_tts)
         self.tts_worker.finished.connect(self.on_tts_finished)
         self.tts_worker.error.connect(self.on_tts_error)
         self.tts_worker.start()
 
     def on_tts_finished(self, translated_text):
-        """Called when TTS conversion and playback complete"""
         self.text_to_speech_btn.setEnabled(True)
         self.text_to_speech_btn.setText("Text to Speech")
         self.download_audio_btn.setEnabled(True)
         
         original_text = self.tts_content.toPlainText().strip()
         
-        # Update TTS text box with translated text if translation was used
         if translated_text != original_text and self.tts_translation != "No Translation":
             self.tts_content.setText(translated_text)
         
-        # Simple success message without showing the translated text
         QMessageBox.information(self, "Playback Complete", "Audio playback finished successfully!")
 
     def on_tts_error(self, error_message):
-        """Called when TTS conversion or playback fails"""
         self.text_to_speech_btn.setEnabled(True)
         self.text_to_speech_btn.setText("Text to Speech")
         QMessageBox.critical(self, "TTS Error", f"Text-to-Speech failed:\n{error_message}")
 
     def handle_download_audio(self):
-        """Download generated audio files to a selected folder"""
         folder_selected = QFileDialog.getExistingDirectory(
             self, 
             "Select Download Folder",
@@ -722,7 +940,6 @@ class EchoMeApp(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    # Show login flow (handles both login and signup)
     username = show_login_flow()
     
     if username:
@@ -730,5 +947,4 @@ if __name__ == "__main__":
         window.show()
         app.exec()
     else:
-        # User cancelled login/signup
         print("Login cancelled by user")

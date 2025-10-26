@@ -10,9 +10,6 @@ Thumbs.db
 # VS Code settings
 .vscode/
 
-# Data / output directories (adjust if yours differ)
-data/
-
 # Zipped folder
 Hand Tracking.zip
 
