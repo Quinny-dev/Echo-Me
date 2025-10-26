@@ -1,46 +1,52 @@
 # GUI
-PySide6>=6.6.0
-pygame>=2.5.2
+PySide6==6.9.3
+pyside6_addons==6.9.3
+pyside6_essentials==6.9.3
+pygame==2.6.1
+Pillow==12.0.0
+
+# Speech Recognition
+SpeechRecognition==3.10.0
+PyAudio==0.2.11
 
 # Text-to-Speech
-gTTS>=2.3.1
-pyttsx3>=2.90
+gTTS==2.5.4
+pyttsx3==2.98
 
 # Translation
-deep-translator
+deep-translator==1.11.4
 
 # Core deep learning & ML
-tensorflow>=2.16.0
-keras>=3.10.0
-numpy>=1.24.0,<2.0.0
+tensorflow==2.15.0
+tensorflow_intel==2.15.0
+keras==2.15.0
+numpy==1.25.2
 pandas==2.3.3
-scikit-learn>=1.6.0
+scikit-learn==1.7.2
 
 # Computer vision
-mediapipe>=0.10.21
-opencv-python>=4.10.0
-opencv-contrib-python>=4.10.0
+mediapipe==0.10.21
+opencv-python==4.11.0.86
+opencv-contrib-python==4.11.0.86
 
 # Utilities
-matplotlib>=3.8.0
-tqdm>=4.66.0
-pyyaml>=6.0.2
-cryptography>=43.0.0
+matplotlib==3.10.7
+tqdm==4.67.1
+pyyaml==6.0.3
+cryptography==46.0.3
+tools==1.0.6
 
 # Networking & I/O
-flask>=3.0.0
-requests>=2.31.0
-boto3>=1.34.0
-paramiko>=3.4.0
+flask==3.1.2
+requests==2.32.5
+boto3==1.40.59
+paramiko==4.0.0
 
-# For encryption (ChaCha20)
-pycryptodome>=3.20.0
+# For encryption
+pycryptodome==3.23.0
+bcrypt==4.0.1
 
 # Windows utilities
-winshell>=0.6
-pywin32>=305
-psutil>=5.9.6
-
-# Security
-PySide6
-bcrypt
+winshell==0.6
+pywin32==310
+psutil==7.1.2
