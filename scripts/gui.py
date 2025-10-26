@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QTextEdit, QFrame, QGraphicsDropShadowEffect,
     QDialog, QFormLayout, QCheckBox, QComboBox, QLineEdit, QMessageBox,
-    QFileDialog
+    QFileDialog, QTabWidget, QStyle
 )
 from PySide6.QtGui import QIcon, QFont, QColor
 from PySide6.QtCore import Qt, QThread, Signal
@@ -12,6 +12,8 @@ from tts import LANGUAGE_OPTIONS, GTTS_VOICES, convert_and_play, download_audio_
 from login import show_login_flow
 from pathlib import Path
 import json
+import speech_recognition as sr
+import queue
 
 READY_FILE = Path("gui_ready.flag")
 USER_PREF_FILE = Path("user_preferences.json")
@@ -40,6 +42,63 @@ class TTSWorker(QThread):
             self.finished.emit(translated_text)
         except Exception as e:
             self.error.emit(str(e))
+
+# ---- STT Worker Thread ----
+class STTWorker(QThread):
+    text_recognized = Signal(str)
+    error = Signal(str)
+    status_update = Signal(str)
+    
+    def __init__(self, mic_device_index=None):
+        super().__init__()
+        self.recognizer = sr.Recognizer()
+        self.mic_device_index = mic_device_index
+        self.is_recording = False
+        self.audio_queue = queue.Queue()
+        
+    def run(self):
+        try:
+            if self.mic_device_index is None:
+                mic = sr.Microphone()
+            else:
+                mic = sr.Microphone(device_index=self.mic_device_index)
+            
+            self.status_update.emit("🎤 Adjusting for ambient noise...")
+            
+            with mic as source:
+                self.recognizer.adjust_for_ambient_noise(source, duration=1)
+            
+            self.status_update.emit("🎤 Listening... Speak now!")
+            self.is_recording = True
+            
+            stop_listening = self.recognizer.listen_in_background(mic, self._audio_callback)
+            
+            while self.is_recording:
+                self.msleep(100)
+                
+                try:
+                    while True:
+                        text = self.audio_queue.get_nowait()
+                        self.text_recognized.emit(text)
+                except queue.Empty:
+                    pass
+            
+            stop_listening(wait_for_stop=False)
+            
+        except Exception as e:
+            self.error.emit(f"Microphone error: {str(e)}")
+    
+    def _audio_callback(self, recognizer, audio):
+        try:
+            text = recognizer.recognize_google(audio)
+            self.audio_queue.put(text)
+        except sr.UnknownValueError:
+            self.audio_queue.put("⚠️ Could not understand audio")
+        except sr.RequestError as e:
+            self.audio_queue.put(f"API error: {e}")
+    
+    def stop_recording(self):
+        self.is_recording = False
 
 # ---- User Preferences Dialog ----
 class PreferencesDialog(QDialog):
@@ -303,6 +362,11 @@ class EchoMeApp(QWidget):
         self.tts_voice = "English (US)"
         self.tts_speed = "Normal"
         self.tts_worker = None
+        
+        # STT variables
+        self.stt_worker = None
+        self.stt_is_recording = False
+        self.mic_device_index = None
 
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
@@ -343,44 +407,75 @@ class EchoMeApp(QWidget):
         self.camera_layout.addWidget(self.camera_label)
         self.main_layout.addWidget(self.camera_frame)
 
-        # ---- Menu panel ----
-        self.menu_frame = QFrame()
-        self.menu_frame.setFixedHeight(60)
-        self.menu_layout = QHBoxLayout(self.menu_frame)
-        self.menu_layout.setContentsMargins(10, 10, 10, 10)
-        self.menu_layout.setSpacing(20)
+        # ---- Tabbed Interface ----
+        self.tabs = QTabWidget()
+        self.main_layout.addWidget(self.tabs)
 
-        self.text_to_speech_btn = QPushButton("Text to Speech")
+        # Text-to-Speech Tab
+        self.tts_tab = QWidget()
+        self.tts_layout = QVBoxLayout(self.tts_tab)
+
+        # TTS buttons layout
+        self.tts_button_layout = QHBoxLayout()
+        self.text_to_speech_btn = QPushButton("🔊 Text to Speech")
         self.text_to_speech_btn.setFixedSize(160, 30)
-        self.menu_layout.addWidget(self.text_to_speech_btn, alignment=Qt.AlignLeft)
         self.text_to_speech_btn.clicked.connect(self.handle_text_to_speech)
+        self.tts_button_layout.addWidget(self.text_to_speech_btn)
 
-        self.download_audio_btn = QPushButton("Download Audio")
+        self.download_audio_btn = QPushButton("📥 Download Audio")
         self.download_audio_btn.setFixedSize(160, 30)
         self.download_audio_btn.setEnabled(False)
-        self.menu_layout.addWidget(self.download_audio_btn, alignment=Qt.AlignCenter)
         self.download_audio_btn.clicked.connect(self.handle_download_audio)
+        self.tts_button_layout.addWidget(self.download_audio_btn)
+        
+        self.tts_button_layout.addStretch()
+        self.tts_layout.addLayout(self.tts_button_layout)
 
-        self.speech_to_text_btn = QPushButton("Speech to Text")
+        self.tts_scroll = QScrollArea()
+        self.tts_content = QTextEdit()
+        self.tts_content.setText("Enter text here for Text-To-Speech...")
+        self.tts_content.focusInEvent = self.clear_placeholder_tts
+        self.tts_scroll.setWidgetResizable(True)
+        self.tts_scroll.setWidget(self.tts_content)
+        self.tts_layout.addWidget(self.tts_scroll)
+
+        self.tabs.addTab(self.tts_tab, "Text To Speech")
+
+        # Speech-to-Text Tab
+        self.stt_tab = QWidget()
+        self.stt_layout = QVBoxLayout(self.stt_tab)
+
+        # STT buttons layout
+        self.stt_button_layout = QHBoxLayout()
+        self.speech_to_text_btn = QPushButton("🎤 Speech to Text")
         self.speech_to_text_btn.setFixedSize(160, 30)
-        self.menu_layout.addWidget(self.speech_to_text_btn, alignment=Qt.AlignRight)
+        self.speech_to_text_btn.clicked.connect(self.handle_speech_to_text)
+        self.stt_button_layout.addWidget(self.speech_to_text_btn)
+        
+        # Add microphone selection button
+        self.mic_select_btn = QPushButton("🎧")
+        self.mic_select_btn.setIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
+        self.mic_select_btn.setFixedSize(30, 30)
+        self.mic_select_btn.clicked.connect(self.show_microphone_selection)
+        self.mic_select_btn.setToolTip("Select Microphone")
+        self.stt_button_layout.addWidget(self.mic_select_btn)
+        
+        # Add stretch to push buttons to the left
+        self.stt_button_layout.addStretch()
+        
+        # Add the horizontal layout to the main vertical layout
+        self.stt_layout.addLayout(self.stt_button_layout)
 
-        self.main_layout.addWidget(self.menu_frame)
+        self.stt_scroll = QScrollArea()
+        self.stt_content = QTextEdit()
+        self.stt_content.setReadOnly(False)
+        self.stt_content.setText("Speech recognition output will appear here...")
+        self.stt_content.setReadOnly(True)  # STT content should be read-only
+        self.stt_scroll.setWidgetResizable(True)
+        self.stt_scroll.setWidget(self.stt_content)
+        self.stt_layout.addWidget(self.stt_scroll)
 
-        # ---- Transcription panel ----
-        self.transcription_label = QLabel("Transcription")
-        self.transcription_label.setAlignment(Qt.AlignCenter)
-        self.transcription_label.setFixedHeight(40)
-        self.main_layout.addWidget(self.transcription_label)
-
-        self.scroll_area = QScrollArea()
-        self.transcription_content = QTextEdit()
-        self.transcription_content.setReadOnly(False)
-        self.transcription_content.setText("Transcription goes here...")
-        self.transcription_content.focusInEvent = self.clear_placeholder
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setWidget(self.transcription_content)
-        self.main_layout.addWidget(self.scroll_area)
+        self.tabs.addTab(self.stt_tab, "Speech To Text")
 
         # ---- Hand Detector & Camera ----
         self.hand_detector = HandLandmarkDetector(static_image_mode=False)
@@ -395,10 +490,10 @@ class EchoMeApp(QWidget):
         self.set_dark_mode(self.dark_mode)
         self.load_user_preferences()
 
-    def clear_placeholder(self, event):
-        if self.transcription_content.toPlainText() == "Transcription goes here...":
-            self.transcription_content.clear()
-        QTextEdit.focusInEvent(self.transcription_content, event)
+    def clear_placeholder_tts(self, event):
+        if self.tts_content.toPlainText() == "Enter text here for Text-To-Speech...":
+            self.tts_content.clear()
+        QTextEdit.focusInEvent(self.tts_content, event)
 
     def set_dark_mode(self, dark: bool):
         self.dark_mode = dark
@@ -508,7 +603,8 @@ class EchoMeApp(QWidget):
             self.user_button,           # Username button in top bar
             self.text_to_speech_btn,    # Text to Speech button
             self.download_audio_btn,    # Download Audio button
-            self.speech_to_text_btn     # Speech to Text button
+            self.speech_to_text_btn,    # Speech to Text button
+            self.mic_select_btn         # Microphone selection button
         ]:
             btn.setStyleSheet(btn_style)
 
@@ -522,28 +618,30 @@ class EchoMeApp(QWidget):
             }}
         """)
         
-        # ---- Menu Panel ----
-        # Panel containing the three main action buttons
-        self.menu_frame.setStyleSheet(f"""
-            QFrame {{
-                background-color: {menu_bg}; 
-                border-radius: 18px;
+        # ---- Tab Widget ----
+        # Tab container styling
+        self.tabs.setStyleSheet(f"""
+            QTabWidget::pane {{
+                background-color: {scroll_bg};
+                border: 1px solid {border_color};
+                border-radius: 12px;
+            }}
+            QTabBar::tab {{
+                background-color: {camera_bg};
+                color: {text_color};
+                padding: 8px 16px;
+                margin-right: 2px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
                 border: 1px solid {border_color};
             }}
-        """)
-        
-        # ---- Transcription Header Label ----
-        # "Transcription" title above the text editor
-        self.transcription_label.setStyleSheet(f"""
-            QLabel {{
-                background-color: {transcription_bg}; 
-                color: {text_color}; 
-                padding: 12px;
-                border-radius: 12px;
-                border: 1px solid {border_color};
-                font-weight: 600;          /* Semi-bold for emphasis */
-                font-size: 14px;
-                letter-spacing: 0.5px;     /* Spaced for clarity */
+            QTabBar::tab:selected {{
+                background-color: {btn_primary};
+                color: white;
+            }}
+            QTabBar::tab:hover {{
+                background-color: {btn_hover};
+                color: white;
             }}
         """)
         
@@ -557,9 +655,9 @@ class EchoMeApp(QWidget):
             }}
         """)
         
-        # ---- Scroll Area Container ----
-        # Scrollable container for the transcription text editor
-        self.scroll_area.setStyleSheet(f"""
+        # ---- Scroll Area Containers ----
+        # Scrollable containers for TTS and STT text editors
+        scroll_style = f"""
             QScrollArea {{
                 background-color: {scroll_bg};
                 border: 1px solid {border_color};
@@ -588,11 +686,15 @@ class EchoMeApp(QWidget):
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
                 height: 0px;
             }}
-        """)
+        """
         
-        # ---- Transcription Text Editor ----
-        # Main text editing area for transcribed/translated text
-        self.transcription_content.setStyleSheet(f"""
+        # Apply scroll styling to both scroll areas
+        self.tts_scroll.setStyleSheet(scroll_style)
+        self.stt_scroll.setStyleSheet(scroll_style)
+        
+        # ---- Text Editor Styling ----
+        # Common styling for text editing areas
+        text_edit_style = f"""
             QTextEdit {{
                 background-color: {text_edit_bg};
                 color: {text_color};
@@ -605,7 +707,11 @@ class EchoMeApp(QWidget):
                 selection-background-color: {btn_primary};  /* Highlighted text background */
                 selection-color: white;                      /* Highlighted text color */
             }}
-        """)
+        """
+        
+        # Apply text editor styling to both content areas
+        self.tts_content.setStyleSheet(text_edit_style)
+        self.stt_content.setStyleSheet(text_edit_style)
 
     def open_preferences(self):
         dialog = PreferencesDialog(self, self.username)
@@ -653,12 +759,13 @@ class EchoMeApp(QWidget):
         self.tts_translation = prefs.get("tts_translation", "No Translation")
         self.tts_voice = prefs.get("tts_voice", "English (US)")
         self.tts_speed = prefs.get("tts_speed", "Normal")
+        self.mic_device_index = prefs.get("mic_device_index", None)
         
     def handle_text_to_speech(self):
-        text = self.transcription_content.toPlainText().strip()
+        text = self.tts_content.toPlainText().strip()
         
-        if not text or text == "Transcription goes here...":
-            QMessageBox.warning(self, "No Text", "Please enter text in the transcription area first.")
+        if not text or text == "Enter text here for Text-To-Speech...":
+            QMessageBox.warning(self, "No Text", "Please enter text in the TTS area first.")
             return
 
         prefs_for_tts = {
@@ -678,19 +785,19 @@ class EchoMeApp(QWidget):
 
     def on_tts_finished(self, translated_text):
         self.text_to_speech_btn.setEnabled(True)
-        self.text_to_speech_btn.setText("Text to Speech")
+        self.text_to_speech_btn.setText("🔊 Text to Speech")
         self.download_audio_btn.setEnabled(True)
         
-        original_text = self.transcription_content.toPlainText().strip()
+        original_text = self.tts_content.toPlainText().strip()
         
         if translated_text != original_text and self.tts_translation != "No Translation":
-            self.transcription_content.setText(translated_text)
+            self.tts_content.setText(translated_text)
         
         QMessageBox.information(self, "Playback Complete", "Audio playback finished successfully!")
 
     def on_tts_error(self, error_message):
         self.text_to_speech_btn.setEnabled(True)
-        self.text_to_speech_btn.setText("Text to Speech")
+        self.text_to_speech_btn.setText("🔊 Text to Speech")
         QMessageBox.critical(self, "TTS Error", f"Text-to-Speech failed:\n{error_message}")
 
     def handle_download_audio(self):
@@ -712,6 +819,163 @@ class EchoMeApp(QWidget):
             )
         except Exception as e:
             QMessageBox.critical(self, "Download Error", f"Failed to download audio files:\n{str(e)}")
+
+    def handle_speech_to_text(self):
+        """Start or stop speech-to-text recording"""
+        if not self.stt_is_recording:
+            # Start recording
+            self.stt_content.clear()
+            self.stt_content.append("🎤 Starting speech recognition...\n")
+            
+            self.speech_to_text_btn.setText("⏹ Stop Recording")
+            self.speech_to_text_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #F44336;
+                    color: white;
+                    border-radius: 5px;
+                    height: 30px;
+                }
+                QPushButton:hover {
+                    background-color: #D32F2F;
+                }
+            """)
+            
+            self.stt_is_recording = True
+            
+            # Create and start STT worker
+            self.stt_worker = STTWorker(self.mic_device_index)
+            self.stt_worker.text_recognized.connect(self.on_stt_text_recognized)
+            self.stt_worker.status_update.connect(self.on_stt_status_update)
+            self.stt_worker.error.connect(self.on_stt_error)
+            self.stt_worker.start()
+            
+        else:
+            # Stop recording
+            self.stop_stt_recording()
+
+    def stop_stt_recording(self):
+        """Stop STT recording and reset button"""
+        if self.stt_worker:
+            self.stt_worker.stop_recording()
+            self.stt_worker.wait()
+            
+        self.stt_is_recording = False
+        self.speech_to_text_btn.setText("🎤 Speech to Text")
+        
+        # Reset button style based on theme
+        if self.dark_mode:
+            btn_color = "#00b3b3"
+            hover_color = "#66ffff"
+        else:
+            btn_color = "#008080"
+            hover_color = "#00cccc"
+            
+        self.speech_to_text_btn.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {btn_color};
+                color: white;
+                border-radius: 5px;
+                height: 30px;
+            }}
+            QPushButton:hover {{
+                background-color: {hover_color};
+            }}
+        """)
+
+    def on_stt_text_recognized(self, text):
+        """Handle recognized text from STT"""
+        current_text = self.stt_content.toPlainText()
+        if "🎤 Starting speech recognition..." in current_text:
+            self.stt_content.clear()
+        
+        if not text.startswith("⚠️") and not text.startswith("API error"):
+            self.stt_content.append(f"{text}")
+        else:
+            self.stt_content.append(f"<i>{text}</i>")
+
+    def on_stt_status_update(self, status):
+        """Handle STT status updates"""
+        current_text = self.stt_content.toPlainText()
+        if "🎤 Starting speech recognition..." in current_text:
+            self.stt_content.clear()
+        self.stt_content.append(f"<i>{status}</i>")
+
+    def on_stt_error(self, error_message):
+        """Handle STT errors"""
+        self.stop_stt_recording()
+        QMessageBox.critical(self, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}")
+
+    def show_microphone_selection(self):
+        """Show microphone selection dialog"""
+        try:
+            # Get list of available microphones
+            mic_names = sr.Microphone.list_microphone_names()
+            
+            if not mic_names:
+                QMessageBox.warning(self, "No Microphones", "No microphones found on this system.")
+                return
+            
+            # Create dialog
+            dialog = QDialog(self)
+            dialog.setFixedSize(400, 300)
+            dialog.setWindowTitle("Select Microphone")
+            dialog.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
+            
+            layout = QVBoxLayout(dialog)
+            
+            label = QLabel("Select your microphone:")
+            layout.addWidget(label)
+            
+            # Add microphone list
+            mic_combo = QComboBox()
+            mic_combo.addItems(mic_names)
+            
+            # Select currently selected microphone
+            if self.mic_device_index is not None and self.mic_device_index < len(mic_names):
+                mic_combo.setCurrentIndex(self.mic_device_index)
+            
+            layout.addWidget(mic_combo)
+            
+            # Buttons
+            button_layout = QHBoxLayout()
+            ok_btn = QPushButton("OK")
+            cancel_btn = QPushButton("Cancel")
+            
+            def on_ok():
+                self.mic_device_index = mic_combo.currentIndex()
+                selected_name = mic_combo.currentText()
+                
+                # Save to user preferences
+                data = load_user_data()
+                if self.username not in data:
+                    data[self.username] = {"preferences": {}}
+                elif "preferences" not in data[self.username]:
+                    data[self.username]["preferences"] = {}
+                
+                data[self.username]["preferences"]["mic_device_index"] = self.mic_device_index
+                save_user_data(data)
+                
+                dialog.accept()
+                QMessageBox.information(
+                    self, 
+                    "Microphone Selected", 
+                    f"Selected microphone:\n{selected_name}"
+                )
+            
+            def on_cancel():
+                dialog.reject()
+            
+            ok_btn.clicked.connect(on_ok)
+            cancel_btn.clicked.connect(on_cancel)
+            
+            button_layout.addWidget(ok_btn)
+            button_layout.addWidget(cancel_btn)
+            layout.addLayout(button_layout)
+            
+            dialog.exec()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to get microphone list:\n{str(e)}")
 
 
 if __name__ == "__main__":
