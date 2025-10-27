@@ -173,11 +173,31 @@ class STTHandler:
     def show_microphone_selection(self):
         """Show microphone selection dialog"""
         try:
-            # Get list of available microphones
-            mic_names = sr.Microphone.list_microphone_names()
+            import pyaudio
             
-            if not mic_names:
-                QMessageBox.warning(self.parent, "No Microphones", "No microphones found on this system.")
+            # Get list of all devices
+            all_devices = sr.Microphone.list_microphone_names()
+            
+            # Filter for input devices only using PyAudio
+            p = pyaudio.PyAudio()
+            input_devices = []
+            
+            for i in range(len(all_devices)):
+                try:
+                    device_info = p.get_device_info_by_index(i)
+                    if device_info.get('maxInputChannels', 0) > 0:
+                        input_devices.append({
+                            'index': i,
+                            'name': all_devices[i],
+                            'channels': device_info.get('maxInputChannels')
+                        })
+                except:
+                    continue
+            
+            p.terminate()
+            
+            if not input_devices:
+                QMessageBox.warning(self.parent, "No Microphones", "No input devices found on this system.")
                 return
             
             # Create dialog
@@ -188,16 +208,21 @@ class STTHandler:
             
             layout = QVBoxLayout(dialog)
             
-            label = QLabel("Select your microphone:")
+            label = QLabel("Select your microphone (input devices only):")
             layout.addWidget(label)
             
-            # Add microphone list
+            # Add microphone list with only input devices
             mic_combo = QComboBox()
-            mic_combo.addItems(mic_names)
+            device_indices = []
             
-            # Select currently selected microphone
-            if self.mic_device_index is not None and self.mic_device_index < len(mic_names):
-                mic_combo.setCurrentIndex(self.mic_device_index)
+            for device in input_devices:
+                mic_combo.addItem(device['name'])
+                device_indices.append(device['index'])
+            
+            # Select currently selected microphone if it's in the list
+            if self.mic_device_index is not None and self.mic_device_index in device_indices:
+                combo_index = device_indices.index(self.mic_device_index)
+                mic_combo.setCurrentIndex(combo_index)
             
             layout.addWidget(mic_combo)
             
@@ -207,8 +232,14 @@ class STTHandler:
             cancel_btn = QPushButton("Cancel")
             
             def on_ok():
-                self.mic_device_index = mic_combo.currentIndex()
-                selected_name = mic_combo.currentText()
+                # Get the actual device index from our filtered list
+                combo_index = mic_combo.currentIndex()
+                if combo_index >= 0 and combo_index < len(device_indices):
+                    self.mic_device_index = device_indices[combo_index]
+                    selected_name = mic_combo.currentText()
+                else:
+                    QMessageBox.warning(dialog, "Error", "Invalid device selection")
+                    return
                 
                 # Save to user preferences
                 data = load_user_data()
