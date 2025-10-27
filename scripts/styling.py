@@ -55,7 +55,7 @@ class ThemeManager:
                 'btn_glow': "rgba(203, 243, 187, 0.5)",     # Button glow effect
                 'transcription_bg': "#ffffff",              # Transcription header background
                 'text_color': "#000000",                    # Primary text color
-                'text_color_bright': "#FFFFFF",             # Extra bright (for dark text on accent)
+                'text_color_bright': "#000000",             # Extra bright (for dark text on accent)
                 'camera_bg': "#ffffff",                     # Camera panel background
                 'menu_bg': "#ffffff",                       # Menu panel background
                 'scroll_bg': "#ffffff",                     # Scroll container background

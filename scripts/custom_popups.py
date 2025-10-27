@@ -26,7 +26,7 @@ class StyledMessageBox(QDialog):
                  auto_close=False, auto_close_delay=3000, dark_mode=True):
         super().__init__(parent)
         self.popup_type = popup_type
-        self.auto_close = auto_close
+        self.auto_close = False
         self.auto_close_delay = auto_close_delay
         self.dark_mode = dark_mode
         
@@ -338,7 +338,7 @@ class StyledDialog(QDialog):
 
 
 # Convenience functions for quick popup creation
-def show_success(parent, title, message, auto_close=True, dark_mode=True):
+def show_success(parent, title, message, auto_close=False, dark_mode=True):
     """Show a success popup"""
     popup = StyledMessageBox(parent, title, message, PopupType.SUCCESS, auto_close, dark_mode=dark_mode)
     popup.exec()
@@ -356,7 +356,7 @@ def show_warning(parent, title, message, dark_mode=True):
     popup.exec()
 
 
-def show_info(parent, title, message, auto_close=True, dark_mode=True):
+def show_info(parent, title, message, auto_close=False, dark_mode=True):
     """Show an info popup"""
     popup = StyledMessageBox(parent, title, message, PopupType.INFO, auto_close, dark_mode=dark_mode)
     popup.exec()
