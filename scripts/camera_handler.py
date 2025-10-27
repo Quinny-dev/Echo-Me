@@ -21,12 +21,13 @@ class CameraHandler:
         self.camera = None
         self.show_landmarks = True
 
+        # Initialize camera and hand detection components
         self.initialize_components()
 
     def initialize_components(self):
         """Initialize hand detector and camera feed."""
         try:
-            # Initialize hand detector
+            # Create hand landmark detector instance
             self.hand_detector = HandLandmarkDetector(static_image_mode=False)
 
             # Initialize camera feed with callback
@@ -39,11 +40,11 @@ class CameraHandler:
             # Signal GUI ready for launcher
             signal_ready()
 
-            print("✅ Camera and hand detector initialized successfully.")
+            print("Camera and hand detector initialized successfully.")
             return True
 
         except Exception as e:
-            print(f"❌ Error initializing camera components: {e}")
+            print(f"Error initializing camera components: {e}")
             return False
 
     def process_frame(self, frame, landmarks):
@@ -52,14 +53,14 @@ class CameraHandler:
         """
         try:
             if self.model_handler and landmarks is not None:
-                # ✅ Pass the full results object (needed for both hands + handedness detection)
+                # Pass the full results object (needed for both hands + handedness detection)
                 self.model_handler.process_landmarks(landmarks)
             else:
                 # Optional debug:
-                # print("⚠️ No landmarks detected")
+                # print("No landmarks detected")
                 pass
         except Exception as e:
-            print(f"⚠️ Error in process_frame: {e}")
+            print(f"Error in process_frame: {e}")
 
 
     def set_landmark_visibility(self, show_landmarks):
@@ -72,9 +73,9 @@ class CameraHandler:
     def start_camera(self):
             """Camera starts automatically via QTimer, so this function is optional."""
             if self.camera:
-                print("📸 Camera already running via QTimer.")
+                print("Camera already running via QTimer.")
                 return True
-            print("❌ Camera is not initialized.")
+            print("Camera is not initialized.")
             return False
 
     def stop_camera(self):
@@ -82,10 +83,10 @@ class CameraHandler:
         if self.camera:
             try:
                 self.camera.release()
-                print("🛑 Camera stopped")
+                print("Camera stopped")
                 return True
             except Exception as e:
-                print(f"❌ Error stopping camera: {e}")
+                print(f"Error stopping camera: {e}")
                 return False
         return False
 
@@ -99,11 +100,11 @@ class CameraHandler:
             if self.hand_detector:
                 self.hand_detector = None
 
-            print("🧹 Camera components cleaned up successfully")
+            print("Camera components cleaned up successfully")
             return True
 
         except Exception as e:
-            print(f"❌ Error during camera cleanup: {e}")
+            print(f"Error during camera cleanup: {e}")
             return False
 
     def is_camera_active(self):

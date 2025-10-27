@@ -1,3 +1,6 @@
+# Text-to-speech module with translation support
+# Handles Google TTS, offline TTS, and audio playback
+
 from gtts import gTTS
 import pygame
 import time
@@ -15,17 +18,19 @@ except ImportError:
     print("Warning: deep-translator not installed. Translation features disabled.")
     print("Install with: pip install deep-translator")
 
+# Configuration for TTS processing
 MAX_CHARS = 4900
 OUTPUT_DIR = "tts_chunks"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# Global list to track generated audio files
 audio_files = []
 
 # ✅ NEW: Thread lock for pygame mixer to prevent conflicts
 pygame_lock = threading.Lock()
 
 def clear_output_dir():
-    """Safely clear old audio files"""
+    """Safely clear old audio files and stop any playing audio"""
     with pygame_lock:
         if pygame.mixer.get_init():
             pygame.mixer.music.stop()
@@ -38,6 +43,7 @@ def clear_output_dir():
             except PermissionError:
                 pass
 
+# Mapping of language names to translation and TTS settings
 LANGUAGE_OPTIONS = {
     'No Translation': {'code': None, 'tts_lang': None, 'tts_tld': None},
     'English (US)': {'code': 'en', 'tts_lang': 'en', 'tts_tld': 'com'},
@@ -76,6 +82,7 @@ LANGUAGE_OPTIONS = {
     'Xhosa (Translation only)': {'code': 'xh', 'tts_lang': 'en', 'tts_tld': 'com'},
 }
 
+# Voice options for Google TTS (without translation)
 GTTS_VOICES = {
     'English (US)': {'lang': 'en', 'tld': 'com'},
     'English (UK)': {'lang': 'en', 'tld': 'co.uk'},
@@ -117,7 +124,7 @@ def get_pyttsx3_voices():
         return {}
 
 def translate_text(text, target_language):
-    """Translate text to target language using deep-translator (Google Translate)"""
+    """Translate text to target language using Google Translate API"""
     try:
         if target_language == 'No Translation':
             return text
@@ -126,19 +133,20 @@ def translate_text(text, target_language):
         if lang_config['code'] is None:
             return text
         
-        # Create translator instance
+        # Initialize Google Translator
         translator = GoogleTranslator(source='auto', target=lang_config['code'])
         
-        # Split into chunks to avoid API limits (deep-translator limit is 5000 chars)
+        # Split text into manageable chunks for translation
         chunks = textwrap.wrap(text, 4500, break_long_words=False, break_on_hyphens=False)
         translated_chunks = []
         
         for chunk in chunks:
             try:
+                # Translate individual chunk
                 result = translator.translate(chunk)
                 translated_chunks.append(result)
             except Exception as chunk_error:
-                # If a chunk fails, try to continue with others
+                # If translation fails, use original text
                 print(f"Warning: Failed to translate chunk: {chunk_error}")
                 translated_chunks.append(chunk)  # Use original text for failed chunk
         

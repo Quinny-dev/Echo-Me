@@ -62,11 +62,13 @@ class ModelHandler(QObject):
         self.window_feature_size = window_feature_size
         self.frame_skip = frame_skip
 
+        # Model properties
         self.model = None
         self.is_savedmodel = False
         self.input_key = None
         self.frame_counter = 0
 
+        # Classification and window properties
         self.LABELS = []
         self.TIMESTEPS = 30
         self.window = None
@@ -74,6 +76,7 @@ class ModelHandler(QObject):
         # ✅ Track last prediction to avoid duplicates
         self.last_predicted_label = None
 
+        # Initialize model components
         self._load_model()
         self._load_labels()
         self._initialize_window()
@@ -84,7 +87,7 @@ class ModelHandler(QObject):
             print(f"🔄 Loading model from: {self.model_path}")
 
             try:
-                # Try loading as standard Keras model
+                # First attempt: load as standard Keras model
                 self.model = tf.keras.models.load_model(self.model_path)
                 self.TIMESTEPS = self.model.input_shape[1]
                 self.is_savedmodel = False
@@ -93,6 +96,7 @@ class ModelHandler(QObject):
             except Exception as keras_error:
                 print(f"⚠️ keras.models.load_model failed: {keras_error}")
                 print("🔄 Attempting SavedModel format...")
+                # Second attempt: load as SavedModel format
                 loaded_model = tf.saved_model.load(self.model_path)
                 self.model = loaded_model.signatures['serving_default']
 
@@ -138,30 +142,31 @@ class ModelHandler(QObject):
         print(f"🖐 Hands detected: {len(results.multi_hand_landmarks)}")
 
         try:
-            # Feature extraction
+            # Extract features from hand landmarks
             features = to_landmark_row(results, use_holistic=False)
             print(f"📏 Raw features length: {len(features)}")
 
+            # Normalize features for model input
             normalized = normalize_features(features)
             print(f"✅ Normalized features length: {len(normalized)}")
 
-            # Sliding window update
+            # Update sliding window with new features
             self.window[:-1] = self.window[1:]
             self.window[-1] = normalized
             print(f"🧠 Updated sliding window.")
 
-            # Frame skip logic
+            # Skip frames to reduce processing load
             self.frame_counter += 1
             print(f"⏱ Frame counter: {self.frame_counter}/{self.frame_skip}")
             if self.frame_counter < self.frame_skip:
                 return
             self.frame_counter = 0
 
-            # Prepare input for model
+            # Prepare input tensor for model prediction
             input_data = np.array([self.window], dtype=np.float32)
             print(f"📦 Model input shape: {input_data.shape}")
 
-            # Make prediction
+            # Run model inference
             if self.is_savedmodel:
                 input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
                 preds = self.model(**{self.input_key: input_tensor})
@@ -170,6 +175,7 @@ class ModelHandler(QObject):
                 preds = self.model(input_data)
                 preds_array = preds.numpy()[0] if hasattr(preds, "numpy") else preds[0]
 
+            # Extract prediction results
             class_index = int(np.argmax(preds_array))
             confidence = float(np.max(preds_array))
             label = self.LABELS[class_index] if class_index < len(self.LABELS) else "Unknown"

@@ -139,13 +139,16 @@ def create_shortcut():
 
         print(f"Shortcut created on Desktop: {shortcut_path}")
 
+    # macOS shortcut creation
     elif system == "Darwin":
         shortcut_path = Path.home() / "Desktop" / "Echo-Me.command"
         with open(shortcut_path, "w") as f:
             f.write(f"#!/bin/bash\\nsource {base_dir}/setup/venv/bin/activate\\npython3 '{launcher_path}'\\n")
+        # Make executable
         os.chmod(shortcut_path, 0o755)
         print(f"macOS launcher created: {shortcut_path}")
 
+    # Linux desktop file creation
     else:
         shortcut_path = Path.home() / "Desktop" / "Echo-Me.desktop"
         with open(shortcut_path, "w") as f:
@@ -156,9 +159,11 @@ Exec=bash -c 'source "{base_dir}/setup/venv/bin/activate" && python3 "{launcher_
 Name=Echo Me
 Icon={logo_path}
 """)
+        # Make executable
         os.chmod(shortcut_path, 0o755)
         print(f"Linux desktop shortcut created: {shortcut_path}")
 
 
+# Run shortcut creation when script is executed directly
 if __name__ == "__main__":
     create_shortcut()

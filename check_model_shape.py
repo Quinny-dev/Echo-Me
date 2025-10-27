@@ -1,17 +1,20 @@
-#-- I used this to check what labels are being loaded 
+# Script to inspect model structure and configuration
 import tensorflow as tf
 from tensorflow.python.saved_model import signature_constants
 
+# Load the model from directory
 model_dir = "models/model_fast"
 model = tf.keras.models.load_model(model_dir)
 
+# Display model architecture summary
 print("\n=== Model Summary ===")
 model.summary()
 
+# Display model configuration details
 print("\n=== Model Config ===")
 print(model.get_config())
 
-# Print all layers to inspect attributes
+# Iterate through all layers and display their configurations
 for i, layer in enumerate(model.layers):
     print(f"\nLayer {i}: {layer.name}")
     try:
@@ -19,6 +22,6 @@ for i, layer in enumerate(model.layers):
     except:
         print("  No config available")
 
-# Check custom objects or attributes
+# Check if model has custom class labels attribute
 if hasattr(model, 'classes_'):
     print("\nClasses attribute found:", model.classes_)

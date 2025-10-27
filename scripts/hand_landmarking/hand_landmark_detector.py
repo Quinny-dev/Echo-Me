@@ -7,6 +7,7 @@ Minimal HandLandmarkDetector
 import cv2
 import mediapipe as mp
 
+# Initialize MediaPipe hands solution
 mp_hands = mp.solutions.hands
 
 class HandLandmarkDetector:
@@ -15,7 +16,7 @@ class HandLandmarkDetector:
                  max_num_hands: int = 2,
                  min_detection_confidence: float = 0.5,
                  min_tracking_confidence: float = 0.5):
-        """Initialize MediaPipe Hands."""
+        """Initialize MediaPipe Hands with specified configuration parameters."""
         self.hands = mp_hands.Hands(
             static_image_mode=static_image_mode,
             max_num_hands=max_num_hands,
@@ -25,12 +26,14 @@ class HandLandmarkDetector:
 
     def process(self, frame_bgr):
         """
-        Process a BGR frame and return raw MediaPipe results.
+        Process a BGR frame and detect hand landmarks.
+        Converts BGR to RGB, then returns MediaPipe results object.
         Use `results.multi_hand_landmarks` to draw or analyze hands.
         """
+        # Convert BGR frame to RGB format required by MediaPipe
         image_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
         return self.hands.process(image_rgb)
 
     def close(self):
-        """Release MediaPipe resources."""
+        """Release MediaPipe resources to free memory."""
         self.hands.close()

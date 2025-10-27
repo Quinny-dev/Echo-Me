@@ -140,12 +140,12 @@ class EchoMeApp(QWidget):
 
         # Buttons Row
         btn_layout = QHBoxLayout()
-        self.text_to_speech_btn = QPushButton("Text to Speech")
+        self.text_to_speech_btn = QPushButton("🔊 Text to Speech")
         self.text_to_speech_btn.setFixedSize(160, 30)
         self.text_to_speech_btn.clicked.connect(self.handle_text_to_speech)
         btn_layout.addWidget(self.text_to_speech_btn)
 
-        self.download_audio_btn = QPushButton("Download Audio")
+        self.download_audio_btn = QPushButton("📥 Download Audio")
         self.download_audio_btn.setFixedSize(160, 30)
         self.download_audio_btn.setEnabled(False)
         self.download_audio_btn.clicked.connect(self.handle_download_audio)
@@ -178,7 +178,7 @@ class EchoMeApp(QWidget):
         layout = QVBoxLayout(self.stt_tab)
 
         btn_layout = QHBoxLayout()
-        self.speech_to_text_btn = QPushButton("Speech to Text")
+        self.speech_to_text_btn = QPushButton("🎤 Speech to Text")
         self.speech_to_text_btn.setFixedSize(160, 30)
         self.speech_to_text_btn.clicked.connect(self.handle_speech_to_text)
         btn_layout.addWidget(self.speech_to_text_btn)

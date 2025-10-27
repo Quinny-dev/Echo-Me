@@ -18,6 +18,7 @@ class PreferencesDialog(QDialog):
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
         self.setFixedSize(450, 400)
 
+        # Store references and load user preferences
         self.parent_window = parent
         self.user = user
         user_data = load_user_data().get(user, {}).get("preferences", {})
@@ -41,10 +42,11 @@ class PreferencesDialog(QDialog):
         self.speed_combo.addItems(["Slow", "Normal", "Fast"])
         self.speed_combo.setCurrentText(user_data.get("tts_speed", "Normal"))
 
+        # Create save button and connect to handler
         save_btn = QPushButton("Save Preferences")
         save_btn.clicked.connect(self.save_preferences)
 
-        # Layout
+        # Set up form layout
         layout = QFormLayout(self)
         layout.addRow(self.dark_mode_checkbox)
         layout.addRow(self.show_landmarks_checkbox)
@@ -53,12 +55,13 @@ class PreferencesDialog(QDialog):
         layout.addRow(QLabel("Speed:"), self.speed_combo)
         layout.addRow(save_btn)
 
+        # Apply initial styling based on dark mode setting
         self.apply_styles(self.dark_mode_checkbox.isChecked())
 
     def apply_styles(self, dark_mode):
         """Apply enhanced styling based on dark/light mode"""
         if dark_mode:
-            # Dark mode: Modern deep blue theme
+            # Define dark mode color scheme
             bg_color = "#1A1A1A"
             card_bg = "#132440"
             text_color = "#F0F0F0"
@@ -72,7 +75,7 @@ class PreferencesDialog(QDialog):
             border_color = "#1e293b"
             hover_bg = "#1e293b"
         else:
-            # Light mode: Clean, warm palette
+            # Define light mode color scheme
             bg_color = "#fafbfc"
             card_bg = "#ffffff"
             text_color = "#1e293b"
@@ -233,7 +236,7 @@ class PreferencesDialog(QDialog):
     def save_preferences(self):
         """Save user preferences"""
         if self.parent_window and self.user:
-            # Update parent window settings
+            # Apply changes to parent window immediately
             if getattr(self.parent_window, 'camera_handler', None):
                 try:
                     self.parent_window.camera_handler.set_landmark_visibility(self.show_landmarks_checkbox.isChecked())
@@ -242,7 +245,7 @@ class PreferencesDialog(QDialog):
             if hasattr(self.parent_window, 'set_dark_mode'):
                 self.parent_window.set_dark_mode(self.dark_mode_checkbox.isChecked())
             
-            # Update TTS settings
+            # Update text-to-speech settings
             if hasattr(self.parent_window, 'tts_handler'):
                 self.parent_window.tts_handler.update_settings(
                     translation=self.translation_combo.currentText(),
@@ -250,7 +253,7 @@ class PreferencesDialog(QDialog):
                     speed=self.speed_combo.currentText()
                 )
 
-            # Save to file
+            # Persist preferences to file
             data = load_user_data()
             if self.user not in data:
                 data[self.user] = {"preferences": {}}
@@ -264,4 +267,5 @@ class PreferencesDialog(QDialog):
             }
             save_user_data(data)
         
+        # Close dialog
         self.accept()
