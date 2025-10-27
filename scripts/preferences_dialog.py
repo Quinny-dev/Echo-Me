@@ -1,6 +1,6 @@
 """
-Preferences Dialog Module - Fixed Color Contrast
-Handles user preferences dialog and settings with improved visibility
+Preferences Dialog Module - Enhanced Visual Design
+Premium styling for settings dialog with refined colors and typography
 """
 
 from PySide6.QtWidgets import QDialog, QFormLayout, QCheckBox, QComboBox, QPushButton, QLabel
@@ -10,7 +10,7 @@ from user_data import load_user_data, save_user_data
 
 
 class PreferencesDialog(QDialog):
-    """User preferences dialog window"""
+    """Enhanced user preferences dialog with premium styling"""
     
     def __init__(self, parent=None, user=None):
         super().__init__(parent)
@@ -41,7 +41,7 @@ class PreferencesDialog(QDialog):
         self.speed_combo.addItems(["Slow", "Normal", "Fast"])
         self.speed_combo.setCurrentText(user_data.get("tts_speed", "Normal"))
 
-        save_btn = QPushButton("Save")
+        save_btn = QPushButton("Save Preferences")
         save_btn.clicked.connect(self.save_preferences)
 
         # Layout
@@ -56,36 +56,35 @@ class PreferencesDialog(QDialog):
         self.apply_styles(self.dark_mode_checkbox.isChecked())
 
     def apply_styles(self, dark_mode):
-        """Apply styling based on dark/light mode"""
-        # Color palette configuration
+        """Apply enhanced styling based on dark/light mode"""
         if dark_mode:
-            # Dark mode colors - FIXED for better contrast
-            bg_color = "#0d1117"
-            card_bg = "#161b22"
-            text_color = "#c9d1d9"  # Lighter text for better visibility
-            label_color = "#e6edf3"  # Even lighter for form labels
-            accent = "#58a6ff"  # Brighter accent
-            accent_hover = "#79b8ff"
-            accent_glow = "rgba(88, 166, 255, 0.4)"
-            checkbox_bg = "#21262d"  # Slightly lighter background
-            combo_bg = "#0d1117"
-            combo_text = "#e6edf3"  # Bright text for dropdown
-            border_color = "#30363d"
-            hover_bg = "#21262d"  # Visible hover state
+            # Dark mode: Modern deep blue theme
+            bg_color = "#1A1A1A"
+            card_bg = "#132440"
+            text_color = "#F0F0F0"
+            label_color = "#F0F0F0"
+            accent = "#004D61"
+            accent_hover = "#27A2A7"
+            accent_glow = "rgba(21, 179, 146, 0.5)"
+            checkbox_bg = "#1a1f2e"
+            combo_bg = "#1a1f2e"
+            combo_text = "#f1f5f9"
+            border_color = "#1e293b"
+            hover_bg = "#1e293b"
         else:
-            # Light mode colors
-            bg_color = "#f6f8fa"
+            # Light mode: Clean, warm palette
+            bg_color = "#fafbfc"
             card_bg = "#ffffff"
-            text_color = "#24292f"
-            label_color = "#24292f"
-            accent = "#0969da"
-            accent_hover = "#0550ae"
-            accent_glow = "rgba(9, 105, 218, 0.3)"
+            text_color = "#1e293b"
+            label_color = "#0f172a"
+            accent = "#2563eb"
+            accent_hover = "#1d4ed8"
+            accent_glow = "rgba(37, 99, 235, 0.3)"
             checkbox_bg = "#ffffff"
-            combo_bg = "#f6f8fa"
-            combo_text = "#24292f"
-            border_color = "#d0d7de"
-            hover_bg = "#f3f4f6"
+            combo_bg = "#f8fafc"
+            combo_text = "#0f172a"
+            border_color = "#e2e8f0"
+            hover_bg = "#f1f5f9"
 
         self.setStyleSheet(f"""
             QDialog {{ 
@@ -96,8 +95,8 @@ class PreferencesDialog(QDialog):
             
             QLabel {{ 
                 color: {label_color}; 
-                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-                font-weight: 500;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+                font-weight: 600;
                 letter-spacing: 0.3px;
                 font-size: 13px;
             }}
@@ -105,7 +104,7 @@ class PreferencesDialog(QDialog):
             QFrame {{
                 background-color: {card_bg};
                 border-radius: 12px;
-                padding: 15px;
+                padding: 16px;
                 border: 1px solid {border_color};
             }}
             
@@ -114,23 +113,25 @@ class PreferencesDialog(QDialog):
                 color: {label_color};
                 font-size: 13px;
                 font-weight: 500;
-                padding: 8px;
-                border-radius: 6px;
+                padding: 10px;
+                border-radius: 8px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+                letter-spacing: 0.3px;
             }}
             QCheckBox:hover {{
                 background-color: {hover_bg};
             }}
             
             QCheckBox::indicator {{
-                width: 20px; 
-                height: 20px; 
+                width: 22px; 
+                height: 22px; 
                 border-radius: 6px;
                 border: 2px solid {border_color}; 
                 background-color: {checkbox_bg};
             }}
             QCheckBox::indicator:hover {{
                 border: 2px solid {accent};
-                box-shadow: 0 0 0 3px {accent_glow};
+                box-shadow: 0 0 0 4px {accent_glow};
             }}
             QCheckBox::indicator:checked {{
                 background-color: {accent}; 
@@ -144,24 +145,28 @@ class PreferencesDialog(QDialog):
             
             QPushButton {{
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
-                    stop:0 {accent}, stop:1 {accent_hover});
+                    stop:0 {accent}, 
+                    stop:0.5 {accent}, 
+                    stop:1 {accent_hover});
                 color: white; 
                 border-radius: 10px;
                 font-size: 14px;
                 font-weight: 600;
-                padding: 12px 24px;
+                padding: 14px 28px;
                 border: none;
                 letter-spacing: 0.5px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
             }}
             QPushButton:hover {{
                 background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
-                    stop:0 {accent_hover}, stop:1 {accent});
-                box-shadow: 0 4px 12px {accent_glow};
+                    stop:0 {accent_hover}, 
+                    stop:1 {accent});
+                box-shadow: 0 4px 16px {accent_glow};
             }}
             QPushButton:pressed {{
                 background: {accent};
-                padding-top: 13px;
-                padding-bottom: 11px;
+                padding-top: 15px;
+                padding-bottom: 13px;
             }}
             
             QComboBox {{
@@ -169,23 +174,25 @@ class PreferencesDialog(QDialog):
                 color: {combo_text};
                 border: 2px solid {border_color};
                 border-radius: 10px;
-                padding: 10px 14px;
+                padding: 11px 16px;
                 font-size: 13px;
                 font-weight: 500;
                 min-height: 28px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+                letter-spacing: 0.3px;
             }}
             QComboBox:hover {{
                 border: 2px solid {accent};
                 background-color: {hover_bg};
-                box-shadow: 0 0 0 3px {accent_glow};
+                box-shadow: 0 0 0 4px {accent_glow};
             }}
             QComboBox:focus {{
                 border: 2px solid {accent};
-                box-shadow: 0 0 0 3px {accent_glow};
+                box-shadow: 0 0 0 4px {accent_glow};
             }}
             QComboBox::drop-down {{
                 border: none;
-                padding-right: 10px;
+                padding-right: 12px;
                 width: 20px;
             }}
             QComboBox::down-arrow {{
@@ -193,22 +200,24 @@ class PreferencesDialog(QDialog):
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
                 border-top: 6px solid {combo_text};
-                margin-right: 6px;
+                margin-right: 8px;
             }}
             QComboBox QAbstractItemView {{
                 background-color: {card_bg};
                 color: {combo_text};
                 border: 2px solid {accent};
-                border-radius: 8px;
+                border-radius: 10px;
                 selection-background-color: {accent};
                 selection-color: white;
-                padding: 5px;
+                padding: 6px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
             }}
             QComboBox QAbstractItemView::item {{
-                padding: 8px 12px;
-                border-radius: 4px;
+                padding: 10px 14px;
+                border-radius: 6px;
                 margin: 2px;
                 color: {combo_text};
+                font-weight: 500;
             }}
             QComboBox QAbstractItemView::item:hover {{
                 background-color: {hover_bg};
@@ -217,6 +226,7 @@ class PreferencesDialog(QDialog):
             QComboBox QAbstractItemView::item:selected {{
                 background-color: {accent};
                 color: white;
+                font-weight: 600;
             }}
         """)
 
