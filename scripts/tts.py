@@ -21,11 +21,15 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 audio_files = []
 
+# ✅ NEW: Thread lock for pygame mixer to prevent conflicts
+pygame_lock = threading.Lock()
+
 def clear_output_dir():
     """Safely clear old audio files"""
-    if pygame.mixer.get_init():
-        pygame.mixer.music.stop()
-        pygame.mixer.quit()
+    with pygame_lock:
+        if pygame.mixer.get_init():
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
 
     for f in os.listdir(OUTPUT_DIR):
         if f.endswith(".mp3") or f.endswith(".wav"):
@@ -216,20 +220,21 @@ def play_audio_sync():
     if not audio_files:
         return
     
-    if pygame.mixer.get_init():
-        pygame.mixer.music.stop()
-        pygame.mixer.quit()
-    
-    pygame.mixer.init()
-    
-    try:
-        for audio_file in audio_files:
-            pygame.mixer.music.load(audio_file)
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.3)
-    finally:
-        pygame.mixer.quit()
+    with pygame_lock:
+        if pygame.mixer.get_init():
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
+        
+        pygame.mixer.init()
+        
+        try:
+            for audio_file in audio_files:
+                pygame.mixer.music.load(audio_file)
+                pygame.mixer.music.play()
+                while pygame.mixer.music.get_busy():
+                    time.sleep(0.1)
+        finally:
+            pygame.mixer.quit()
 
 def download_audio_files(destination_folder):
     """Copy all generated audio files to destination folder"""
@@ -247,7 +252,7 @@ def download_audio_files(destination_folder):
 def convert_and_play(text, user_prefs):
     """
     Main function to handle translation + TTS + playback.
-    Called from gui.py.
+    Called from gui.py for button-based TTS.
     
     Args:
         text (str): Text to convert and play.
@@ -295,12 +300,123 @@ def convert_and_play(text, user_prefs):
     
     return translated_text
 
+
+# ✅ Add this function to your tts.py file (replace the existing play_word_instantly)
+
+def play_word_instantly(text, user_prefs):
+    """
+    Instantly play a single word/phrase for live TTS.
+    Non-blocking, stops any previous playback automatically.
+    
+    Args:
+        text (str): Single word or short phrase
+        user_prefs (dict): TTS preferences (voice, speed, translation)
+    """
+    print(f"🎵 play_word_instantly STARTED")
+    print(f"   Text: '{text}'")
+    print(f"   Prefs: {user_prefs}")
+    
+    try:
+        if not text.strip():
+            print("⚠️ Empty text, skipping")
+            return
+        
+        # Get voice settings
+        target_language = user_prefs.get("translate_to", "No Translation")
+        speed = user_prefs.get("speed", "Normal")
+        voice = user_prefs.get("voice", "English (US)")
+        
+        print(f"   Target language: {target_language}")
+        print(f"   Voice: {voice}")
+        print(f"   Speed: {speed}")
+        
+        # Translate if needed
+        if target_language != 'No Translation':
+            print(f"🌐 Translation requested...")
+            lang_config = LANGUAGE_OPTIONS.get(target_language)
+            if lang_config and lang_config['code']:
+                try:
+                    translator = GoogleTranslator(source='auto', target=lang_config['code'])
+                    text = translator.translate(text)
+                    print(f"   Translated to: '{text}'")
+                except Exception as trans_err:
+                    print(f"   Translation failed: {trans_err}")
+        
+        # Generate audio file
+        temp_file = os.path.join(OUTPUT_DIR, f"live_{uuid.uuid4()}.mp3")
+        print(f"📁 Temp file: {temp_file}")
+        
+        if target_language != 'No Translation':
+            lang_config = LANGUAGE_OPTIONS[target_language]
+            tts = gTTS(
+                text=text,
+                lang=lang_config['tts_lang'],
+                tld=lang_config['tts_tld'],
+                slow=speed == "Slow"
+            )
+        else:
+            voice_config = GTTS_VOICES[voice]
+            tts = gTTS(
+                text=text,
+                lang=voice_config['lang'],
+                tld=voice_config['tld'],
+                slow=speed == "Slow"
+            )
+        
+        print(f"💾 Saving TTS file...")
+        tts.save(temp_file)
+        print(f"✅ File saved: {os.path.exists(temp_file)}")
+        
+        # Play with thread lock
+        print(f"🔒 Acquiring pygame lock...")
+        with pygame_lock:
+            print(f"🔒 Lock acquired")
+            
+            # Stop any current playback
+            if pygame.mixer.get_init():
+                print(f"🛑 Stopping previous playback...")
+                pygame.mixer.music.stop()
+                pygame.mixer.quit()
+            
+            # Initialize and play
+            print(f"🎮 Initializing pygame mixer...")
+            pygame.mixer.init()
+            print(f"📂 Loading audio file...")
+            pygame.mixer.music.load(temp_file)
+            print(f"▶️ Playing audio...")
+            pygame.mixer.music.play()
+            
+            # Wait for playback to finish
+            print(f"⏳ Waiting for playback to complete...")
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.05)
+            
+            print(f"✅ Playback complete")
+            pygame.mixer.quit()
+            print(f"🔒 Lock released")
+        
+        # Clean up temp file
+        try:
+            os.remove(temp_file)
+            print(f"🗑️ Temp file deleted")
+        except Exception as cleanup_err:
+            print(f"⚠️ Failed to delete temp file: {cleanup_err}")
+        
+        print(f"🎵 play_word_instantly COMPLETED SUCCESSFULLY")
+            
+    except Exception as e:
+        print(f"❌ Live TTS error: {e}")
+        import traceback
+        print("📋 Full traceback:")
+        traceback.print_exc()
+
 def cleanup():
     """Clean up resources and temporary files"""
     try:
-        if pygame.mixer.get_init():
-            pygame.mixer.music.stop()
-            pygame.mixer.quit()
+        with pygame_lock:
+            if pygame.mixer.get_init():
+                pygame.mixer.music.stop()
+                pygame.mixer.quit()
     except:
         pass
     

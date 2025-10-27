@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QIcon, QFont, QColor
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QTextCursor
 
 # Import external modules
 import tensorflow as tf
@@ -24,6 +25,8 @@ from styling import ThemeManager, apply_theme
 from camera_handler import CameraHandler
 from model_handler import ModelHandler
 from login import show_login_flow
+from tts import cleanup
+
 
 # ✅ Ready flag for splash screen
 READY_FILE = Path("gui_ready.flag")
@@ -90,7 +93,6 @@ class EchoMeApp(QWidget):
         # Logo
         self.logo_label = QLabel("ECHO ME")
         self.logo_label.setFont(QFont("Arial", 16, QFont.Bold))
-        self.logo_label.setStyleSheet("border: none;")
         top_layout.addWidget(self.logo_label)
         top_layout.addStretch()
 
@@ -159,6 +161,13 @@ class EchoMeApp(QWidget):
         layout.addWidget(self.tts_scroll)
 
         self.tabs.addTab(self.tts_tab, "Text To Speech")
+        self.live_tts_enabled = True  # default ON
+        self.last_spoken_label = None
+        self.live_tts_toggle_btn = QPushButton("✅ Live TTS: ON")
+        self.live_tts_toggle_btn.setFixedSize(160, 30)
+        self.live_tts_toggle_btn.clicked.connect(self.toggle_live_tts)
+        btn_layout.addWidget(self.live_tts_toggle_btn)
+
     
     def create_stt_tab(self):
         self.stt_tab = QWidget()
@@ -170,9 +179,9 @@ class EchoMeApp(QWidget):
         self.speech_to_text_btn.clicked.connect(self.handle_speech_to_text)
         btn_layout.addWidget(self.speech_to_text_btn)
 
-        self.mic_select_btn = QPushButton("🎧 Select Input Device")
+        self.mic_select_btn = QPushButton("🎧")
         #self.mic_select_btn.setIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
-        self.mic_select_btn.setMinimumHeight(30)
+        self.mic_select_btn.setFixedSize(30, 30)
         self.mic_select_btn.clicked.connect(self.show_microphone_selection)
         btn_layout.addWidget(self.mic_select_btn)
 
@@ -212,46 +221,46 @@ class EchoMeApp(QWidget):
             print("📸 Camera successfully started with model recognition enabled.")
         else:
             print("❌ Failed to start camera.")
-    
+    def toggle_live_tts(self):
+        self.live_tts_enabled = not self.live_tts_enabled
+        status = "ON" if self.live_tts_enabled else "OFF"
+        self.live_tts_toggle_btn.setText(f"✅ Live TTS: {status}")
+
+    def stop_live_tts(self):
+        cleanup()
     def on_model_prediction(self, label, confidence):
-        """
-        Handle model predictions - display as sentence without confidence scores.
-        Filters out duplicates and formats as continuous text.
-        """
         print(f"🔮 PREDICTION RECEIVED: {label} ({confidence:.2f})")
-        
-        # ✅ Case-insensitive duplicate check
+
+        # ✅ Case-insensitive duplicate check for UI
         if self.last_displayed_word and label.lower() == self.last_displayed_word.lower():
             print(f"🔁 GUI-level duplicate filter blocked: {label}")
             return
-        
-        # ✅ Get current text
+
+        # ✅ Update text area
         current_text = self.tts_content.toPlainText()
-        
-        # ✅ Clear placeholder on first real prediction
         if current_text == "Model predictions will appear here...":
             self.tts_content.clear()
             current_text = ""
-        
-        # ✅ Build sentence format (append with space, not new line)
+
         if current_text:
-            # Add space before new word
             new_text = current_text + " " + label
         else:
-            # First word - capitalize it
             new_text = label.capitalize()
-        
-        # ✅ Set the text (replaces everything, so it's on one line)
+
         self.tts_content.setText(new_text)
-        
-        # ✅ Update last displayed word (store in lowercase for comparison)
         self.last_displayed_word = label
-        
-        # ✅ Move cursor to end for visual feedback
+
+        # ✅ Move cursor to end
         cursor = self.tts_content.textCursor()
-        cursor.movePosition(cursor.End)
+        cursor.movePosition(QTextCursor.End)
         self.tts_content.setTextCursor(cursor)
-    
+
+        # ✅ Trigger Live TTS only ONCE
+        if self.live_tts_enabled and label != self.last_spoken_label:
+            print(f"🔊 Speaking live word: {label}")
+            self.tts_handler.handle_text_to_speech_live(label)
+            self.last_spoken_label = label
+            
     # ------------------- TTS & STT Delegation -------------------
     def handle_text_to_speech(self):
         self.tts_handler.handle_text_to_speech(
