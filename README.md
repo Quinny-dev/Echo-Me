@@ -37,7 +37,7 @@ The application recognizes various South African Sign Language gestures includin
 
 Before installation, ensure you have:
 
-- **Python 3.8 or higher** (Recommended: 3.10–3.12)
+- **Python 3.11**
 - **pip** (Python package manager)
 - **Git** (optional, for version control)
 - **CUDA 11.8+** (optional, for GPU acceleration)
@@ -49,53 +49,13 @@ Before installation, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Echo-Me.git
+git clone https://github.com/Quinny-dev/Echo-Me.git
 cd Echo-Me
 ```
 
-### 2. Set Up Virtual Environment
+### 2. See SETUP_GUIDE.md
 
-#### Windows Users
-Navigate to the `setup` directory and run:
-```cmd
-setup\setup_venv.bat
-```
-
-#### macOS/Linux Users
-Run the setup script:
-```bash
-chmod +x setup/setup_venv.sh
-bash setup/setup_venv.sh
-```
-
-The setup script will:
-- Create a virtual environment named `Echo-Me`
-- Upgrade pip to the latest version
-- Install all dependencies from `requirements.txt`
-- Verify core libraries (TensorFlow & MediaPipe)
-
-### 3. Activate the Environment
-
-**Windows:**
-```cmd
-setup\venv\Scripts\activate
-```
-
-**macOS/Linux:**
-```bash
-source setup/venv/bin/activate
-```
-
-### 4. Run the Application
-
-```bash
-python scripts/gui.py
-```
-
-Or use the launcher with splash screen:
-```bash
-python scripts/launcher.py
-```
+[GOT TO SETUP GUIDE](setup/SETUP_GUIDE.md)
 
 ## 📁 Project Structure
 
@@ -137,7 +97,6 @@ Echo-Me/
 ### First Launch
 1. **Create Account**: Sign up with a username and password
 2. **Login**: Use your credentials to access the application
-3. **Camera Permission**: Allow camera access for sign language detection
 
 ### Main Interface
 - **Camera View**: Shows live video feed with hand detection
@@ -152,19 +111,6 @@ Echo-Me/
 - **Microphone**: Select input device for speech recognition
 
 ## 🔧 Advanced Configuration
-
-### VS Code Integration
-To use the virtual environment in VS Code:
-1. Open the Echo-Me project folder
-2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS)
-3. Run: **Python: Select Interpreter**
-4. Choose the interpreter in `setup/venv/Scripts/python.exe` (Windows) or `setup/venv/bin/python` (macOS/Linux)
-
-### GPU Acceleration
-For faster model inference, install CUDA-compatible TensorFlow:
-```bash
-pip install tensorflow[and-cuda]
-```
 
 ### Custom Models
 Replace `models/model_fast/` with your own trained model:
@@ -185,7 +131,7 @@ If setup fails or dependencies conflict:
    ```bash
    python --version
    ```
-   Ensure you're using Python 3.8+
+   Ensure you're using Python 3.11
 
 2. **Remove Old Environment**:
    ```bash
@@ -263,30 +209,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **MediaPipe** - Google's framework for building perception pipelines
 - **TensorFlow** - Open-source machine learning platform
 - **PySide6** - Python bindings for Qt application framework
-- **South African Sign Language Community** - For gesture references and feedback
-
-## 📞 Support
-
-For support and questions:
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/Echo-Me/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/Echo-Me/discussions)
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
-
-## 🚧 Roadmap
-
-Future enhancements planned:
-
-- [ ] Expanded vocabulary (more signs and phrases)
-- [ ] Multiple sign language support (ASL, BSL, etc.)
-- [ ] Mobile app version
-- [ ] Cloud-based model training
-- [ ] Real-time collaboration features
-- [ ] Integration with video conferencing platforms
-- [ ] Offline mode improvements
-- [ ] Advanced gesture customization
-
----
 
 **Happy signing and coding!**  
 — Echo-Me Development Team
