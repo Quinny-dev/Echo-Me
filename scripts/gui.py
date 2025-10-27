@@ -68,7 +68,7 @@ class EchoMeApp(QWidget):
     def center_window(self):
         screen_geometry = QApplication.primaryScreen().availableGeometry()
         x = (screen_geometry.width() - self.width()) // 2
-        y = 50
+        y = 0
         self.move(x, y)
     
     # ------------------- UI Setup -------------------
@@ -307,6 +307,8 @@ class EchoMeApp(QWidget):
     def load_user_preferences(self):
         prefs = get_user_preferences(self.username)
         self.set_dark_mode(prefs.get("dark_mode", True))
+        if getattr(self, "camera_handler", None):
+            self.camera_handler.set_landmark_visibility(prefs.get("show_landmarks", True))
         if self.tts_handler:
             self.tts_handler.update_settings(
                 translation=prefs.get("tts_translation", "No Translation"),

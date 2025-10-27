@@ -234,8 +234,11 @@ class PreferencesDialog(QDialog):
         """Save user preferences"""
         if self.parent_window and self.user:
             # Update parent window settings
-            if hasattr(self.parent_window, 'landmark_toggle_btn_state'):
-                self.parent_window.landmark_toggle_btn_state(self.show_landmarks_checkbox.isChecked())
+            if getattr(self.parent_window, 'camera_handler', None):
+                try:
+                    self.parent_window.camera_handler.set_landmark_visibility(self.show_landmarks_checkbox.isChecked())
+                except Exception:
+                    pass
             if hasattr(self.parent_window, 'set_dark_mode'):
                 self.parent_window.set_dark_mode(self.dark_mode_checkbox.isChecked())
             
