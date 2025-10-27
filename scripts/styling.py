@@ -15,50 +15,64 @@ class ThemeManager:
         if dark_mode:
             return {
                 # Dark mode: Modern deep blue theme with vibrant accents
-                'bg_color': "#1A1A1A",                      # Deeper, richer background
-                'top_bar_color': "#1A1A1A",                  # Subtle blue-gray
-                'top_bar_gradient': "#01144B",               # Gentle gradient
-                'btn_primary': "#004D61",                    # Vibrant blue primary
-                'btn_hover': "#27A2A7",                     # Bright blue hover
-                'btn_glow': "rgba(21, 179, 146, 0.5)",        #Stronger glow
-                'transcription_bg': "#131720",              # Consistent with top bar
-                'text_color': "#F0F0F0",                    # Crisp, clear text
-                'text_color_bright': "#F3F3F3",             # Extra bright for emphasis
-                'camera_bg': "#131720",                     # Unified panel color
-                'menu_bg': "#131720",                       # Consistent panels
-                'scroll_bg': "#131720",                     # Unified background
-                'text_edit_bg': "#1a1f2e",                  # Slightly elevated
-                'border_color': "#1e293b",                  # Subtle borders
-                'shadow_dark': "rgba(0, 0, 0, 0.7)",        # Deep shadows
-                'shadow_light': "rgba(0, 0, 0, 0.4)",       # Soft depth
-                'disabled_bg': "#1e293b",                   # Muted disabled
-                'disabled_text': "#64748b",                 # Clear disabled state
-                'accent_purple': "#8b5cf6",                 # Purple accent option
-                'accent_cyan': "#06b6d4"                    # Cyan accent option
+                'bg_color': "#0d1117",              # Main dialog background
+                'card_bg': "#161b22",               # Card/panel backgrounds
+                'top_bar_color': "#161b22",         # Top bar base color
+                'top_bar_gradient': "#1f6feb",      # Top bar gradient accent
+                'btn_primary': "#1f6feb",           # Primary button color (accent)
+                'btn_hover': "#58a6ff",             # Button hover state (lighter accent)
+                'btn_glow': "rgba(88, 166, 255, 0.4)",  # Glow effect color for buttons
+                'transcription_bg': "#161b22",      # Transcription header background
+                'text_color': "#e6edf3",            # Primary text color
+                'text_color_bright': "#f3f3f3",     # Extra bright for emphasis
+                'camera_bg': "#161b22",             # Camera panel background
+                'menu_bg': "#161b22",               # Menu panel background
+                'scroll_bg': "#161b22",             # Scroll container background
+                'text_edit_bg': "#0d1117",          # Text editor background
+                'border_color': "#30363d",          # Subtle borders
+                'shadow_dark': "rgba(0, 0, 0, 0.6)", # Strong shadow for depth
+                'shadow_light': "rgba(0, 0, 0, 0.3)",# Lighter shadow
+                'disabled_bg': "#1e293b",           # Disabled control background
+                'disabled_text': "#64748b",         # Disabled text color
+                'accent_purple': "#8b5cf6",         # Optional purple accent
+                'accent_cyan': "#06b6d4",           # Optional cyan accent
+                'accent': "#1f6feb",
+                'accent_hover': "#58a6ff",
+                'accent_glow': "rgba(88, 166, 255, 0.4)",
+                'checkbox_bg': "#161b22",
+                'combo_bg': "#0d1117",
+                'shadow_color': "rgba(0, 0, 0, 0.6)"
             }
         else:
             return {
                 # Light mode: Clean, modern palette with warm undertones
-                'bg_color': "#FFFFFF",                      # Softer white
-                'top_bar_color': "#146D75",                 # Pure white
-                'top_bar_gradient': "#146D75",              # Light blue tint
-                'btn_primary': "#79BDBD",                   # Rich blue
-                'btn_hover': "#74A5A5",                     # Deeper blue hover
-                'btn_glow': "rgba(203, 243, 187, 0.5)",       # Subtle glow
-                'transcription_bg': "#ffffff",              # Clean white
-                'text_color': "#111925",                    # Rich, dark text
-                'text_color_bright': "#FFFFFF",             # Maximum contrast
-                'camera_bg': "#ffffff",                     # Pure white
-                'menu_bg': "#ffffff",                       # Consistent panels
-                'scroll_bg': "#ffffff",                     # Clean background
-                'text_edit_bg': "#f8fafc",                  # Subtle gray
-                'border_color': "#e2e8f0",                  # Soft borders
-                'shadow_dark': "rgba(0, 0, 0, 0.1)",        # Light shadow
-                'shadow_light': "rgba(0, 0, 0, 0.05)",      # Barely there
-                'disabled_bg': "#cbd5e1",                   # Clear disabled
-                'disabled_text': "#64748b",                 # Muted text
-                'accent_purple': "#7c3aed",                 # Purple accent
-                'accent_cyan': "#0891b2"                    # Cyan accent
+                'bg_color': "#FFFFFF",                      # Main window background
+                'card_bg': "#ffffff",                       # Card/panel backgrounds
+                'top_bar_color': "#146D75",                 # Top bar base color
+                'top_bar_gradient': "#146D75",              # Top bar gradient accent
+                'btn_primary': "#79BDBD",                   # Primary button color
+                'btn_hover': "#74A5A5",                     # Button hover state
+                'btn_glow': "rgba(203, 243, 187, 0.5)",     # Button glow effect
+                'transcription_bg': "#ffffff",              # Transcription header background
+                'text_color': "#111925",                    # Primary text color
+                'text_color_bright': "#FFFFFF",             # Extra bright (for dark text on accent)
+                'camera_bg': "#ffffff",                     # Camera panel background
+                'menu_bg': "#ffffff",                       # Menu panel background
+                'scroll_bg': "#ffffff",                     # Scroll container background
+                'text_edit_bg': "#f8fafc",                  # Text editor background
+                'border_color': "#e2e8f0",                  # Border color
+                'shadow_dark': "rgba(0, 0, 0, 0.1)",        # Darker shadow for light theme
+                'shadow_light': "rgba(0, 0, 0, 0.05)",      # Lighter shadow
+                'disabled_bg': "#cbd5e1",                   # Disabled control background
+                'disabled_text': "#64748b",                 # Disabled text color
+                'accent_purple': "#7c3aed",                 # Optional purple accent
+                'accent_cyan': "#0891b2",                   # Optional cyan accent
+                'accent': "#79BDBD",
+                'accent_hover': "#74A5A5",
+                'accent_glow': "rgba(203, 243, 187, 0.5)",
+                'checkbox_bg': "#ffffff",
+                'combo_bg': "#f6f8fa",
+                'shadow_color': "rgba(0, 0, 0, 0.08)"
             }
     
     def get_button_style(self, colors):
