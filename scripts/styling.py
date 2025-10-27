@@ -17,8 +17,8 @@ class ThemeManager:
                 # Dark mode: Modern deep blue theme with vibrant accents
                 'bg_color': "#0d1117",              # Main dialog background
                 'card_bg': "#161b22",               # Card/panel backgrounds
-                'top_bar_color': "#161b22",         # Top bar base color
-                'top_bar_gradient': "#1f6feb",      # Top bar gradient accent
+                'top_bar_color': "#161b22",         # Top bar base color (gradient start)
+                'top_bar_gradient': "#1f6feb",      # Top bar gradient accent (gradient end)
                 'btn_primary': "#1f6feb",           # Primary button color (accent)
                 'btn_hover': "#58a6ff",             # Button hover state (lighter accent)
                 'btn_glow': "rgba(88, 166, 255, 0.4)",  # Glow effect color for buttons
@@ -46,23 +46,23 @@ class ThemeManager:
         else:
             return {
                 # Light mode: Clean, modern palette with warm undertones
-                'bg_color': "#FFFFFF",                      # Main window background
+                'bg_color': "#E8E8E8",                      # Main window background
                 'card_bg': "#ffffff",                       # Card/panel backgrounds
-                'top_bar_color': "#146D75",                 # Top bar base color
-                'top_bar_gradient': "#146D75",              # Top bar gradient accent
-                'btn_primary': "#79BDBD",                   # Primary button color
-                'btn_hover': "#74A5A5",                     # Button hover state
+                'top_bar_color': "#B384FF",                 # Top bar gradient START (light)
+                'top_bar_gradient': "#59B6F8",              # Top bar gradient END (darker) -> creates light->dark gradient
+                'btn_primary': "#727AFF",                   # Primary button color
+                'btn_hover': "#492077",                     # Button hover state
                 'btn_glow': "rgba(203, 243, 187, 0.5)",     # Button glow effect
                 'transcription_bg': "#ffffff",              # Transcription header background
-                'text_color': "#111925",                    # Primary text color
+                'text_color': "#000000",                    # Primary text color
                 'text_color_bright': "#FFFFFF",             # Extra bright (for dark text on accent)
                 'camera_bg': "#ffffff",                     # Camera panel background
                 'menu_bg': "#ffffff",                       # Menu panel background
                 'scroll_bg': "#ffffff",                     # Scroll container background
-                'text_edit_bg': "#f8fafc",                  # Text editor background
+                'text_edit_bg': "#FFFFFF",                  # Text editor background
                 'border_color': "#e2e8f0",                  # Border color
-                'shadow_dark': "rgba(0, 0, 0, 0.1)",        # Darker shadow for light theme
-                'shadow_light': "rgba(0, 0, 0, 0.05)",      # Lighter shadow
+                'shadow_dark': "rgba(0, 0, 0, 0.9)",        # Darker shadow for light theme
+                'shadow_light': "rgba(0, 0, 0, 0.01)",      # Lighter shadow
                 'disabled_bg': "#cbd5e1",                   # Disabled control background
                 'disabled_text': "#64748b",                 # Disabled text color
                 'accent_purple': "#7c3aed",                 # Optional purple accent
@@ -74,6 +74,7 @@ class ThemeManager:
                 'combo_bg': "#f6f8fa",
                 'shadow_color': "rgba(0, 0, 0, 0.08)"
             }
+
     
     def get_button_style(self, colors):
         """Get enhanced button styling with modern gradients"""
