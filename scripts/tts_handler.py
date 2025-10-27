@@ -5,6 +5,7 @@ Handles TTS worker threads and TTS functionality
 
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QMessageBox, QFileDialog
+from custom_popups import show_error, show_warning, show_info, show_success
 from pathlib import Path
 from tts import convert_and_play, download_audio_files
 
@@ -53,7 +54,7 @@ class TTSHandler:
         text = tts_content.toPlainText().strip()
         
         if not text or text == "Enter text here for Text-To-Speech...":
-            QMessageBox.warning(self.parent, "No Text", "Please enter text in the TTS area first.")
+            show_warning(self.parent, "No Text", "Please enter text in the TTS area first.", self.parent.dark_mode)
             return
 
         prefs_for_tts = {
@@ -86,14 +87,14 @@ class TTSHandler:
         if translated_text != original_text and self.tts_translation != "No Translation":
             tts_content.setText(translated_text)
         
-        QMessageBox.information(self.parent, "Playback Complete", "Audio playback finished successfully!")
+        show_success(self.parent, "Playback Complete", "Audio playback finished successfully!", True, self.parent.dark_mode)
 
     def on_tts_error(self, error_message, text_to_speech_btn, download_audio_btn):
         """Handle TTS error"""
         text_to_speech_btn.setEnabled(True)
         text_to_speech_btn.setText("🔊 Text to Speech")
         download_audio_btn.setEnabled(False)
-        QMessageBox.critical(self.parent, "TTS Error", f"Text-to-Speech failed:\n{error_message}")
+        show_error(self.parent, "TTS Error", f"Text-to-Speech failed:\n{error_message}", self.parent.dark_mode)
 
     def handle_download_audio(self):
         """Handle audio download"""
@@ -108,10 +109,12 @@ class TTSHandler:
 
         try:
             num_files = download_audio_files(folder_selected)
-            QMessageBox.information(
+            show_success(
                 self.parent, 
                 "Download Complete", 
-                f"Successfully saved {num_files} audio file(s) to:\n{folder_selected}"
+                f"Successfully saved {num_files} audio file(s) to:\n{folder_selected}",
+                True,
+                self.parent.dark_mode
             )
         except Exception as e:
-            QMessageBox.critical(self.parent, "Download Error", f"Failed to download audio files:\n{str(e)}")
+            show_error(self.parent, "Download Error", f"Failed to download audio files:\n{str(e)}", self.parent.dark_mode)

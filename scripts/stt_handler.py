@@ -9,6 +9,8 @@ from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QMessageBox, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton
 from PySide6.QtCore import Qt
 from user_data import load_user_data, save_user_data
+from custom_popups import show_error, show_warning, show_info, StyledDialog
+from styling import ThemeManager
 
 
 class STTWorker(QThread):
@@ -80,6 +82,7 @@ class STTHandler:
         self.stt_worker = None
         self.stt_is_recording = False
         self.mic_device_index = None
+        self.theme_manager = ThemeManager()
     
     def update_mic_device(self, device_index):
         """Update microphone device index"""
@@ -168,7 +171,7 @@ class STTHandler:
     def on_stt_error(self, error_message, speech_to_text_btn):
         """Handle STT errors"""
         self.stop_stt_recording(speech_to_text_btn)
-        QMessageBox.critical(self.parent, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}")
+        show_error(self.parent, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}", self.parent.dark_mode)
 
     def show_microphone_selection(self):
         """Show microphone selection dialog"""
@@ -202,18 +205,23 @@ class STTHandler:
             p.terminate()
             
             if not input_devices:
-                QMessageBox.warning(self.parent, "No Microphones", "No input devices found on this system.")
+                show_warning(self.parent, "No Microphones", "No input devices found on this system.", self.parent.dark_mode)
                 return
             
-            # Create dialog
-            dialog = QDialog(self.parent)
-            dialog.setFixedSize(400, 300)
-            dialog.setWindowTitle("Select Microphone")
-            dialog.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
+            # Create styled dialog
+            dialog = StyledDialog(self.parent, "Select Microphone", self.parent.dark_mode)
+            dialog.setFixedSize(420, 320)
             
             layout = QVBoxLayout(dialog)
+            layout.setContentsMargins(20, 20, 20, 20)
+            layout.setSpacing(15)
             
-            label = QLabel("Select your microphone (input devices only):")
+            # Header
+            header_label = QLabel("🎧 Select Input Device")
+            header_label.setStyleSheet("font-size: 16px; font-weight: 700; color: #3b82f6; margin-bottom: 10px;")
+            layout.addWidget(header_label)
+            
+            label = QLabel("Choose your preferred microphone from the available input devices:")
             layout.addWidget(label)
             
             # Add microphone list with only input devices
@@ -221,7 +229,7 @@ class STTHandler:
             device_indices = []
             
             for device in input_devices:
-                mic_combo.addItem(device['name'])
+                mic_combo.addItem(f"🎤 {device['name']}")
                 device_indices.append(device['index'])
             
             # Select currently selected microphone if it's in the list
@@ -233,17 +241,21 @@ class STTHandler:
             
             # Buttons
             button_layout = QHBoxLayout()
-            ok_btn = QPushButton("OK")
+            button_layout.addStretch()
+            
             cancel_btn = QPushButton("Cancel")
+            cancel_btn.setFixedSize(80, 32)
+            ok_btn = QPushButton("Select")
+            ok_btn.setFixedSize(80, 32)
             
             def on_ok():
                 # Get the actual device index from our filtered list
                 combo_index = mic_combo.currentIndex()
                 if combo_index >= 0 and combo_index < len(device_indices):
                     self.mic_device_index = device_indices[combo_index]
-                    selected_name = mic_combo.currentText()
+                    selected_name = mic_combo.currentText().replace("🎤 ", "")
                 else:
-                    QMessageBox.warning(dialog, "Error", "Invalid device selection")
+                    show_error(dialog, "Invalid Selection", "Please select a valid microphone device.", self.parent.dark_mode)
                     return
                 
                 # Save to user preferences
@@ -257,10 +269,12 @@ class STTHandler:
                 save_user_data(data)
                 
                 dialog.accept()
-                QMessageBox.information(
+                show_info(
                     self.parent, 
                     "Microphone Selected", 
-                    f"Selected microphone:\n{selected_name}"
+                    f"Successfully selected:\n{selected_name}",
+                    True,
+                    self.parent.dark_mode
                 )
             
             def on_cancel():
@@ -269,11 +283,15 @@ class STTHandler:
             ok_btn.clicked.connect(on_ok)
             cancel_btn.clicked.connect(on_cancel)
             
-            button_layout.addWidget(ok_btn)
             button_layout.addWidget(cancel_btn)
+            button_layout.addWidget(ok_btn)
             layout.addLayout(button_layout)
+            
+            # Apply styling
+            colors = self.theme_manager.get_color_palette(self.parent.dark_mode)
+            dialog.setStyleSheet(self.theme_manager.get_dialog_style(colors))
             
             dialog.exec()
             
         except Exception as e:
-            QMessageBox.critical(self.parent, "Error", f"Failed to get microphone list:\n{str(e)}")
+            show_error(self.parent, "Microphone Error", f"Failed to get microphone list:\n{str(e)}", self.parent.dark_mode)

@@ -90,6 +90,7 @@ class EchoMeApp(QWidget):
         # Logo
         self.logo_label = QLabel("ECHO ME")
         self.logo_label.setFont(QFont("Arial", 16, QFont.Bold))
+        self.logo_label.setStyleSheet("border: none;")
         top_layout.addWidget(self.logo_label)
         top_layout.addStretch()
 

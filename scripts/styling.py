@@ -235,6 +235,91 @@ class ThemeManager:
                 border: 2px solid {colors['border_color']};
             }}
         """
+    
+    def get_dialog_style(self, colors):
+        """Get enhanced dialog styling for custom popups"""
+        return f"""
+            QDialog {{
+                background-color: {colors['bg_color']};
+                color: {colors['text_color']};
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+                border-radius: 16px;
+            }}
+            
+            QLabel {{
+                color: {colors['text_color']};
+                font-size: 14px;
+                padding: 5px 0;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+            }}
+            
+            QComboBox {{
+                background-color: {colors['text_edit_bg']};
+                color: {colors['text_color']};
+                border: 1px solid {colors['border_color']};
+                border-radius: 8px;
+                padding: 8px 12px;
+                font-size: 13px;
+                min-height: 20px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+            }}
+            
+            QComboBox:hover {{
+                border-color: {colors['btn_primary']};
+            }}
+            
+            QComboBox::drop-down {{
+                border: none;
+                width: 20px;
+            }}
+            
+            QComboBox::down-arrow {{
+                image: none;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid {colors['text_color']};
+                width: 0;
+                height: 0;
+                margin-right: 5px;
+            }}
+            
+            QComboBox QAbstractItemView {{
+                background-color: {colors['menu_bg']};
+                color: {colors['text_color']};
+                selection-background-color: {colors['btn_primary']};
+                selection-color: white;
+                border: 1px solid {colors['border_color']};
+                border-radius: 8px;
+                padding: 5px;
+            }}
+            
+            QPushButton {{
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 {colors['btn_primary']}, 
+                    stop:1 {colors['btn_hover']});
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 8px 16px;
+                font-size: 13px;
+                font-weight: 600;
+                min-width: 80px;
+                font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
+            }}
+            
+            QPushButton:hover {{
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 {colors['btn_hover']}, 
+                    stop:1 {colors['btn_primary']});
+                box-shadow: 0 4px 16px {colors['btn_glow']};
+            }}
+            
+            QPushButton:pressed {{
+                background: {colors['btn_hover']};
+                padding-top: 9px;
+                padding-bottom: 7px;
+            }}
+        """
 
 
 def apply_theme(widget, theme_manager, dark_mode=True):

@@ -1,6 +1,8 @@
 from PySide6.QtWidgets import (
     QDialog, QFormLayout, QLineEdit, QPushButton, QLabel, QMessageBox
 )
+from custom_popups import show_error, show_warning, show_info, show_success, StyledDialog
+from styling import ThemeManager
 from PySide6.QtCore import Qt
 from pathlib import Path
 import json
@@ -112,11 +114,11 @@ class LoginDialog(QDialog):
         password = self.password_input.text().encode("utf-8")
         
         if not username or not password:
-            QMessageBox.warning(self, "Error", "Username and password cannot be empty")
+            show_warning(self, "Error", "Username and password cannot be empty", True)
             return
         
         if username not in self.user_data:
-            QMessageBox.warning(self, "Error", "Username not found. Please sign up first.")
+            show_warning(self, "Error", "Username not found. Please sign up first.", True)
             return
         
         hashed_pw = self.user_data[username]["password"].encode("utf-8")
@@ -125,7 +127,7 @@ class LoginDialog(QDialog):
             self.logged_in_user = username
             self.accept()
         else:
-            QMessageBox.warning(self, "Error", "Incorrect password")
+            show_error(self, "Error", "Incorrect password", True)
             self.password_input.clear()
             self.password_input.setFocus()
     
@@ -240,26 +242,26 @@ class SignupDialog(QDialog):
         
         # Validation
         if not username or not password:
-            QMessageBox.warning(self, "Error", "Username and password cannot be empty")
+            show_warning(self, "Error", "Username and password cannot be empty", True)
             return
         
         if len(username) < 3:
-            QMessageBox.warning(self, "Error", "Username must be at least 3 characters long")
+            show_warning(self, "Error", "Username must be at least 3 characters long", True)
             return
         
         if len(password) < 6:
-            QMessageBox.warning(self, "Error", "Password must be at least 6 characters long")
+            show_warning(self, "Error", "Password must be at least 6 characters long", True)
             return
         
         if password != confirm_password:
-            QMessageBox.warning(self, "Error", "Passwords do not match")
+            show_warning(self, "Error", "Passwords do not match", True)
             self.password_input.clear()
             self.confirm_password_input.clear()
             self.password_input.setFocus()
             return
         
         if username in self.user_data:
-            QMessageBox.warning(self, "Error", "Username already exists. Please choose another.")
+            show_warning(self, "Error", "Username already exists. Please choose another.", True)
             self.username_input.clear()
             self.username_input.setFocus()
             return
@@ -279,7 +281,7 @@ class SignupDialog(QDialog):
         save_user_data(self.user_data)
         
         self.logged_in_user = username
-        QMessageBox.information(self, "Success", f"Account created successfully!\nWelcome, {username}!")
+        show_success(self, "Success", f"Account created successfully!\nWelcome, {username}!", True, True)
         self.accept()
     
     def switch_to_login(self):
