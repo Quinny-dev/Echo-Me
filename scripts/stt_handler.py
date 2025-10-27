@@ -210,7 +210,7 @@ class STTHandler:
             
             # Create styled dialog
             dialog = StyledDialog(self.parent, "Select Microphone", self.parent.dark_mode)
-            dialog.setFixedSize(420, 320)
+            dialog.setFixedSize(450, 320)
             
             layout = QVBoxLayout(dialog)
             layout.setContentsMargins(20, 20, 20, 20)
@@ -222,10 +222,13 @@ class STTHandler:
             layout.addWidget(header_label)
             
             label = QLabel("Choose your preferred microphone from the available input devices:")
+            label.setWordWrap(True)
+            label.setStyleSheet("padding: 5px 0; line-height: 1.4;")
             layout.addWidget(label)
             
             # Add microphone list with only input devices
             mic_combo = QComboBox()
+            mic_combo.setMinimumHeight(35)
             device_indices = []
             
             for device in input_devices:
@@ -239,14 +242,17 @@ class STTHandler:
             
             layout.addWidget(mic_combo)
             
+            # Add some spacing before buttons
+            layout.addSpacing(10)
+            
             # Buttons
             button_layout = QHBoxLayout()
             button_layout.addStretch()
             
             cancel_btn = QPushButton("Cancel")
-            cancel_btn.setFixedSize(80, 32)
+            cancel_btn.setFixedSize(90, 35)
             ok_btn = QPushButton("Select")
-            ok_btn.setFixedSize(80, 32)
+            ok_btn.setFixedSize(90, 35)
             
             def on_ok():
                 # Get the actual device index from our filtered list
