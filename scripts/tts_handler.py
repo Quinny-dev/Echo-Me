@@ -127,7 +127,7 @@ class TTSHandler:
         if translated_text != original_text and self.tts_translation != "No Translation":
             tts_content.setText(translated_text)
 
-        QMessageBox.information(self.parent, "Playback Complete", "Audio playback finished successfully!")
+        show_success(self.parent, "Playback Complete", "Audio playback finished successfully!", True, self.parent.dark_mode)
 
     def on_tts_error(self, error_message, text_to_speech_btn, download_audio_btn):
         """Handle TTS error"""
@@ -149,10 +149,12 @@ class TTSHandler:
 
         try:
             num_files = download_audio_files(folder_selected)
-            QMessageBox.information(
-                self.parent,
-                "Download Complete",
-                f"Successfully saved {num_files} audio file(s) to:\n{folder_selected}"
+            show_success(
+                self.parent, 
+                "Download Complete", 
+                f"Successfully saved {num_files} audio file(s) to:\n{folder_selected}",
+                True,
+                self.parent.dark_mode
             )
         except Exception as e:
-            QMessageBox.critical(self.parent, "Download Error", f"Failed to download audio files:\n{str(e)}")
+            show_error(self.parent, "Download Error", f"Failed to download audio files:\n{str(e)}", self.parent.dark_mode)

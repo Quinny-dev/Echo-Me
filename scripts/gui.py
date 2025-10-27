@@ -1,5 +1,5 @@
 """
-Main GUI Module - Display Only
+Main GUI Module
 Handles the main window and UI layout, delegates functionality to specialized modules
 """
 
@@ -27,8 +27,7 @@ from model_handler import ModelHandler
 from login import show_login_flow
 from tts import cleanup
 
-
-# ✅ Ready flag for splash screen
+# Ready flag for splash screen
 READY_FILE = Path("gui_ready.flag")
 
 
@@ -46,7 +45,7 @@ class EchoMeApp(QWidget):
         self.camera_handler = None
         self.model_handler = None
         
-        # ✅ Track last word added to prevent GUI-level duplicates
+        # Track last word added to prevent GUI-level duplicates
         self.last_displayed_word = None
         
         self.setup_window()
@@ -58,10 +57,10 @@ class EchoMeApp(QWidget):
         # Connect model predictions to update the transcription box
         self.model_handler.prediction_made.connect(self.on_model_prediction)
 
-        print("✅ EchoMeApp Initialized and Ready")
+        print("EchoMeApp Initialized and Ready")
 
-    # ------------------- Window Setup -------------------
     def setup_window(self):
+        """Configure main window properties"""
         self.setWindowTitle(f"ECHO ME - {self.username}")
         self.setWindowIcon(QIcon("assets/Echo_Me_Logo.ico"))
         self.setFixedSize(658, 780)
@@ -69,13 +68,14 @@ class EchoMeApp(QWidget):
         self.center_window()
     
     def center_window(self):
+        """Center window on screen"""
         screen_geometry = QApplication.primaryScreen().availableGeometry()
         x = (screen_geometry.width() - self.width()) // 2
         y = 0
         self.move(x, y)
     
-    # ------------------- UI Setup -------------------
     def setup_ui(self):
+        """Setup main UI layout"""
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(10)
@@ -85,6 +85,7 @@ class EchoMeApp(QWidget):
         self.create_tabbed_interface()
     
     def create_top_bar(self):
+        """Create top navigation bar with logo and user button"""
         self.top_bar = QFrame()
         self.top_bar.setFixedHeight(80)
         top_layout = QHBoxLayout(self.top_bar)
@@ -113,6 +114,7 @@ class EchoMeApp(QWidget):
         self.main_layout.addWidget(self.top_bar)
     
     def create_camera_area(self):
+        """Create camera display area"""
         self.camera_frame = QFrame()
         self.camera_frame.setFixedHeight(450)
         camera_layout = QVBoxLayout(self.camera_frame)
@@ -125,23 +127,25 @@ class EchoMeApp(QWidget):
         self.main_layout.addWidget(self.camera_frame)
     
     def create_tabbed_interface(self):
+        """Create tabbed interface for TTS and STT"""
         self.tabs = QTabWidget()
         self.main_layout.addWidget(self.tabs)
         self.create_tts_tab()
         self.create_stt_tab()
     
     def create_tts_tab(self):
+        """Create Text-to-Speech tab"""
         self.tts_tab = QWidget()
         layout = QVBoxLayout(self.tts_tab)
 
         # Buttons Row
         btn_layout = QHBoxLayout()
-        self.text_to_speech_btn = QPushButton("🔊 Text to Speech")
+        self.text_to_speech_btn = QPushButton("Text to Speech")
         self.text_to_speech_btn.setFixedSize(160, 30)
         self.text_to_speech_btn.clicked.connect(self.handle_text_to_speech)
         btn_layout.addWidget(self.text_to_speech_btn)
 
-        self.download_audio_btn = QPushButton("📥 Download Audio")
+        self.download_audio_btn = QPushButton("Download Audio")
         self.download_audio_btn.setFixedSize(160, 30)
         self.download_audio_btn.setEnabled(False)
         self.download_audio_btn.clicked.connect(self.handle_download_audio)
@@ -150,12 +154,11 @@ class EchoMeApp(QWidget):
         btn_layout.addStretch()
         layout.addLayout(btn_layout)
 
-        # ✅ Text Area - READ-ONLY for model predictions
+        # Text Area - READ-ONLY for model predictions
         self.tts_scroll = QScrollArea()
         self.tts_content = QTextEdit()
-        self.tts_content.setReadOnly(True)  # ✅ Read-only
-        self.tts_content.setText("Model predictions will appear here...")  # ✅ Updated placeholder
-        # ✅ Removed focusInEvent since it's read-only
+        self.tts_content.setReadOnly(True)  # Read-only
+        self.tts_content.setText("Model predictions will appear here...")  # Updated placeholder
         self.tts_scroll.setWidgetResizable(True)
         self.tts_scroll.setWidget(self.tts_content)
         layout.addWidget(self.tts_scroll)
@@ -163,25 +166,31 @@ class EchoMeApp(QWidget):
         self.tabs.addTab(self.tts_tab, "Text To Speech")
         self.live_tts_enabled = True  # default ON
         self.last_spoken_label = None
-        self.live_tts_toggle_btn = QPushButton("✅ Live TTS: ON")
+        self.live_tts_toggle_btn = QPushButton("Live TTS: ON ✅")
         self.live_tts_toggle_btn.setFixedSize(160, 30)
         self.live_tts_toggle_btn.clicked.connect(self.toggle_live_tts)
         btn_layout.addWidget(self.live_tts_toggle_btn)
 
     
     def create_stt_tab(self):
+        """Create Speech-to-Text tab"""
         self.stt_tab = QWidget()
         layout = QVBoxLayout(self.stt_tab)
 
         btn_layout = QHBoxLayout()
-        self.speech_to_text_btn = QPushButton("🎤 Speech to Text")
+        self.speech_to_text_btn = QPushButton("Speech to Text")
         self.speech_to_text_btn.setFixedSize(160, 30)
         self.speech_to_text_btn.clicked.connect(self.handle_speech_to_text)
         btn_layout.addWidget(self.speech_to_text_btn)
 
+<<<<<<< Updated upstream
         self.mic_select_btn = QPushButton("🎧 Select Input Device")
         #self.mic_select_btn.setIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
         self.mic_select_btn.setMinimumHeight(30)
+=======
+        self.mic_select_btn = QPushButton("Mic")
+        self.mic_select_btn.setFixedSize(30, 30)
+>>>>>>> Stashed changes
         self.mic_select_btn.clicked.connect(self.show_microphone_selection)
         btn_layout.addWidget(self.mic_select_btn)
 
@@ -198,9 +207,8 @@ class EchoMeApp(QWidget):
 
         self.tabs.addTab(self.stt_tab, "Speech To Text")
     
-    # ------------------- Handlers & Model -------------------
     def setup_handlers(self):
-        """Initialize functionality handlers in the correct order."""
+        """Initialize functionality handlers in the correct order"""
         # Initialize TTS and STT first
         self.tts_handler = TTSHandler(self)
         self.stt_handler = STTHandler(self, self.username)
@@ -208,35 +216,40 @@ class EchoMeApp(QWidget):
         # Initialize model handler BEFORE camera
         self.model_handler = ModelHandler()
 
-        # ✅ Connect prediction signal immediately
+        # Connect prediction signal immediately
         self.model_handler.prediction_made.connect(self.on_model_prediction)
-        print("🔌 ModelHandler connected to GUI signal.")
+        print("ModelHandler connected to GUI signal.")
 
         # Initialize camera handler with model handler
         self.camera_handler = CameraHandler(self.camera_label, self.model_handler)
 
-        # ✅ Start camera AFTER everything is connected
+        # Start camera AFTER everything is connected
         started = self.camera_handler.start_camera()
         if started:
-            print("📸 Camera successfully started with model recognition enabled.")
+            print("Camera successfully started with model recognition enabled.")
         else:
-            print("❌ Failed to start camera.")
+            print("Failed to start camera.")
+            
     def toggle_live_tts(self):
+        """Toggle live TTS on/off"""
         self.live_tts_enabled = not self.live_tts_enabled
-        status = "ON" if self.live_tts_enabled else "OFF"
-        self.live_tts_toggle_btn.setText(f"✅ Live TTS: {status}")
+        status = "ON ✅" if self.live_tts_enabled else "OFF ❌"
+        self.live_tts_toggle_btn.setText(f"Live TTS: {status}")
 
     def stop_live_tts(self):
+        """Stop any currently playing TTS"""
         cleanup()
+        
     def on_model_prediction(self, label, confidence):
-        print(f"🔮 PREDICTION RECEIVED: {label} ({confidence:.2f})")
+        """Handle incoming model predictions"""
+        print(f"PREDICTION RECEIVED: {label} ({confidence:.2f})")
 
-        # ✅ Case-insensitive duplicate check for UI
+        # Case-insensitive duplicate check for UI
         if self.last_displayed_word and label.lower() == self.last_displayed_word.lower():
-            print(f"🔁 GUI-level duplicate filter blocked: {label}")
+            print(f"GUI-level duplicate filter blocked: {label}")
             return
 
-        # ✅ Update text area
+        # Update text area
         current_text = self.tts_content.toPlainText()
         if current_text == "Model predictions will appear here...":
             self.tts_content.clear()
@@ -250,51 +263,55 @@ class EchoMeApp(QWidget):
         self.tts_content.setText(new_text)
         self.last_displayed_word = label
 
-        # ✅ Move cursor to end
+        # Move cursor to end
         cursor = self.tts_content.textCursor()
         cursor.movePosition(QTextCursor.End)
         self.tts_content.setTextCursor(cursor)
 
-        # ✅ Trigger Live TTS only ONCE
+        # Trigger Live TTS only ONCE
         if self.live_tts_enabled and label != self.last_spoken_label:
-            print(f"🔊 Speaking live word: {label}")
+            print(f"Speaking live word: {label}")
             self.tts_handler.handle_text_to_speech_live(label)
             self.last_spoken_label = label
             
-    # ------------------- TTS & STT Delegation -------------------
     def handle_text_to_speech(self):
+        """Delegate TTS handling to TTS handler"""
         self.tts_handler.handle_text_to_speech(
             self.tts_content, self.text_to_speech_btn, self.download_audio_btn
         )
     
     def handle_download_audio(self):
+        """Delegate audio download to TTS handler"""
         self.tts_handler.handle_download_audio()
     
     def handle_speech_to_text(self):
+        """Delegate STT handling to STT handler"""
         self.stt_handler.handle_speech_to_text(
             self.stt_content, self.speech_to_text_btn
         )
     
     def show_microphone_selection(self):
+        """Show microphone selection dialog"""
         self.stt_handler.show_microphone_selection()
     
-    # ✅ Removed clear_placeholder_tts method since text area is now read-only
-    
     def open_preferences(self):
+        """Open preferences dialog"""
         dialog = PreferencesDialog(self, self.username)
         dialog.exec()
     
-    # ------------------- Styling & Preferences -------------------
     def set_dark_mode(self, dark_mode):
+        """Set application theme mode"""
         self.dark_mode = dark_mode
         self.apply_styling()
     
     def apply_styling(self):
+        """Apply theme styling to all components"""
         colors = apply_theme(self, self.theme_manager, self.dark_mode)
         self.apply_button_styling(colors)
         self.apply_component_styling(colors)
     
     def apply_button_styling(self, colors):
+        """Apply styling to all buttons"""
         btn_style = self.theme_manager.get_button_style(colors)
         for btn in [
             self.user_button,
@@ -306,6 +323,7 @@ class EchoMeApp(QWidget):
             btn.setStyleSheet(btn_style)
     
     def apply_component_styling(self, colors):
+        """Apply styling to UI components"""
         self.top_bar.setStyleSheet(self.theme_manager.get_top_bar_style(colors))
         self.camera_frame.setStyleSheet(self.theme_manager.get_camera_frame_style(colors))
         self.camera_label.setStyleSheet(self.theme_manager.get_camera_label_style(colors))
@@ -315,6 +333,7 @@ class EchoMeApp(QWidget):
         self.stt_content.setStyleSheet(text_edit_style)
     
     def load_user_preferences(self):
+        """Load and apply user preferences"""
         prefs = get_user_preferences(self.username)
         self.set_dark_mode(prefs.get("dark_mode", True))
         if getattr(self, "camera_handler", None):
@@ -326,8 +345,8 @@ class EchoMeApp(QWidget):
                 speed=prefs.get("tts_speed", "Normal")
             )
     
-    # ------------------- Close Event -------------------
     def closeEvent(self, event):
+        """Handle application close event"""
         if self.camera_handler:
             self.camera_handler.cleanup()
         if self.tts_handler and self.tts_handler.tts_worker:
@@ -335,7 +354,7 @@ class EchoMeApp(QWidget):
         if self.stt_handler and self.stt_handler.stt_worker:
             self.stt_handler.stt_worker.stop_recording()
             self.stt_handler.stt_worker.wait()
-        print("👋 Application closed cleanly.")
+        print("Application closed cleanly.")
         event.accept()
 
 
