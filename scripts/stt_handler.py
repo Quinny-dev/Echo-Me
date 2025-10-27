@@ -181,16 +181,21 @@ class STTHandler:
             # Filter for input devices only using PyAudio
             p = pyaudio.PyAudio()
             input_devices = []
+            seen_names = set()
             
             for i in range(len(all_devices)):
                 try:
                     device_info = p.get_device_info_by_index(i)
                     if device_info.get('maxInputChannels', 0) > 0:
-                        input_devices.append({
-                            'index': i,
-                            'name': all_devices[i],
-                            'channels': device_info.get('maxInputChannels')
-                        })
+                        device_name = all_devices[i]
+                        # Skip if we've already seen this device name
+                        if device_name not in seen_names:
+                            seen_names.add(device_name)
+                            input_devices.append({
+                                'index': i,
+                                'name': device_name,
+                                'channels': device_info.get('maxInputChannels')
+                            })
                 except:
                     continue
             
