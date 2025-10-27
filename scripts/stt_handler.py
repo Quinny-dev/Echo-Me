@@ -10,6 +10,8 @@ from PySide6.QtWidgets import QMessageBox, QDialog, QVBoxLayout, QHBoxLayout, QL
 from PySide6.QtCore import Qt
 from user_data import load_user_data, save_user_data
 from tts import cleanup  # ✅ ADD THIS IMPORT
+from custom_popups import show_error, show_warning, show_info, StyledDialog
+from styling import ThemeManager
 
 
 class STTWorker(QThread):
@@ -81,6 +83,7 @@ class STTHandler:
         self.stt_worker = None
         self.stt_is_recording = False
         self.mic_device_index = None
+        self.theme_manager = ThemeManager()
 
     def update_mic_device(self, device_index):
         """Update microphone device index"""
@@ -171,7 +174,8 @@ class STTHandler:
     def on_stt_error(self, error_message, speech_to_text_btn):
         """Handle STT errors"""
         self.stop_stt_recording(speech_to_text_btn)
-        QMessageBox.critical(self.parent, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}")
+        show_error(self.parent, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}", self.parent.dark_mode)
+        #QMessageBox.critical(self.parent, "Speech Recognition Error", f"Speech-to-Text failed:\n{error_message}")
 
     def show_microphone_selection(self):
         """Show microphone selection dialog"""
@@ -205,22 +209,37 @@ class STTHandler:
             p.terminate()
             
             if not input_devices:
-                QMessageBox.warning(self.parent, "No Microphones", "No input devices found on this system.")
+                show_warning(self.parent, "No Microphones", "No input devices found on this system.", self.parent.dark_mode)
+                #QMessageBox.warning(self.parent, "No Microphones", "No input devices found on this system.")
                 return
             
             # Create dialog
-            dialog = QDialog(self.parent)
-            dialog.setFixedSize(400, 300)
-            dialog.setWindowTitle("Select Microphone")
-            dialog.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
+            dialog = StyledDialog(self.parent, "Select Microphone", self.parent.dark_mode)
+            dialog.setFixedSize(450, 320)
+
+            # dialog = QDialog(self.parent)
+            # dialog.setFixedSize(400, 300)
+            # dialog.setWindowTitle("Select Microphone")
+            # dialog.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint)
             
             layout = QVBoxLayout(dialog)
+            layout.setContentsMargins(20, 20, 20, 20)
+            layout.setSpacing(15)
             
-            label = QLabel("Select your microphone (input devices only):")
+            #label = QLabel("Select your microphone (input devices only):")
+            # Header
+            header_label = QLabel("🎧 Select Input Device")
+            header_label.setStyleSheet("font-size: 16px; font-weight: 700; color: #3b82f6; margin-bottom: 10px;")
+            layout.addWidget(header_label)
+            
+            label = QLabel("Choose your preferred microphone from the available input devices:")
+            label.setWordWrap(True)
+            label.setStyleSheet("padding: 5px 0; line-height: 1.4;")
             layout.addWidget(label)
             
             # Add microphone list with only input devices
             mic_combo = QComboBox()
+            mic_combo.setMinimumHeight(35)
             device_indices = []
             
             for device in input_devices:
@@ -246,7 +265,8 @@ class STTHandler:
                     self.mic_device_index = device_indices[combo_index]
                     selected_name = mic_combo.currentText()
                 else:
-                    QMessageBox.warning(dialog, "Error", "Invalid device selection")
+                    show_error(dialog, "Invalid Selection", "Please select a valid microphone device.", self.parent.dark_mode)
+                    #QMessageBox.warning(dialog, "Error", "Invalid device selection")
                     return
                 
                 # Save to user preferences
@@ -260,7 +280,7 @@ class STTHandler:
                 save_user_data(data)
                 
                 dialog.accept()
-                QMessageBox.information(
+                show_info(
                     self.parent, 
                     "Microphone Selected", 
                     f"Selected microphone:\n{selected_name}"

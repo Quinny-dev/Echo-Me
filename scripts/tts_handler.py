@@ -6,6 +6,7 @@ Handles TTS worker threads and TTS functionality
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QMessageBox, QFileDialog
 from pathlib import Path
+from custom_popups import show_error, show_warning, show_info, show_success
 from tts import convert_and_play, download_audio_files, play_word_instantly
 import threading
 
@@ -58,7 +59,8 @@ class TTSHandler:
         text = tts_content.toPlainText().strip()
 
         if not text or text == "Model predictions will appear here...":
-            QMessageBox.warning(self.parent, "No Text", "Please enter text in the TTS area first.")
+            show_warning(self.parent, "No Text", "Please enter text in the TTS area first.", self.parent.dark_mode)
+            #QMessageBox.warning(self.parent, "No Text", "Please enter text in the TTS area first.")
             return
 
         prefs_for_tts = {
