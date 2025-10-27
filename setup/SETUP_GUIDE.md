@@ -9,17 +9,36 @@ It supports both **Windows** and **macOS/Linux** and requires minimal steps to g
 
 Before you begin, make sure you have:
 
-- `Python 3.8 or higher` (Recommended: 3.10–3.12)
+- `Python 3.11` (Custom Portable Installation)
 - `pip` (Python package manager)
 - Optional: **Git** (for version control)
-- Optional: **CUDA 11.8+** (for GPU training)
+
+---
+
+## Important: Python Portable Setup (Windows)
+
+Before running the setup scripts, you must first **custom install Python 3.11** and make it portable.
+
+1. Download **Python 3.11** from the official website:  
+   [Portable Python](https://www.python.org/downloads/windows)
+
+2. Run the installer and choose **Customize installation**.
+
+3. Check the following options:
+   - *Install for all users* (optional but recommended)
+   - *Add Python to PATH*
+   - *Include pip*
+
+4. On the next screen, choose **Customize install location** and set it to:  
+   `setup\python-portable`
 
 ---
 
 ## File Overview
 
-Inside the `setup/` folder, you’ll find:
+Inside the `setup/` folder, you should now find:
 
+- `python-portable` - used for venv installation
 - `setup_venv.bat` – for **Windows** users  
 - `setup_venv.sh` – for **macOS/Linux** users  
 
@@ -129,9 +148,4 @@ Your environment is now ready! Continue with:
 - **Model Training** - Train the LSTM model using MediaPipe landmarks.
 - **Live Testing** - Run the real-time Sign-to-Speech translator.
 
-For detailed instructions, see the main `README.md`.
-
----
-
-Happy signing and coding!
-— Echo-Me Development Team
+For detailed overview of the project, see the main [README](README.md).
