@@ -272,7 +272,7 @@ class ThemeManager:
                 color: {colors['text_color']};
                 border: 1px solid {colors['border_color']};
                 border-radius: 8px;
-                padding: 8px 12px;
+                padding: 10px 35px 10px 12px;
                 font-size: 13px;
                 min-height: 20px;
                 font-family: 'Inter', 'Segoe UI', -apple-system, system-ui, sans-serif;
@@ -282,20 +282,24 @@ class ThemeManager:
                 border-color: {colors['btn_primary']};
             }}
             
-            QComboBox::drop-down {{
-                border: none;
-                width: 20px;
+            QComboBox::down-arrow {{
+                subcontrol-origin: padding;
+                subcontrol-position: center;
+                width: 16px;
+                height: 16px;
+                font-size: 12px;
+                
+                font-weight: bold;
             }}
             
-            QComboBox::down-arrow {{
-                image: none;
-                border-left: 5px solid transparent;
-                border-right: 5px solid transparent;
-                border-top: 5px solid {colors['text_color']};
-                width: 0;
-                height: 0;
-                margin-right: 5px;
+            QComboBox::down-arrow:after {{
+                content: "▼";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }}
+            
             
             QComboBox QAbstractItemView {{
                 background-color: {colors['menu_bg']};
