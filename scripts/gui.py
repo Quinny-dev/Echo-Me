@@ -183,14 +183,9 @@ class EchoMeApp(QWidget):
         self.speech_to_text_btn.clicked.connect(self.handle_speech_to_text)
         btn_layout.addWidget(self.speech_to_text_btn)
 
-<<<<<<< Updated upstream
         self.mic_select_btn = QPushButton("🎧 Select Input Device")
         #self.mic_select_btn.setIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
         self.mic_select_btn.setMinimumHeight(30)
-=======
-        self.mic_select_btn = QPushButton("Mic")
-        self.mic_select_btn.setFixedSize(30, 30)
->>>>>>> Stashed changes
         self.mic_select_btn.clicked.connect(self.show_microphone_selection)
         btn_layout.addWidget(self.mic_select_btn)
 
